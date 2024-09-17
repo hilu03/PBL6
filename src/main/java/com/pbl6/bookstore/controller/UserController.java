@@ -26,13 +26,15 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public User findUserByUsername(@RequestParam(value = "username", required = true) String username) {
-        return userService.findByUsername(username);
-    }
-
-    @GetMapping("/user")
-    public User findUserByEmail(@RequestParam(value = "email", required = true) String email) {
-        return userService.findByEmail(email);
+    public User findUserByEmail(@RequestParam(required = false) String email,
+                                @RequestParam(required = false) String username) {
+        if (email != null) {
+            return userService.findByEmail(email);
+        } else if (username != null) {
+            return userService.findByUsername(username);
+        }
+        // xử lý trường hợp không có tham số
+         return null;
     }
 
     @PutMapping("/users")
