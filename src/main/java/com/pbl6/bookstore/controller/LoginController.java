@@ -1,9 +1,8 @@
 package com.pbl6.bookstore.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.pbl6.bookstore.service.LoginServiceImpl;
+import com.pbl6.bookstore.service.login.LoginServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 

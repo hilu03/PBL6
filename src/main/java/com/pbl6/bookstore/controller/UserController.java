@@ -1,7 +1,7 @@
 package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.entity.User;
-import com.pbl6.bookstore.service.UserService;
+import com.pbl6.bookstore.service.user.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

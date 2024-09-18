@@ -1,46 +1,30 @@
-package com.pbl6.bookstore.entity;
+package com.pbl6.bookstore.dto;
 
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "user")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
+public class UserDTO {
     private int id;
 
-    @Column(name = "Firstname")
     private String firstName;
 
-    @Column(name = "Lastname")
     private String lastName;
 
-    @Column(name = "PhoneNumber")
     private String phoneNumber;
 
-    @Column(name = "Password")
-    private String password;
-
-    @Column(name = "Role")
     private String role;
 
-    @Column(name = "Email")
     private String email;
 
-    @Column(name = "Username")
     private String username;
 
-    public User() {
+    public UserDTO() {
 
     }
 
-    public User(String firstName, String lastName, String phoneNumber, String passWord, String role, String email, String username) {
+    public UserDTO(String firstName, int id, String lastName, String phoneNumber, String password, String role, String email, String username) {
         this.firstName = firstName;
+        this.id = id;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.password = passWord;
         this.role = role;
         this.email = email;
         this.username = username;
@@ -54,14 +38,6 @@ public class User {
         this.id = id;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -70,20 +46,20 @@ public class User {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String passWord) {
-        this.password = passWord;
     }
 
     public String getRole() {
@@ -112,12 +88,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", passWord='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +

@@ -1,4 +1,4 @@
-package com.pbl6.bookstore.service;
+package com.pbl6.bookstore.service.user;
 
 import com.pbl6.bookstore.entity.User;
 
