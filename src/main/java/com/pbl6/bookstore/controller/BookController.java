@@ -1,7 +1,6 @@
 package com.pbl6.bookstore.controller;
 
-import com.pbl6.bookstore.entity.Book;
-import com.pbl6.bookstore.entity.User;
+import com.pbl6.bookstore.dto.BookDTO;
 import com.pbl6.bookstore.service.book.BookServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,14 +19,14 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public Page<Book> getFirstPageBooks(@RequestParam(required = false) String page) {
+    public Page<BookDTO> getBookPerPage(@RequestParam(required = false) String page) {
         if (page == null) {
             page = "0";
         }
 
         Pageable pageWithFortyBooks = PageRequest.of(Integer.parseInt(page), 40);
 
-        return bookService.findAll(pageWithFortyBooks);
+        return bookService.getBookPerPage(pageWithFortyBooks);
     }
 
 }

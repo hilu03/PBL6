@@ -1,95 +1,43 @@
-package com.pbl6.bookstore.entity;
-
-import jakarta.persistence.*;
+package com.pbl6.bookstore.dto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "book")
-public class Book {
-
-    @Id
-    @Column(name = "BookID")
+public class BookDTO {
     private String id;
 
-    @Column(name = "Title")
     private String title;
 
-    @Column(name = "DatePublish")
     private Date datePublish;
 
-    @Column(name = "Description")
     private String description;
 
-    @Column(name = "OriginalPrice")
     private BigDecimal originalPrice;
 
-    @Column(name = "DiscountPrice")
     private BigDecimal discountedPrice;
 
-    @Column(name = "Image")
     private String imageLink;
 
-    @Column(name = "SoldQuantity")
     private int soldQuantity;
 
-    @Column(name = "AvailableQuantity")
     private Integer availableQuantity;
 
-    @Column(name = "Pages")
     private Integer pages;
 
-    @Column(name = "BookCover")
     private String cover;
 
-    @Column(name = "Dimension")
     private String dimension;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
-                            CascadeType.MERGE, CascadeType.REFRESH},
-                fetch = FetchType.LAZY)
-    @JoinColumn(name = "CategoryID")
-    private Category category;
+    private String category;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.DETACH,
-                    CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "bookauthor",
-            joinColumns = @JoinColumn(name = "BookID"),
-            inverseJoinColumns = @JoinColumn(name = "AuthorID"))
-    private List<Author> authors;
+    private List<String> authors;
 
+    private List<String> targets;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.DETACH,
-                    CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "booktarget",
-            joinColumns = @JoinColumn(name = "BookID"),
-            inverseJoinColumns = @JoinColumn(name = "TargetID"))
-    private List<Target> targets;
+    public BookDTO() {
 
-    public Book() {
-
-    }
-
-    public Book(String id, String title, Date datePublish, String description, BigDecimal originalPrice,
-                BigDecimal discountedPrice, String imageLink, int soldQuantity, int availableQuantity,
-                int pages, String cover, String dimension) {
-        this.id = id;
-        this.title = title;
-        this.datePublish = datePublish;
-        this.description = description;
-        this.originalPrice = originalPrice;
-        this.discountedPrice = discountedPrice;
-        this.imageLink = imageLink;
-        this.soldQuantity = soldQuantity;
-        this.availableQuantity = availableQuantity;
-        this.pages = pages;
-        this.cover = cover;
-        this.dimension = dimension;
     }
 
     public String getId() {
@@ -188,27 +136,42 @@ public class Book {
         this.dimension = dimension;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public List<Author> getAuthors() {
+    public List<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(List<String> authors) {
         this.authors = authors;
     }
 
-    public List<Target> getTargets() {
+    public void addAuthor(String author) {
+        if (authors == null) {
+            authors = new ArrayList<>();
+        }
+        authors.add(author);
+    }
+
+    public List<String> getTargets() {
         return targets;
     }
 
-    public void setTargets(List<Target> targets) {
+    public void setTargets(List<String> targets) {
         this.targets = targets;
     }
+
+    public void addTarget(String target) {
+        if (targets == null) {
+            targets = new ArrayList<>();
+        }
+        targets.add(target);
+    }
+
 }
