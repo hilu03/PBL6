@@ -2,6 +2,7 @@ package com.pbl6.bookstore.service.book;
 
 import com.pbl6.bookstore.dao.BookRepository;
 import com.pbl6.bookstore.dao.CategoryRepository;
+import com.pbl6.bookstore.dao.TargetRepository;
 import com.pbl6.bookstore.dto.BookDTO;
 import com.pbl6.bookstore.entity.Author;
 import com.pbl6.bookstore.entity.Book;
@@ -25,11 +26,15 @@ public class BookServiceImpl implements BookService{
 
     private CategoryRepository categoryRepository;
 
+    private TargetRepository targetRepository;
+
     private ModelMapper modelMapper;
 
-    public BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository, ModelMapper modelMapper) {
+    public BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository,
+                           TargetRepository targetRepository, ModelMapper modelMapper) {
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
+        this.targetRepository = targetRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -77,6 +82,42 @@ public class BookServiceImpl implements BookService{
         if (category == null) return null;
 
         List<BookDTO> bookDTOList = category.getBooks().stream().map(this::convertToDTO).toList();
+
+        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+    }
+
+    @Override
+    public Page<BookDTO> findBooksByCategoryID(int id, Pageable pageable) {
+        Optional<Category> category = categoryRepository.findById(id);
+
+        if (category.isPresent()) {
+
+            List<BookDTO> bookDTOList = category.get().getBooks().stream().map(this::convertToDTO).toList();
+
+            return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+        }
+
+        return null;
+    }
+
+    @Override
+    public Page<BookDTO> findBooksByTargetName(String targetName, Pageable pageable) {
+
+        Target target = targetRepository.findByName(targetName);
+        if (target == null) return null;
+
+        List<BookDTO> bookDTOList = target.getBooks().stream().map(this::convertToDTO).toList();
+
+        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+    }
+
+    @Override
+    public Page<BookDTO> findBooksByTargetID(String id, Pageable pageable) {
+        Optional<Target> target = targetRepository.findById(id);
+
+        if (target.isEmpty()) return null;
+
+        List<BookDTO> bookDTOList = target.get().getBooks().stream().map(this::convertToDTO).toList();
 
         return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
     }
