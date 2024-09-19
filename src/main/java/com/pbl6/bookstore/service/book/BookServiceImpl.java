@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +37,15 @@ public class BookServiceImpl implements BookService{
                 .collect(Collectors.toList());
 
         return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
+    }
+
+    @Override
+    public BookDTO findBookById(String id) {
+        Optional<Book> book = bookRepository.findById(id);
+
+        if (book.isPresent()) return convertToDTO(book.get());
+
+        return null;
     }
 
     public BookDTO convertToDTO(Book book) {
