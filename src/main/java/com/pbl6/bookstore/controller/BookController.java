@@ -24,13 +24,18 @@ public class BookController {
 
     @GetMapping("/books")
     public ResponseEntity<APIResponse> getBookPerPage(@RequestParam(required = false) String page) {
-        if (page == null) {
-            page = "0";
+        try {
+            if (page == null) {
+                page = "0";
+            }
+
+            Pageable pageWithFortyBooks = PageRequest.of(Integer.parseInt(page), 40);
+
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getBookPerPage(pageWithFortyBooks)));
         }
-
-        Pageable pageWithFortyBooks = PageRequest.of(Integer.parseInt(page), 40);
-
-        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getBookPerPage(pageWithFortyBooks)));
+        catch (NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
+        }
     }
 
     @GetMapping("/books/{bookID}")
@@ -40,6 +45,23 @@ public class BookController {
             return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookDTO));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
+    }
+
+    @GetMapping("/books/category/{category}")
+    public ResponseEntity<APIResponse> getBooksByCategory(@PathVariable String category,
+                                                          @RequestParam(required = false) String page) {
+
+        try {
+            if (page == null) {
+                page = "0";
+            }
+            Pageable pageable = PageRequest.of(Integer.parseInt(page), 40);
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.findBooksByCategoryName(category, pageable)));
+        }
+        catch (NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
+        }
+
     }
 
 }

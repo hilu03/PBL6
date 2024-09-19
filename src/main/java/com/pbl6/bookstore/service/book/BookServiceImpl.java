@@ -1,9 +1,11 @@
 package com.pbl6.bookstore.service.book;
 
 import com.pbl6.bookstore.dao.BookRepository;
+import com.pbl6.bookstore.dao.CategoryRepository;
 import com.pbl6.bookstore.dto.BookDTO;
 import com.pbl6.bookstore.entity.Author;
 import com.pbl6.bookstore.entity.Book;
+import com.pbl6.bookstore.entity.Category;
 import com.pbl6.bookstore.entity.Target;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -21,11 +23,31 @@ public class BookServiceImpl implements BookService{
 
     private BookRepository bookRepository;
 
+    private CategoryRepository categoryRepository;
+
     private ModelMapper modelMapper;
 
-    public BookServiceImpl (BookRepository bookRepository, ModelMapper modelMapper) {
+    public BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository, ModelMapper modelMapper) {
         this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
         this.modelMapper = modelMapper;
+    }
+
+    public BookDTO convertToDTO(Book book) {
+        BookDTO bookDTO = modelMapper.map(book, BookDTO.class);
+        bookDTO.setCategory(book.getCategory().getName());
+
+        bookDTO.setAuthors(new ArrayList<>());
+        for (Author author: book.getAuthors()) {
+            bookDTO.addAuthor(author.getName());
+        }
+
+        bookDTO.setTargets(new ArrayList<>());
+        for (Target target: book.getTargets()) {
+            bookDTO.addTarget(target.getName());
+        }
+
+        return bookDTO;
     }
 
     @Override
@@ -48,20 +70,15 @@ public class BookServiceImpl implements BookService{
         return null;
     }
 
-    public BookDTO convertToDTO(Book book) {
-        BookDTO bookDTO = modelMapper.map(book, BookDTO.class);
-        bookDTO.setCategory(book.getCategory().getName());
+    @Override
+    public Page<BookDTO> findBooksByCategoryName(String categoryName, Pageable pageable) {
+        Category category = categoryRepository.findByName(categoryName);
 
-        bookDTO.setAuthors(new ArrayList<>());
-        for (Author author: book.getAuthors()) {
-            bookDTO.addAuthor(author.getName());
-        }
+        if (category == null) return null;
 
-        bookDTO.setTargets(new ArrayList<>());
-        for (Target target: book.getTargets()) {
-            bookDTO.addTarget(target.getName());
-        }
+        List<BookDTO> bookDTOList = category.getBooks().stream().map(this::convertToDTO).toList();
 
-        return bookDTO;
+        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
     }
+
 }
