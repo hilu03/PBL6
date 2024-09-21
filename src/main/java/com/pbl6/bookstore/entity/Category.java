@@ -21,6 +21,7 @@ public class Category {
                 cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                             CascadeType.MERGE, CascadeType.REFRESH},
                 fetch = FetchType.LAZY)
+    @JsonIgnore
     List<Book> books;
 
     public Category() {

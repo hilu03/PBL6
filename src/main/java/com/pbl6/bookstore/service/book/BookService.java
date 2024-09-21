@@ -1,16 +1,16 @@
 package com.pbl6.bookstore.service.book;
 
 import com.pbl6.bookstore.dto.BookDTO;
-import com.pbl6.bookstore.entity.Book;
+import com.pbl6.bookstore.dto.BookDetailDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
 public interface BookService {
 
-    Page<BookDTO> getBookPerPage(Pageable pageable);
+    Page<BookDetailDTO> getBookPerPage(Pageable pageable);
 
-    BookDTO findBookById(String id);
+    BookDetailDTO findBookById(String id);
 
     Page<BookDTO> findBooksByCategoryName(String categoryName, Pageable pageable);
 

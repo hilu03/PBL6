@@ -1,15 +1,13 @@
 package com.pbl6.bookstore.controller;
 
-import com.pbl6.bookstore.dto.BookDTO;
+import com.pbl6.bookstore.dto.BookDetailDTO;
 import com.pbl6.bookstore.response.APIResponse;
 import com.pbl6.bookstore.response.MessageResponse;
 import com.pbl6.bookstore.service.book.BookServiceImpl;
-import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -40,9 +38,9 @@ public class BookController {
 
     @GetMapping("/books/{bookID}")
     public ResponseEntity<APIResponse> findBookByID(@PathVariable String bookID) {
-        BookDTO bookDTO = bookService.findBookById(bookID);
-        if (bookDTO != null) {
-            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookDTO));
+        BookDetailDTO bookDetailDTO = bookService.findBookById(bookID);
+        if (bookDetailDTO != null) {
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookDetailDTO));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
     }
