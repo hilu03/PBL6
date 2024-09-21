@@ -1,7 +1,14 @@
 package com.pbl6.bookstore.controller;
 
+import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.entity.User;
-import com.pbl6.bookstore.service.user.UserService;
+import com.pbl6.bookstore.response.APIResponse;
+import com.pbl6.bookstore.response.MessageResponse;
+import com.pbl6.bookstore.service.user.UserServieceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +16,9 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private UserService userService;
+    private final UserServieceImpl userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserServieceImpl userService) {
         this.userService = userService;
     }
 
@@ -21,8 +28,14 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
-        return userService.save(user);
+    public ResponseEntity<APIResponse> addUser(@RequestBody User user) {
+        if (userService.findByEmail(user.getEmail()) == null) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            UserDTO userDTO = userService.save(user);
+            return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userDTO));
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new APIResponse(MessageResponse.USER_EXISTED, null));
     }
 
     @GetMapping("/user")
@@ -38,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
+    public UserDTO updateUser(@RequestBody User user) {
         return userService.save(user);
     }
 

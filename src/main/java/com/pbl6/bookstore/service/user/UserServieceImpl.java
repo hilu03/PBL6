@@ -1,6 +1,8 @@
 package com.pbl6.bookstore.service.user;
 
 import com.pbl6.bookstore.dao.UserRepository;
+import com.pbl6.bookstore.dto.Converter;
+import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +11,13 @@ import java.util.List;
 @Service
 public class UserServieceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserServieceImpl(UserRepository userRepository) {
+    private Converter<User, UserDTO> converter;
+
+    public UserServieceImpl(UserRepository userRepository, Converter<User, UserDTO> converter) {
         this.userRepository = userRepository;
+        this.converter = converter;
     }
 
     @Override
@@ -21,9 +26,9 @@ public class UserServieceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
+    public UserDTO save(User user) {
         userRepository.save(user);
-        return user;
+        return converter.mapEntityToDto(user, UserDTO.class);
     }
 
     @Override

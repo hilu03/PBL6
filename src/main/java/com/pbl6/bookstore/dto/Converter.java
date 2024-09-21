@@ -1,9 +1,11 @@
 package com.pbl6.bookstore.dto;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Converter<T, D> {
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public Converter(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
