@@ -1,5 +1,6 @@
 package com.pbl6.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class Target {
     @JoinTable(name = "booktarget",
             joinColumns = @JoinColumn(name = "TargetID"),
             inverseJoinColumns = @JoinColumn(name = "BookID"))
+    @JsonIgnore
     List<Book> books;
 
     public Target() {
