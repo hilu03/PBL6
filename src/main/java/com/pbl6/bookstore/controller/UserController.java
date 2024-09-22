@@ -7,6 +7,8 @@ import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.user.UserServieceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +25,12 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    List<User> findAll() {
-        return userService.findAll();
+    public ResponseEntity<APIResponse> findAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getName());
+        authentication.getAuthorities().forEach(System.out::println);
+
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, userService.findAll()));
     }
 
     @PostMapping("/sign-up")
@@ -36,18 +42,6 @@ public class UserController {
             return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userDTO));
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new APIResponse(MessageResponse.USER_EXISTED, null));
-    }
-
-    @GetMapping("/user")
-    public User findUserByEmail(@RequestParam(required = false) String email,
-                                @RequestParam(required = false) String username) {
-        if (email != null) {
-            return userService.findByEmail(email);
-        } else if (username != null) {
-            return userService.findByUsername(username);
-        }
-        // xử lý trường hợp không có tham số
-         return null;
     }
 
     @PutMapping("/users")

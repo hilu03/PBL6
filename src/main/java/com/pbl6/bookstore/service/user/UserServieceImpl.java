@@ -21,8 +21,8 @@ public class UserServieceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDTO> findAll() {
+        return userRepository.findAll().stream().map(user -> converter.mapEntityToDto(user, UserDTO.class)).toList();
     }
 
     @Override

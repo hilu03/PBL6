@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDTO> findAll();
 
     UserDTO save(User user);
 

@@ -15,7 +15,6 @@ import com.pbl6.bookstore.dto.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -51,7 +50,7 @@ public class LoginServiceImpl implements LoginService {
 
             if (passwordEncoder.matches(password, user.getPassword())) {
 
-                String token = generateToken(user.getEmail());
+                String token = generateToken(user);
 
                 LoginResponseDTO loginResponseDTO = converter.mapEntityToDto(user, LoginResponseDTO.class);
 
@@ -81,15 +80,16 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
-    private String generateToken(String email) {
+    private String generateToken(User user) {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(email)
+                .subject(user.getEmail())
                 .issuer("bookstore.pbl6.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now()
                         .plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .claim("scope", user.getRole())
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
