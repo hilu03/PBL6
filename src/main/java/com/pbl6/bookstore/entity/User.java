@@ -11,11 +11,8 @@ public class User {
     @Column(name = "UserID")
     private int id;
 
-    @Column(name = "Firstname")
-    private String firstName;
-
-    @Column(name = "Lastname")
-    private String lastName;
+    @Column(name = "FullName")
+    private String fullName;
 
     @Column(name = "PhoneNumber")
     private String phoneNumber;
@@ -36,11 +33,10 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String phoneNumber, String passWord, String role, String email, String username) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String fullName, String phoneNumber, String password, String role, String email, String username) {
+        this.fullName = fullName;
         this.phoneNumber = phoneNumber;
-        this.password = passWord;
+        this.password = password;
         this.role = role;
         this.email = email;
         this.username = username;
@@ -54,20 +50,12 @@ public class User {
         this.id = id;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhoneNumber() {
@@ -110,17 +98,4 @@ public class User {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", passWord='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                '}';
-    }
 }

@@ -27,7 +27,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping("/users")
+    @PostMapping("/sign-up")
     public ResponseEntity<APIResponse> addUser(@RequestBody User user) {
         if (userService.findByEmail(user.getEmail()) == null) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);

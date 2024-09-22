@@ -1,6 +1,5 @@
 package com.pbl6.bookstore.controller;
 
-import com.pbl6.bookstore.dto.BookDTO;
 import com.pbl6.bookstore.dto.BookDetailDTO;
 import com.pbl6.bookstore.response.APIResponse;
 import com.pbl6.bookstore.response.MessageResponse;

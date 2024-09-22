@@ -4,9 +4,7 @@ package com.pbl6.bookstore.dto;
 public class UserDTO {
     private int id;
 
-    private String firstName;
-
-    private String lastName;
+    private String fullName;
 
     private String phoneNumber;
 
@@ -20,10 +18,8 @@ public class UserDTO {
 
     }
 
-    public UserDTO(String firstName, int id, String lastName, String phoneNumber, String password, String role, String email, String username) {
-        this.firstName = firstName;
-        this.id = id;
-        this.lastName = lastName;
+    public UserDTO(String fullName, String phoneNumber, String role, String email, String username) {
+        this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.role = role;
         this.email = email;
@@ -38,20 +34,12 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhoneNumber() {
