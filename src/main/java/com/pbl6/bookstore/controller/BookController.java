@@ -1,5 +1,6 @@
 package com.pbl6.bookstore.controller;
 
+import com.pbl6.bookstore.dto.BookDTO;
 import com.pbl6.bookstore.dto.BookDetailDTO;
 import com.pbl6.bookstore.response.APIResponse;
 import com.pbl6.bookstore.response.MessageResponse;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
 
 @RestController
 public class BookController {
@@ -113,6 +115,16 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
         }
 
+    }
+
+    @GetMapping("books/hot-books")
+    public ResponseEntity<APIResponse> getHotBook() {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getHotBooks()));
+    }
+
+    @GetMapping("books/sale-books")
+    public ResponseEntity<APIResponse> getBestSellerBook() {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getSaleBooks()));
     }
 
 }

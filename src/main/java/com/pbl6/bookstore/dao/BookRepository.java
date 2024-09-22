@@ -19,4 +19,11 @@ public interface BookRepository extends JpaRepository<Book, String> {
     @Query("select b from Book b where b.category.name = :name")
     List<Book> findBooksByCategoryName(@Param("name") String name);
 
+
+    List<Book> findTop20ByOrderBySoldQuantityDesc();
+
+    // 20 cuốn théo discount
+    @Query(value = "SELECT * FROM book ORDER BY ((OriginalPrice - DiscountPrice) / OriginalPrice) DESC LIMIT 20", nativeQuery = true)
+    List<Book> findTop20ByDiscountDesc();
+
 }

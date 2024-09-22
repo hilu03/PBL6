@@ -100,4 +100,14 @@ public class BookServiceImpl implements BookService{
         return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
     }
 
+    @Override
+    public List<BookDTO> getHotBooks() {
+        return bookRepository.findTop20ByOrderBySoldQuantityDesc().stream().map(this::convertToBookDTO).toList();
+    }
+
+    @Override
+    public List<BookDTO> getSaleBooks() {
+        return bookRepository.findTop20ByDiscountDesc().stream().map(this::convertToBookDTO).toList();
+    }
+
 }
