@@ -1,6 +1,6 @@
-package com.pbl6.bookstore.dto;
+package com.pbl6.bookstore.dto.request;
 
-public class LoginDTO {
+public class LoginRequestDTO {
 
     private String email;
 

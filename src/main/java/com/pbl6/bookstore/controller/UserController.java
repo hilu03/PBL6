@@ -2,8 +2,8 @@ package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.entity.User;
-import com.pbl6.bookstore.response.APIResponse;
-import com.pbl6.bookstore.response.MessageResponse;
+import com.pbl6.bookstore.dto.response.APIResponse;
+import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.user.UserServieceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

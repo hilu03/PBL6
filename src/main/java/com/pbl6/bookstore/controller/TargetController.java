@@ -1,8 +1,7 @@
 package com.pbl6.bookstore.controller;
 
-import com.pbl6.bookstore.response.APIResponse;
-import com.pbl6.bookstore.response.MessageResponse;
-import com.pbl6.bookstore.service.target.TargetService;
+import com.pbl6.bookstore.dto.response.APIResponse;
+import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.target.TargetServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TargetController {
 
-    private TargetServiceImpl targetService;
+    private final TargetServiceImpl targetService;
 
     public TargetController(TargetServiceImpl targetService) {
         this.targetService = targetService;

@@ -1,8 +1,7 @@
 package com.pbl6.bookstore.controller;
 
-import com.pbl6.bookstore.response.APIResponse;
-import com.pbl6.bookstore.response.MessageResponse;
-import com.pbl6.bookstore.service.category.CategoryService;
+import com.pbl6.bookstore.dto.response.APIResponse;
+import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.category.CategoryServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

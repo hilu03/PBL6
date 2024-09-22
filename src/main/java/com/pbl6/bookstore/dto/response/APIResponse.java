@@ -1,4 +1,4 @@
-package com.pbl6.bookstore.response;
+package com.pbl6.bookstore.dto.response;
 
 public class APIResponse {
     private String message;

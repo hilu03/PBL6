@@ -1,8 +1,8 @@
 package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.dto.BookDetailDTO;
-import com.pbl6.bookstore.response.APIResponse;
-import com.pbl6.bookstore.response.MessageResponse;
+import com.pbl6.bookstore.dto.response.APIResponse;
+import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.book.BookServiceImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -116,12 +116,12 @@ public class BookController {
 
     }
 
-    @GetMapping("books/hot-books")
+    @GetMapping("/books/hot-books")
     public ResponseEntity<APIResponse> getHotBook() {
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getHotBooks()));
     }
 
-    @GetMapping("books/sale-books")
+    @GetMapping("/books/sale-books")
     public ResponseEntity<APIResponse> getBestSellerBook() {
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getSaleBooks()));
     }
