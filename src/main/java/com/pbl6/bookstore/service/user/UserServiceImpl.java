@@ -4,21 +4,22 @@ import com.pbl6.bookstore.dao.UserRepository;
 import com.pbl6.bookstore.dto.Converter;
 import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.entity.User;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServieceImpl implements UserService {
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    UserRepository userRepository;
 
-    private Converter<User, UserDTO> converter;
+    Converter<User, UserDTO> converter;
 
-    public UserServieceImpl(UserRepository userRepository, Converter<User, UserDTO> converter) {
-        this.userRepository = userRepository;
-        this.converter = converter;
-    }
 
     @Override
     public List<UserDTO> findAll() {

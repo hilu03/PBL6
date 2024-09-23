@@ -4,7 +4,10 @@ import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.entity.User;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
-import com.pbl6.bookstore.service.user.UserServieceImpl;
+import com.pbl6.bookstore.service.user.UserServiceImpl;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,22 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
 
-    private final UserServieceImpl userService;
-
-    public UserController(UserServieceImpl userService) {
-        this.userService = userService;
-    }
+    UserServiceImpl userService;
 
     @GetMapping("/users")
     public ResponseEntity<APIResponse> findAll() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
-        authentication.getAuthorities().forEach(System.out::println);
 
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, userService.findAll()));
     }

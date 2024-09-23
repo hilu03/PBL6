@@ -4,6 +4,9 @@ import com.pbl6.bookstore.dto.BookDetailDTO;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.book.BookServiceImpl;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,13 +16,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 
 @RestController
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookController {
 
-    private BookServiceImpl bookService;
-
-    public BookController(BookServiceImpl bookService) {
-        this.bookService = bookService;
-    }
+    BookServiceImpl bookService;
 
     @GetMapping("/books")
     public ResponseEntity<APIResponse> getBookPerPage(@RequestParam(required = false) String page) {

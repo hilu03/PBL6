@@ -7,6 +7,10 @@ import com.pbl6.bookstore.dto.BookDetailDTO;
 import com.pbl6.bookstore.entity.Author;
 import com.pbl6.bookstore.entity.Book;
 import com.pbl6.bookstore.entity.Target;
+import lombok.AccessLevel;
+
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,20 +23,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookServiceImpl implements BookService{
 
-    private BookRepository bookRepository;
+    BookRepository bookRepository;
 
-    private TargetRepository targetRepository;
+    TargetRepository targetRepository;
 
-    private ModelMapper modelMapper;
+    ModelMapper modelMapper;
 
-    public BookServiceImpl(BookRepository bookRepository,
-                           TargetRepository targetRepository, ModelMapper modelMapper) {
-        this.bookRepository = bookRepository;
-        this.targetRepository = targetRepository;
-        this.modelMapper = modelMapper;
-    }
 
     public BookDetailDTO convertToBookDetailDTO(Book book) {
         BookDetailDTO bookDetailDTO = modelMapper.map(book, BookDetailDTO.class);

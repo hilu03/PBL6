@@ -4,6 +4,9 @@ import com.pbl6.bookstore.dto.request.LoginRequestDTO;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.login.LoginServiceImpl;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LoginController {
-    private final LoginServiceImpl loginService;
-
-    public LoginController(LoginServiceImpl loginService) {
-        this.loginService = loginService;
-    }
+    LoginServiceImpl loginService;
 
     @PostMapping("/login")
     public ResponseEntity<APIResponse> checkLogin(@RequestBody LoginRequestDTO loginRequestDTO) {

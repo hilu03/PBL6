@@ -1,155 +1,52 @@
 package com.pbl6.bookstore.dto;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookDetailDTO {
-    private String id;
+    String id;
 
-    private String title;
+    String title;
 
-    private Date datePublish;
+    Date datePublish;
 
-    private String description;
+    String description;
 
-    private BigDecimal originalPrice;
+    BigDecimal originalPrice;
 
-    private BigDecimal discountedPrice;
+    BigDecimal discountedPrice;
 
-    private String imageLink;
+    String imageLink;
 
-    private int soldQuantity;
+    int soldQuantity;
 
-    private Integer availableQuantity;
+    Integer availableQuantity;
 
-    private Integer pages;
+    Integer pages;
 
-    private String cover;
+    String cover;
 
-    private String dimension;
+    String dimension;
 
-    private String category;
+    String category;
 
-    private List<String> authors;
+    List<String> authors;
 
-    private List<String> targets;
+    List<String> targets;
 
-    public BookDetailDTO() {
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getDatePublish() {
-        return datePublish;
-    }
-
-    public void setDatePublish(Date datePublish) {
-        this.datePublish = datePublish;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(BigDecimal originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public BigDecimal getDiscountedPrice() {
-        return discountedPrice;
-    }
-
-    public void setDiscountedPrice(BigDecimal discountedPrice) {
-        this.discountedPrice = discountedPrice;
-    }
-
-    public String getImageLink() {
-        return imageLink;
-    }
-
-    public void setImageLink(String imageLink) {
-        this.imageLink = imageLink;
-    }
-
-    public int getSoldQuantity() {
-        return soldQuantity;
-    }
-
-    public void setSoldQuantity(int soldQuantity) {
-        this.soldQuantity = soldQuantity;
-    }
-
-    public Integer getAvailableQuantity() {
-        return availableQuantity;
-    }
-
-    public void setAvailableQuantity(Integer availableQuantity) {
-        this.availableQuantity = availableQuantity;
-    }
-
-    public Integer getPages() {
-        return pages;
-    }
-
-    public void setPages(Integer pages) {
-        this.pages = pages;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public String getDimension() {
-        return dimension;
-    }
-
-    public void setDimension(String dimension) {
-        this.dimension = dimension;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public List<String> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
+    public void addTarget(String target) {
+        if (targets == null) {
+            targets = new ArrayList<>();
+        }
+        targets.add(target);
     }
 
     public void addAuthor(String author) {
@@ -157,21 +54,6 @@ public class BookDetailDTO {
             authors = new ArrayList<>();
         }
         authors.add(author);
-    }
-
-    public List<String> getTargets() {
-        return targets;
-    }
-
-    public void setTargets(List<String> targets) {
-        this.targets = targets;
-    }
-
-    public void addTarget(String target) {
-        if (targets == null) {
-            targets = new ArrayList<>();
-        }
-        targets.add(target);
     }
 
 }

@@ -12,6 +12,9 @@ import com.pbl6.bookstore.dto.response.IntrospectResponse;
 import com.pbl6.bookstore.dto.response.LoginResponseDTO;
 import com.pbl6.bookstore.entity.User;
 import com.pbl6.bookstore.dto.response.MessageResponse;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,19 +26,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoginServiceImpl implements LoginService {
 
-    private UserRepository userRepository;
+    final UserRepository userRepository;
 
-    private Converter<User, LoginResponseDTO> converter;
+    final Converter<User, LoginResponseDTO> converter;
 
     @Value("${jwt.signerKey}")
-    private String SIGNER_KEY;
-
-    public LoginServiceImpl(UserRepository userRepository, Converter<User, LoginResponseDTO> converter) {
-        this.userRepository = userRepository;
-        this.converter = converter;
-    }
+    String SIGNER_KEY;
 
     @Override
     public LoginResponseDTO checkLogin(String email, String password) {
