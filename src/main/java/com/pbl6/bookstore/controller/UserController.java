@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +23,6 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<APIResponse> findAll() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, userService.findAll()));
     }
 
@@ -41,10 +37,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new APIResponse(MessageResponse.USER_EXISTED, null));
     }
 
-    @PutMapping("/users")
-    public UserDTO updateUser(@RequestBody User user) {
-        return userService.save(user);
+    @GetMapping("/my-info")
+    public ResponseEntity<APIResponse> getMyInfo() {
+        try {
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, userService.getMyInfo()));
+        }
+        catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
+        }
     }
+
+//    @PutMapping("/users")
+//    public UserDTO updateUser(@RequestBody UserDTO userDTO) {
+//        return userService.save(user);
+//    }
+
 
 
 }

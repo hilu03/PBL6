@@ -13,5 +13,7 @@ public class MessageResponse {
     public static final String USER_NOT_FOUND = "User not found!";
     public static final String SIGNUP_SUCCESS = "Sign up successfully!";
     public static final String VALID_TOKEN = "Valid token!";
-    public static final String UNAUTHORIZE = "Unauthorize!";
+    public static final String UNAUTHENTICATED = "Unauthenticated request!";
+    public static final String SERVER_ERROR = "Unknown error!";
+    public static final String DENIED_PERMISSION = "Permission denied!";
 }
