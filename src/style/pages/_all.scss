@@ -1,0 +1,58 @@
+@use "sass:map";
+@import "theme.scss";
+@import "responsive";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
+
+html,
+body {
+    margin: 0;
+}
+
+* {
+    font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0 !important; 
+}
+
+
+.container1 {
+    max-width: 1170px;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    // background: map.get($theme_colors, "main");
+    margin: auto;
+}
+
+.row1 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// Chia chiều rộng thành 2 cột
+.col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+// @include Responsive ($DESKTOP) {
+    .col-xl-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .col-xl-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+// }

@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .image-slider-container {
+    width: 1298px;
+    margin: 0 auto;
+    position: relative;
+    // overflow: hidden;
+  }
+  
+  .image-slider-container .slick-slide img {
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .image-slider-container .slick-prev:before,
+  .image-slider-container .slick-next:before {
+    color: black;
+  }
+  
