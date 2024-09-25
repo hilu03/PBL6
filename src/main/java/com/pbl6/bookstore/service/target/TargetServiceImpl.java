@@ -1,6 +1,6 @@
 package com.pbl6.bookstore.service.target;
 
-import com.pbl6.bookstore.dao.TargetRepository;
+import com.pbl6.bookstore.repository.TargetRepository;
 import com.pbl6.bookstore.entity.Target;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

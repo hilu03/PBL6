@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 @Slf4j
@@ -22,8 +23,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AccessDeniedException.class)
     ResponseEntity<APIResponse> handleAccessDeniedException(AccessDeniedException exception) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new APIResponse(MessageResponse.DENIED_PERMISSION, null));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new APIResponse(MessageResponse.DENIED_PERMISSION, null));
     }
 
+    @ExceptionHandler(value = AppException.class)
+    ResponseEntity<APIResponse> handleAppException(AppException exception) {
+        return ResponseEntity.status(exception.getErrorCode().getHttpStatusCode())
+                .body(new APIResponse(exception.getErrorCode().getMessage(), null));
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<APIResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+
+        return ResponseEntity.status(ErrorCode.WRONG_VARIABLE_TYPE.getHttpStatusCode())
+                .body(new APIResponse(ErrorCode.WRONG_VARIABLE_TYPE.getMessage(), null));
+    }
 
 }

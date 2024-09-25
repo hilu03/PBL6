@@ -1,4 +1,4 @@
-package com.pbl6.bookstore.dao;
+package com.pbl6.bookstore.repository;
 
 import com.pbl6.bookstore.entity.Book;
 import com.pbl6.bookstore.entity.Target;

@@ -1,6 +1,6 @@
 package com.pbl6.bookstore.service.category;
 
-import com.pbl6.bookstore.dao.CategoryRepository;
+import com.pbl6.bookstore.repository.CategoryRepository;
 import com.pbl6.bookstore.entity.Category;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

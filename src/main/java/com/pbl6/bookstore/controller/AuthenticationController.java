@@ -1,9 +1,11 @@
 package com.pbl6.bookstore.controller;
 
+import com.nimbusds.jose.JOSEException;
 import com.pbl6.bookstore.dto.request.LoginRequestDTO;
+import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
-import com.pbl6.bookstore.service.login.LoginServiceImpl;
+import com.pbl6.bookstore.service.authentication.AuthenticationServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,11 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class LoginController {
-    LoginServiceImpl loginService;
+public class AuthenticationController {
+    AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/login")
     public ResponseEntity<APIResponse> checkLogin(@RequestBody LoginRequestDTO loginRequestDTO) {
@@ -25,7 +29,7 @@ public class LoginController {
 
             return ResponseEntity.ok(new APIResponse(
                     MessageResponse.LOGIN_SUCCESS,
-                    loginService.checkLogin(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()))
+                    authenticationService.checkLogin(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()))
             );
         }
         catch (RuntimeException e) {
@@ -35,19 +39,12 @@ public class LoginController {
 
     }
 
-//    @PostMapping("/introspect")
-//    public ResponseEntity<APIResponse> introspect(@RequestBody IntrospectRequest request) {
-//        try {
-//            if (loginService.introspect(request).isValid()) {
-//                return ResponseEntity.ok(new APIResponse(MessageResponse.VALID_TOKEN,
-//                        loginService.introspect(request)));
-//            }
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
-//                    body(new APIResponse(MessageResponse.UNAUTHORIZE, null));
-//
-//        } catch (JOSEException | ParseException e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
-//                    body(new APIResponse(MessageResponse.UNAUTHORIZE, null));
-//        }
-//    }
+    @PostMapping("/log-out")
+    public ResponseEntity<APIResponse> logout(@RequestBody LogoutRequestDTO logoutRequestDTO)
+            throws ParseException, JOSEException {
+        authenticationService.logout(logoutRequestDTO);
+        return ResponseEntity.ok(new APIResponse(
+                MessageResponse.LOGOUT_SUCCESS,
+                null));
+    }
 }

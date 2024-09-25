@@ -1,11 +1,16 @@
-package com.pbl6.bookstore.service.login;
+package com.pbl6.bookstore.service.authentication;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.pbl6.bookstore.dao.UserRepository;
+import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
+import com.pbl6.bookstore.entity.InvalidatedToken;
+import com.pbl6.bookstore.exception.AppException;
+import com.pbl6.bookstore.exception.ErrorCode;
+import com.pbl6.bookstore.repository.InvalidatedTokenRepository;
+import com.pbl6.bookstore.repository.UserRepository;
 import com.pbl6.bookstore.dto.Converter;
 import com.pbl6.bookstore.dto.request.IntrospectRequest;
 import com.pbl6.bookstore.dto.response.IntrospectResponse;
@@ -24,15 +29,18 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LoginServiceImpl implements LoginService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     final UserRepository userRepository;
 
     final Converter<User, LoginResponseDTO> converter;
+
+    final InvalidatedTokenRepository invalidatedTokenRepository;
 
     @Value("${jwt.signerKey}")
     String SIGNER_KEY;
@@ -67,17 +75,35 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+    public void logout(LogoutRequestDTO logoutRequestDTO) throws ParseException, JOSEException {
+        SignedJWT signedJWT = verifyToken(logoutRequestDTO.getToken());
+        String jwtID = signedJWT.getJWTClaimsSet().getJWTID();
+        Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                .id(jwtID)
+                .expirationTime(expirationTime)
+                .build();
+        invalidatedTokenRepository.save(invalidatedToken);
+    }
 
-            JWSVerifier jwsVerifier = new MACVerifier(SIGNER_KEY.getBytes());
+    private SignedJWT verifyToken(String token) throws JOSEException, ParseException {
+        JWSVerifier jwsVerifier = new MACVerifier(SIGNER_KEY.getBytes());
 
-            SignedJWT signedJWT = SignedJWT.parse(request.getToken());
+        SignedJWT signedJWT = SignedJWT.parse(token);
 
-            Date expireTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date expireTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
-            return new IntrospectResponse(expireTime.after(new Date()) && signedJWT.verify(jwsVerifier));
+        boolean verified = signedJWT.verify(jwsVerifier);
 
+        if (!(expireTime.after(new Date()) && verified)) {
+            throw new AppException(ErrorCode.DENIED_PERMISSION);
+        }
 
+        if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID())) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        }
+
+        return signedJWT;
     }
 
     private String generateToken(User user) {
@@ -89,6 +115,7 @@ public class LoginServiceImpl implements LoginService {
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now()
                         .plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .jwtID(UUID.randomUUID().toString())
                 .claim("scope", user.getRole())
                 .build();
 
@@ -102,6 +129,15 @@ public class LoginServiceImpl implements LoginService {
         } catch (JOSEException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    @Override
+    public IntrospectResponse introspect(String token) throws JOSEException, ParseException {
+
+        verifyToken(token);
+
+        return new IntrospectResponse(true);
     }
 
 

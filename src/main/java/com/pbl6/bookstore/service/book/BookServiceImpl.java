@@ -1,7 +1,7 @@
 package com.pbl6.bookstore.service.book;
 
-import com.pbl6.bookstore.dao.BookRepository;
-import com.pbl6.bookstore.dao.TargetRepository;
+import com.pbl6.bookstore.repository.BookRepository;
+import com.pbl6.bookstore.repository.TargetRepository;
 import com.pbl6.bookstore.dto.BookDTO;
 import com.pbl6.bookstore.dto.BookDetailDTO;
 import com.pbl6.bookstore.entity.Author;
@@ -109,5 +109,11 @@ public class BookServiceImpl implements BookService{
     public List<BookDTO> getSaleBooks() {
         return bookRepository.findTop20ByDiscountDesc().stream().map(this::convertToBookDTO).toList();
     }
+
+//    @Override
+//    public Book addBook(BookDetailDTO book) {
+//
+//        return null;
+//    }
 
 }

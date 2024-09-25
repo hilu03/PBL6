@@ -3,6 +3,8 @@ package com.pbl6.bookstore.controller;
 import com.pbl6.bookstore.dto.BookDetailDTO;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
+import com.pbl6.bookstore.exception.AppException;
+import com.pbl6.bookstore.exception.ErrorCode;
 import com.pbl6.bookstore.service.book.BookServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +36,7 @@ public class BookController {
             return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getBookPerPage(pageWithFortyBooks)));
         }
         catch (NumberFormatException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
+            throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
         }
     }
 
@@ -44,7 +46,7 @@ public class BookController {
         if (bookDetailDTO != null) {
             return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookDetailDTO));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
+        throw new AppException(ErrorCode.RESOURCE_NOT_FOUND);
     }
 
     @GetMapping("/books/category-name/{category}")
@@ -58,7 +60,7 @@ public class BookController {
             return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.findBooksByCategoryName(category, pageable)));
         }
         catch (NumberFormatException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
+            throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
         }
     }
 
@@ -70,18 +72,12 @@ public class BookController {
                 page = "0";
             }
             Pageable pageable = PageRequest.of(Integer.parseInt(page), 40);
-            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.findBooksByCategoryID(id, pageable)));
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                    bookService.findBooksByCategoryID(id, pageable)));
         }
         catch (NumberFormatException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
+            throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
         }
-    }
-
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<APIResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new APIResponse(ex.getMessage(), null));
     }
 
     @GetMapping("/books/target-name/{target}")

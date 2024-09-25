@@ -1,6 +1,6 @@
 package com.pbl6.bookstore.service.user;
 
-import com.pbl6.bookstore.dao.UserRepository;
+import com.pbl6.bookstore.repository.UserRepository;
 import com.pbl6.bookstore.dto.Converter;
 import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.dto.response.MessageResponse;
