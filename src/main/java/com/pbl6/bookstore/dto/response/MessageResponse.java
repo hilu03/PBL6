@@ -9,6 +9,7 @@ public class MessageResponse {
     public static String LOGIN_SUCCESS = "Log in successfully!";
     public static String LOGOUT_SUCCESS = "Log out successfully!";
     public static String SIGNUP_SUCCESS = "Sign up successfully!";
+    public static String TOKEN_REFRESH = "Token has been refreshed!";
     public static String VALID_TOKEN = "Valid token!";
 
     public static String UNAUTHENTICATED = "Unauthenticated request!";

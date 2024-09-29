@@ -1,7 +1,6 @@
 package com.pbl6.bookstore.config;
 
 import com.nimbusds.jose.JOSEException;
-import com.pbl6.bookstore.dto.request.IntrospectRequest;
 import com.pbl6.bookstore.service.authentication.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

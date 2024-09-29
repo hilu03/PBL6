@@ -6,13 +6,13 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
+import com.pbl6.bookstore.dto.request.RefreshRequestDTO;
 import com.pbl6.bookstore.entity.InvalidatedToken;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
 import com.pbl6.bookstore.repository.InvalidatedTokenRepository;
 import com.pbl6.bookstore.repository.UserRepository;
 import com.pbl6.bookstore.dto.Converter;
-import com.pbl6.bookstore.dto.request.IntrospectRequest;
 import com.pbl6.bookstore.dto.response.IntrospectResponse;
 import com.pbl6.bookstore.dto.response.LoginResponseDTO;
 import com.pbl6.bookstore.entity.User;
@@ -20,6 +20,8 @@ import com.pbl6.bookstore.dto.response.MessageResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,19 +33,29 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    final UserRepository userRepository;
+    UserRepository userRepository;
 
-    final Converter<User, LoginResponseDTO> converter;
+    Converter<User, LoginResponseDTO> converter;
 
-    final InvalidatedTokenRepository invalidatedTokenRepository;
+    InvalidatedTokenRepository invalidatedTokenRepository;
 
+    @NonFinal
     @Value("${jwt.signerKey}")
     String SIGNER_KEY;
+
+    @NonFinal
+    @Value("${jwt.tokenDuration}")
+    long TOKEN_DURATION;
+
+    @NonFinal
+    @Value("${jwt.tokenDuration}")
+    long REFRESHABLE_DURATION;
 
     @Override
     public LoginResponseDTO checkLogin(String email, String password) {
@@ -76,22 +88,33 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void logout(LogoutRequestDTO logoutRequestDTO) throws ParseException, JOSEException {
-        SignedJWT signedJWT = verifyToken(logoutRequestDTO.getToken());
-        String jwtID = signedJWT.getJWTClaimsSet().getJWTID();
-        Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
-        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
-                .id(jwtID)
-                .expirationTime(expirationTime)
-                .build();
-        invalidatedTokenRepository.save(invalidatedToken);
+        // use try catch to make logout always return code 200 to client
+        try {
+            SignedJWT signedJWT = verifyToken(logoutRequestDTO.getToken(), true); // true because when logout token can't be refresh later
+            String jwtID = signedJWT.getJWTClaimsSet().getJWTID();
+            Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+            InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                    .id(jwtID)
+                    .expirationTime(expirationTime)
+                    .build();
+            invalidatedTokenRepository.save(invalidatedToken);
+        }
+        catch (AppException exception) {
+            log.error("Token already expired!");
+        }
+
     }
 
-    private SignedJWT verifyToken(String token) throws JOSEException, ParseException {
+    private SignedJWT verifyToken(String token, boolean isRefresh) throws JOSEException, ParseException {
         JWSVerifier jwsVerifier = new MACVerifier(SIGNER_KEY.getBytes());
 
         SignedJWT signedJWT = SignedJWT.parse(token);
 
-        Date expireTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date expireTime = (isRefresh)
+                ? new Date(signedJWT.getJWTClaimsSet().getIssueTime()
+                    .toInstant().plus(REFRESHABLE_DURATION, ChronoUnit.HOURS)
+                    .toEpochMilli())
+                : signedJWT.getJWTClaimsSet().getExpirationTime();
 
         boolean verified = signedJWT.verify(jwsVerifier);
 
@@ -114,7 +137,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .issuer("bookstore.pbl6.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now()
-                        .plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                        .plus(TOKEN_DURATION, ChronoUnit.HOURS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", user.getRole())
                 .build();
@@ -135,9 +158,32 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public IntrospectResponse introspect(String token) throws JOSEException, ParseException {
 
-        verifyToken(token);
+        verifyToken(token, false);
 
         return new IntrospectResponse(true);
+    }
+
+    @Override
+    public RefreshRequestDTO refreshToken(RefreshRequestDTO request)
+            throws ParseException, JOSEException {
+        SignedJWT signedJWT = verifyToken(request.getToken(), true);
+
+        // invalidate old token
+        String jwtID = signedJWT.getJWTClaimsSet().getJWTID();
+        Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                .id(jwtID)
+                .expirationTime(expirationTime)
+                .build();
+        invalidatedTokenRepository.save(invalidatedToken);
+
+        User user = userRepository.findByEmail(signedJWT.getJWTClaimsSet().getSubject());
+
+        String token = generateToken(user);
+
+        return RefreshRequestDTO.builder()
+                .token(token)
+                .build();
     }
 
 

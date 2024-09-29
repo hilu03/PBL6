@@ -1,5 +1,10 @@
 package com.pbl6.bookstore.dto.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class IntrospectResponse {
     private boolean valid;
 
@@ -7,11 +12,4 @@ public class IntrospectResponse {
         this.valid = valid;
     }
 
-    public boolean isValid() {
-        return valid;
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
-    }
 }

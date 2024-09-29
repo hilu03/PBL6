@@ -3,6 +3,7 @@ package com.pbl6.bookstore.controller;
 import com.nimbusds.jose.JOSEException;
 import com.pbl6.bookstore.dto.request.LoginRequestDTO;
 import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
+import com.pbl6.bookstore.dto.request.RefreshRequestDTO;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.authentication.AuthenticationServiceImpl;
@@ -46,5 +47,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(new APIResponse(
                 MessageResponse.LOGOUT_SUCCESS,
                 null));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<APIResponse> refreshToken(@RequestBody RefreshRequestDTO request)
+            throws ParseException, JOSEException {
+        return ResponseEntity.ok(new APIResponse(
+                MessageResponse.TOKEN_REFRESH,
+                authenticationService.refreshToken(request)));
     }
 }
