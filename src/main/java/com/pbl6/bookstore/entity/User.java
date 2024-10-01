@@ -1,11 +1,13 @@
 package com.pbl6.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -32,18 +34,5 @@ public class User {
 
     @Column(name = "Username")
     private String username;
-
-    public User() {
-
-    }
-
-    public User(String fullName, String phoneNumber, String password, String role, String email, String username) {
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.role = role;
-        this.email = email;
-        this.username = username;
-    }
 
 }

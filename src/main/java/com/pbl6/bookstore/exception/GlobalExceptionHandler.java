@@ -2,6 +2,7 @@ package com.pbl6.bookstore.exception;
 
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,13 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(ErrorCode.WRONG_VARIABLE_TYPE.getHttpStatusCode())
                 .body(new APIResponse(ErrorCode.WRONG_VARIABLE_TYPE.getMessage(), null));
+    }
+
+    @ExceptionHandler(FeignException.BadRequest.class)
+    public ResponseEntity<APIResponse> handleInvalidGrantException(FeignException.BadRequest e) {
+
+        return ResponseEntity.status(ErrorCode.INVALID_GRANT.getHttpStatusCode())
+                .body(new APIResponse(ErrorCode.INVALID_GRANT.getMessage(), null));
     }
 
 }

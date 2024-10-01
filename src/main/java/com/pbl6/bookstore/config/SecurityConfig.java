@@ -9,14 +9,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +35,8 @@ public class SecurityConfig {
             "/sign-up",
             "/login",
             "/log-out",
-            "/refresh"
+            "/refresh",
+            "/login/google"
     };
 
     @Value("${jwt.signerKey}")
@@ -50,8 +47,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity.cors(cors -> cors.configurationSource(corsConfigurationSource()))
         httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
+                request.requestMatchers(HttpMethod.OPTIONS).permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                         .anyRequest().authenticated());
 

@@ -14,7 +14,8 @@ public enum ErrorCode {
     USER_EXISTED(MessageResponse.USER_EXISTED, HttpStatus.CONFLICT),
     UNAUTHENTICATED(MessageResponse.UNAUTHENTICATED, HttpStatus.UNAUTHORIZED),
     DENIED_PERMISSION(MessageResponse.DENIED_PERMISSION, HttpStatus.FORBIDDEN),
-    WRONG_VARIABLE_TYPE(MessageResponse.WRONG_VARIABLE_TYPE, HttpStatus.BAD_REQUEST)
+    WRONG_VARIABLE_TYPE(MessageResponse.WRONG_VARIABLE_TYPE, HttpStatus.BAD_REQUEST),
+    INVALID_GRANT(MessageResponse.INVALID_GRANT, HttpStatus.BAD_REQUEST)
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {

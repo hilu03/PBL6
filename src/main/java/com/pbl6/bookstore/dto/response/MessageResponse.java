@@ -21,4 +21,5 @@ public class MessageResponse {
     public static String USER_NOT_FOUND = "User not found!";
     public static String LOGIN_FAIL = "Log in failed!";
     public static String WRONG_VARIABLE_TYPE = "Passing wrong type of variable!";
+    public static String INVALID_GRANT = "Invalid code!";
 }

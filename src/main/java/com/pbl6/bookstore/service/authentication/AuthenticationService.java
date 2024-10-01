@@ -18,4 +18,6 @@ public interface AuthenticationService {
     IntrospectResponse introspect(String token) throws JOSEException, ParseException;
 
     RefreshRequestDTO refreshToken(RefreshRequestDTO request) throws ParseException, JOSEException;
+
+    LoginResponseDTO loginWithGoogle(String code);
 }

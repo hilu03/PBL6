@@ -5,6 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.pbl6.bookstore.dto.request.ExchangeTokenRequestDTO;
 import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
 import com.pbl6.bookstore.dto.request.RefreshRequestDTO;
 import com.pbl6.bookstore.entity.InvalidatedToken;
@@ -17,6 +18,8 @@ import com.pbl6.bookstore.dto.response.IntrospectResponse;
 import com.pbl6.bookstore.dto.response.LoginResponseDTO;
 import com.pbl6.bookstore.entity.User;
 import com.pbl6.bookstore.dto.response.MessageResponse;
+import com.pbl6.bookstore.repository.fiegnclient.GoogleAuthClient;
+import com.pbl6.bookstore.repository.fiegnclient.GoogleUserInfoClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -45,17 +48,36 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     InvalidatedTokenRepository invalidatedTokenRepository;
 
+    GoogleAuthClient googleAuthClient;
+
+    GoogleUserInfoClient googleUserInfoClient;
+
     @NonFinal
     @Value("${jwt.signerKey}")
     String SIGNER_KEY;
 
     @NonFinal
-    @Value("${jwt.tokenDuration}")
+    @Value("${jwt.token-duration}")
     long TOKEN_DURATION;
 
     @NonFinal
-    @Value("${jwt.tokenDuration}")
+    @Value("${jwt.refreshable-duration}")
     long REFRESHABLE_DURATION;
+
+    @NonFinal
+    @Value("${google.auth.web.client-id}")
+    String WEB_CLIENT_ID;
+
+    @NonFinal
+    @Value("${google.auth.web.client-secret}")
+    String WEB_CLIENT_SECRET;
+
+    @NonFinal
+    @Value("${google.auth.web.redirect-uri}")
+    String WEB_REDIRECT_URI;
+
+    @NonFinal
+    String WEB_GRANT_TYPE = "authorization_code";
 
     @Override
     public LoginResponseDTO checkLogin(String email, String password) {
@@ -183,6 +205,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return RefreshRequestDTO.builder()
                 .token(token)
+                .build();
+    }
+
+    @Override
+    public LoginResponseDTO loginWithGoogle(String code) {
+        var response = googleAuthClient.exchangeToken(ExchangeTokenRequestDTO.builder()
+                        .code(code)
+                        .clientId(WEB_CLIENT_ID)
+                        .clientSecret(WEB_CLIENT_SECRET)
+                        .redirectUri(WEB_REDIRECT_URI)
+                        .grantType(WEB_GRANT_TYPE)
+                .build());
+
+        var userInfo = googleUserInfoClient.getUserInfo("json", response.getAccessToken());
+
+        User user = userRepository.findByEmail(userInfo.getEmail());
+
+        if (user == null) {
+            user = User.builder()
+                    .email(userInfo.getEmail())
+                    .fullName(userInfo.getName())
+                    .role("user")
+                    .build();
+            userRepository.save(user);
+        }
+
+        String token = generateToken(user);
+
+        return LoginResponseDTO.builder()
+                .token(token)
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .role(user.getRole())
                 .build();
     }
 
