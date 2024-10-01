@@ -1,0 +1,151 @@
+.product-container {
+  border: 1px solid #5E2E86;
+  border-radius: 7px;
+  display: flex;
+}
+
+.quantity {
+  margin-left: 17px !important;
+  margin: 0;
+}
+
+
+
+
+
+.quantity Button {
+  min-width: 25px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.quantity input {
+      // margin-left: 5px;
+      outline: none;
+      border: 0px;
+      background: #5E2E86;
+      border-radius: 5px;
+      width: 25px;
+      color: white;
+      font-size: 16px;
+      text-align: center;
+}
+
+.price span {
+font-size: 17px;
+padding-left: 37px;
+color: #5E2E86;
+margin: 0 !important;
+display: flex;
+  justify-content: space-between; /* Đẩy phần tử span sang bên phải */
+  align-items: center; 
+}
+
+
+.product-infor {
+  display: flex;
+  align-items: center;
+}
+
+.select-all {
+  font-size: 18px; /* Tăng kích thước chữ */
+  color: #5E2E86; /* Màu tím */
+  font-weight: 700;
+}
+
+.first_checkbox {
+  margin-right: 10px;
+  // margin-top: 10px;
+  // padding: 5px;
+  padding-top: 4px;
+  transform: scale(1.5);
+}
+
+.checkbox {
+  translate: 0px 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.product-item {
+  margin-bottom: 15px;
+}
+
+.title {
+  width: 400px;
+  margin-top: -18px;
+  margin-left: 10px;
+}
+
+//  button.remove{
+//   background: transparent;
+//   border: none;
+//   font-size: 25px;
+//   cursor: pointer;
+// }
+
+.sl {
+  margin-left: 322px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #5e2e86;
+}
+.total {
+  margin-left: 47px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #5e2e86;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.test {
+  padding-top: 170px;
+  padding-left: 30px;
+
+}
+
+.test .roww {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Khoảng cách giữa các dòng */
+}
+
+.test .roww span {
+  font-size: 20px; /* Kích thước chữ có thể điều chỉnh tùy ý */
+}
+
+hr {
+  margin: 20px 0;
+  border: none;
+  border: 2px solid #4A246A;
+}
+
+button.btn {
+  margin-top: 30px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #5E2E86; /* Màu nền #5E2E86 */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 650;
+}
+
+button.btn:hover {
+  border: 5px solid #5E2E86; /* Viền hiển thị khi hover */
+  background-color: white; /* Thay đổi màu nền khi hover, nếu cần */
+  color: #5E2E86; /* Thay đổi màu chữ khi hover, nếu cần */
+  border-radius: 10px; /* Giữ nguyên bo tròn các góc */
+  font-size: 23px;
+}

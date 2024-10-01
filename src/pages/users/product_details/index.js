@@ -22,6 +22,10 @@ const ProductDetails = () => {
   const [quantityValue, setQuantityValue] = useState(1);
   const [estimateValue, setEstimateValue] = useState(0);
 
+  const handleAddToCart = async (e) => {
+   
+  };
+
   useEffect(() => {
     const fetchBookDetails = async () => {
       const bookData = await getBookByID(id);
@@ -197,7 +201,7 @@ const ProductDetails = () => {
               </div>
 
               <div className="buy d-flex align-items-center mt-3">
-                <Button className="addToCart">Thêm vào giỏ hàng</Button>
+                <Button className="addToCart" onClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
                 <Button className="addToOrder">Mua ngay cho nóng</Button>
               </div>
             </div>

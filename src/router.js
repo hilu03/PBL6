@@ -7,6 +7,7 @@ import BestSellerBooks from 'component/user/best_seller';
 import LoginForm from 'component/user/LoginRegister';
 import RegisterForm from 'component/user/Register/RegisterForm';
 import ProductDetails from 'pages/users/product_details';
+import CartItems from 'pages/users/cartItems';
 
 const renderUserRouter = () => {
     const userRouters = [
@@ -43,6 +44,11 @@ const renderUserRouter = () => {
         {
             path: ROUTERS.USER.PRODUCT_DETAILS,
             component: <ProductDetails/>
+        },
+
+        {
+            path: ROUTERS.USER.CARTITEMS,
+            component: <CartItems/>
         },
     ]
 
