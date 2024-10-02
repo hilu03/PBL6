@@ -75,29 +75,43 @@ public class BookServiceImpl implements BookService{
 
     }
 
-    @Override
-    public Page<BookDTO> findBooksByCategoryName(String categoryName, Pageable pageable) {
-        List<BookDTO> bookDTOList = bookRepository.findBooksByCategoryName(categoryName).stream().map(this::convertToBookDTO).toList();
-        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
-    }
+//    @Override
+//    public Page<BookDTO> findBooksByCategoryName(String categoryName, Pageable pageable) {
+//        List<BookDTO> bookDTOList = bookRepository.findBooksByCategoryName(categoryName).stream().map(this::convertToBookDTO).toList();
+//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+//    }
 
     @Override
     public Page<BookDTO> findBooksByCategoryID(int id, Pageable pageable) {
-        List<BookDTO> bookDTOList = bookRepository.findBooksByCategoryID(id).stream().map(this::convertToBookDTO).toList();
-        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+        Page<Book> books = bookRepository.findAllByCategoryID(id, pageable);
+
+        List<BookDTO> bookDetailDTOList = books.getContent().stream()
+                .map(this::convertToBookDTO)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(bookDetailDTOList, pageable, books.getTotalElements());
     }
 
-    @Override
-    public Page<BookDTO> findBooksByTargetName(String targetName, Pageable pageable) {
-
-        List<BookDTO> bookDTOList = targetRepository.findBooksByTargetName(targetName).stream().map(this::convertToBookDTO).toList();
-        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
-    }
+//    @Override
+//    public Page<BookDTO> findBooksByTargetName(String targetName, Pageable pageable) {
+//
+//        List<BookDTO> bookDTOList = targetRepository.findBooksByTargetName(targetName).stream().map(this::convertToBookDTO).toList();
+//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+//    }
 
     @Override
     public Page<BookDTO> findBooksByTargetID(String id, Pageable pageable) {
-        List<BookDTO> bookDTOList = targetRepository.findBooksByTargetID(id).stream().map(this::convertToBookDTO).toList();
-        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+//        List<BookDTO> bookDTOList = bookRepository.findAllByTargetID(id, pageable)
+//                .stream().map(this::convertToBookDTO).toList();
+//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+
+        Page<Book> books = targetRepository.findBooksByTargetID(id, pageable);
+
+        List<BookDTO> bookDetailDTOList = books.getContent().stream()
+                .map(this::convertToBookDTO)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(bookDetailDTOList, pageable, books.getTotalElements());
     }
 
     @Override

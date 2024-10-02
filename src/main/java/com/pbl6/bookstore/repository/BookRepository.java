@@ -14,11 +14,10 @@ public interface BookRepository extends JpaRepository<Book, String> {
     Page<Book> findAll(Pageable pageable);
 
     @Query("select b from Book b where b.category.id = :id")
-    List<Book> findBooksByCategoryID(@Param("id") int id);
+    Page<Book> findAllByCategoryID(@Param("id") int id, Pageable pageable);
 
-    @Query("select b from Book b where b.category.name = :name")
-    List<Book> findBooksByCategoryName(@Param("name") String name);
-
+//    @Query("select b from Book b where b.category.name = :name")
+//    List<Book> findBooksByCategoryName(@Param("name") String name);
 
     List<Book> findTop20ByOrderBySoldQuantityDesc();
 
