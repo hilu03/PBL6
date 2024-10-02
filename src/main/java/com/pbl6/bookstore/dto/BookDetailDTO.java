@@ -16,6 +16,8 @@ public class BookDetailDTO {
 
     String title;
 
+    String publisher;
+
     Date datePublish;
 
     String description;

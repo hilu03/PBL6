@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -35,15 +36,16 @@ public class BookServiceImpl implements BookService{
 
 
     public BookDetailDTO convertToBookDetailDTO(Book book) {
-        BookDetailDTO bookDetailDTO = modelMapper.map(book, BookDetailDTO.class);
-        bookDetailDTO.setCategory(book.getCategory().getName());
 
-        bookDetailDTO.setAuthors(new ArrayList<>());
-        for (Author author: book.getAuthors()) {
+        BookDetailDTO bookDetailDTO = modelMapper.map(book, BookDetailDTO.class);
+
+        bookDetailDTO.setCategory(book.getCategory().getName());
+        bookDetailDTO.setPublisher(book.getPublisher().getName());
+
+        for (Author author : book.getAuthors()) {
             bookDetailDTO.addAuthor(author.getName());
         }
 
-        bookDetailDTO.setTargets(new ArrayList<>());
         for (Target target: book.getTargets()) {
             bookDetailDTO.addTarget(target.getName());
         }
@@ -75,12 +77,6 @@ public class BookServiceImpl implements BookService{
 
     }
 
-//    @Override
-//    public Page<BookDTO> findBooksByCategoryName(String categoryName, Pageable pageable) {
-//        List<BookDTO> bookDTOList = bookRepository.findBooksByCategoryName(categoryName).stream().map(this::convertToBookDTO).toList();
-//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
-//    }
-
     @Override
     public Page<BookDTO> findBooksByCategoryID(int id, Pageable pageable) {
         Page<Book> books = bookRepository.findAllByCategoryID(id, pageable);
@@ -92,18 +88,8 @@ public class BookServiceImpl implements BookService{
         return new PageImpl<>(bookDetailDTOList, pageable, books.getTotalElements());
     }
 
-//    @Override
-//    public Page<BookDTO> findBooksByTargetName(String targetName, Pageable pageable) {
-//
-//        List<BookDTO> bookDTOList = targetRepository.findBooksByTargetName(targetName).stream().map(this::convertToBookDTO).toList();
-//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
-//    }
-
     @Override
     public Page<BookDTO> findBooksByTargetID(String id, Pageable pageable) {
-//        List<BookDTO> bookDTOList = bookRepository.findAllByTargetID(id, pageable)
-//                .stream().map(this::convertToBookDTO).toList();
-//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
 
         Page<Book> books = targetRepository.findBooksByTargetID(id, pageable);
 
@@ -124,10 +110,18 @@ public class BookServiceImpl implements BookService{
         return bookRepository.findTop20ByDiscountDesc().stream().map(this::convertToBookDTO).toList();
     }
 
-//    @Override
-//    public Book addBook(BookDetailDTO book) {
+
+    //    @Override
+//    public Page<BookDTO> findBooksByCategoryName(String categoryName, Pageable pageable) {
+//        List<BookDTO> bookDTOList = bookRepository.findBooksByCategoryName(categoryName).stream().map(this::convertToBookDTO).toList();
+//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
+//    }
+
+    //    @Override
+//    public Page<BookDTO> findBooksByTargetName(String targetName, Pageable pageable) {
 //
-//        return null;
+//        List<BookDTO> bookDTOList = targetRepository.findBooksByTargetName(targetName).stream().map(this::convertToBookDTO).toList();
+//        return new PageImpl<>(bookDTOList, pageable, bookDTOList.size());
 //    }
 
 }

@@ -20,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final String[] PUBLIC_GET_ENDPOINTS = {
+            "/books",
             "/books/{bookID}",
             "/books/category/{id}",
             "/books/category-name/{category}",

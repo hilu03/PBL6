@@ -57,6 +57,12 @@ public class Book {
     @JoinColumn(name = "CategoryID")
     private Category category;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+            CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "PublisherID")
+    private Publisher publisher;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH})
@@ -74,25 +80,5 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "TargetID"))
     private List<Target> targets;
 
-    public Book() {
-
-    }
-
-    public Book(String id, String title, Date datePublish, String description, BigDecimal originalPrice,
-                BigDecimal discountedPrice, String imageLink, int soldQuantity, int availableQuantity,
-                int pages, String cover, String dimension) {
-        this.id = id;
-        this.title = title;
-        this.datePublish = datePublish;
-        this.description = description;
-        this.originalPrice = originalPrice;
-        this.discountedPrice = discountedPrice;
-        this.imageLink = imageLink;
-        this.soldQuantity = soldQuantity;
-        this.availableQuantity = availableQuantity;
-        this.pages = pages;
-        this.cover = cover;
-        this.dimension = dimension;
-    }
 
 }

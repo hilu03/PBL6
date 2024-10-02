@@ -29,13 +29,5 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "BookID"))
     private List<Book> books;
 
-    public Author() {
-
-    }
-
-    public Author(String name) {
-        this.name = name;
-    }
-
 
 }

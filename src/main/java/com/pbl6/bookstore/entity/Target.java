@@ -29,13 +29,4 @@ public class Target {
     @JsonIgnore
     List<Book> books;
 
-    public Target() {
-
-    }
-
-    public Target(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
 }

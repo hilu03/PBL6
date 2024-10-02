@@ -54,22 +54,6 @@ public class BookController {
         throw new AppException(ErrorCode.RESOURCE_NOT_FOUND);
     }
 
-//    @GetMapping("/books/category-name/{category}")
-//    public ResponseEntity<APIResponse> getBooksByCategoryName(@PathVariable String category,
-//                                                          @RequestParam(required = false) String page) {
-//        try {
-//            if (page == null) {
-//                page = "0";
-//            }
-//            Pageable pageable = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
-//            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
-//                    bookService.findBooksByCategoryName(category, pageable)));
-//        }
-//        catch (NumberFormatException e) {
-//            throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
-//        }
-//    }
-
     @GetMapping("/books/category/{id}")
     public ResponseEntity<APIResponse> getBooksByCategoryID(@PathVariable int id,
                                                               @RequestParam(required = false) String page) {
@@ -85,24 +69,6 @@ public class BookController {
             throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
         }
     }
-
-//    @GetMapping("/books/target-name/{target}")
-//    public ResponseEntity<APIResponse> getBooksByTargetName(@PathVariable String target,
-//                                                          @RequestParam(required = false) String page) {
-//
-//        try {
-//            if (page == null) {
-//                page = "0";
-//            }
-//            Pageable pageable = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
-//            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
-//                    bookService.findBooksByTargetName(target, pageable)));
-//        }
-//        catch (NumberFormatException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).
-//                    body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
-//        }
-//    }
 
     @GetMapping("/books/target/{id}")
     public ResponseEntity<APIResponse> getBooksByTargetID(@PathVariable String id,
@@ -132,5 +98,39 @@ public class BookController {
     public ResponseEntity<APIResponse> getBestSellerBook() {
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getSaleBooks()));
     }
+
+    //    @GetMapping("/books/category-name/{category}")
+//    public ResponseEntity<APIResponse> getBooksByCategoryName(@PathVariable String category,
+//                                                          @RequestParam(required = false) String page) {
+//        try {
+//            if (page == null) {
+//                page = "0";
+//            }
+//            Pageable pageable = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
+//            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+//                    bookService.findBooksByCategoryName(category, pageable)));
+//        }
+//        catch (NumberFormatException e) {
+//            throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
+//        }
+//    }
+
+    //    @GetMapping("/books/target-name/{target}")
+//    public ResponseEntity<APIResponse> getBooksByTargetName(@PathVariable String target,
+//                                                          @RequestParam(required = false) String page) {
+//
+//        try {
+//            if (page == null) {
+//                page = "0";
+//            }
+//            Pageable pageable = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
+//            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+//                    bookService.findBooksByTargetName(target, pageable)));
+//        }
+//        catch (NumberFormatException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).
+//                    body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
+//        }
+//    }
 
 }

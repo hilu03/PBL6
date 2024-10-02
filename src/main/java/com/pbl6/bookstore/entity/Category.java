@@ -28,12 +28,4 @@ public class Category {
     @JsonIgnore
     List<Book> books;
 
-    public Category() {
-
-    }
-
-    public Category(String name) {
-        this.name = name;
-    }
-
 }
