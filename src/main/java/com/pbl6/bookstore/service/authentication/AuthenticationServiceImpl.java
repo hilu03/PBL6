@@ -8,6 +8,7 @@ import com.nimbusds.jwt.SignedJWT;
 import com.pbl6.bookstore.dto.request.ExchangeTokenRequestDTO;
 import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
 import com.pbl6.bookstore.dto.request.RefreshRequestDTO;
+import com.pbl6.bookstore.dto.response.TokenInfoResponseDTO;
 import com.pbl6.bookstore.entity.InvalidatedToken;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
@@ -243,6 +244,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public LoginResponseDTO loginWithGoogleByApp(String googleToken) {
+        if (!isGoogleTokenValid(googleToken)) {
+            throw new AppException(ErrorCode.INVALID_TOKEN);
+        }
+
         var userInfo = googleUserInfoClient.getUserInfo("json", googleToken);
 
         User user = userRepository.findByEmail(userInfo.getEmail());
@@ -264,6 +269,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .fullName(user.getFullName())
                 .role(user.getRole())
                 .build();
+    }
+
+    @Override
+    public boolean isGoogleTokenValid(String token) {
+
+        try {
+            TokenInfoResponseDTO tokenInfo = googleUserInfoClient.verifyToken(token);
+
+            return tokenInfo.getError() == null && tokenInfo.getExpires_in() > 0;
+
+        } catch (Exception e) {
+            return false; // Có lỗi trong quá trình xác thực
+        }
     }
 
 

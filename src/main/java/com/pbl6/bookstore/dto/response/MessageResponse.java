@@ -22,4 +22,5 @@ public class MessageResponse {
     public static String LOGIN_FAIL = "Log in failed!";
     public static String WRONG_VARIABLE_TYPE = "Passing wrong type of variable!";
     public static String INVALID_GRANT = "Invalid code!";
+    public static String INVALID_TOKEN = "Invalid token!";
 }

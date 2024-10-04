@@ -22,4 +22,6 @@ public interface AuthenticationService {
     LoginResponseDTO loginWithGoogleByWeb(String code);
 
     LoginResponseDTO loginWithGoogleByApp(String googleToken);
+
+    boolean isGoogleTokenValid(String token);
 }

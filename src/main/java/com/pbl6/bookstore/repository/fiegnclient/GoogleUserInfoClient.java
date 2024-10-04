@@ -1,6 +1,7 @@
 package com.pbl6.bookstore.repository.fiegnclient;
 
 import com.pbl6.bookstore.dto.response.GoogleUserInfoResponseDTO;
+import com.pbl6.bookstore.dto.response.TokenInfoResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,5 +12,8 @@ public interface GoogleUserInfoClient {
     @GetMapping(value = "/oauth2/v1/userinfo")
     GoogleUserInfoResponseDTO getUserInfo(@RequestParam("alt") String alt,
                                           @RequestParam("access_token") String accessToken);
+
+    @GetMapping(value = "/oauth2/v3/tokeninfo")
+    TokenInfoResponseDTO verifyToken(@RequestParam("access_token") String accessToken);
 
 }
