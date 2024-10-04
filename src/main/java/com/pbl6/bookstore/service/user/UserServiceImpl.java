@@ -1,5 +1,7 @@
 package com.pbl6.bookstore.service.user;
 
+import com.pbl6.bookstore.dto.request.UserAccountRequest;
+import com.pbl6.bookstore.entity.Cart;
 import com.pbl6.bookstore.repository.UserRepository;
 import com.pbl6.bookstore.dto.Converter;
 import com.pbl6.bookstore.dto.UserDTO;
@@ -22,18 +24,33 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
 
-    Converter<User, UserDTO> converter;
+    Converter<User, UserDTO> userDTOConverter;
+    Converter<User, UserAccountRequest> userAccountRequestConverter;
 
     @Override
     @PreAuthorize("hasRole('admin')")
     public List<UserDTO> findAll() {
-        return userRepository.findAll().stream().map(user -> converter.mapEntityToDto(user, UserDTO.class)).toList();
+        return userRepository.findAll().stream().map(user -> userDTOConverter.mapEntityToDto(user, UserDTO.class)).toList();
     }
 
     @Override
-    public UserDTO save(User user) {
+    public UserDTO createUser(UserAccountRequest userAccountRequest) {
+        User user = userAccountRequestConverter.mapDtoToEntity(userAccountRequest, User.class);
+        user.setRole("user");
+        Cart cart = Cart.builder()
+                .user(user)
+                .build();
+        user.setCart(cart);
         userRepository.save(user);
-        return converter.mapEntityToDto(user, UserDTO.class);
+        return userDTOConverter.mapEntityToDto(user, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO createAdmin(UserAccountRequest userAccountRequest) {
+        User user = userAccountRequestConverter.mapDtoToEntity(userAccountRequest, User.class);
+        user.setRole("admin");
+        userRepository.save(user);
+        return userDTOConverter.mapEntityToDto(user, UserDTO.class);
     }
 
     @Override
@@ -55,7 +72,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
 
         if (user != null) {
-            return converter.mapEntityToDto(user, UserDTO.class);
+            return userDTOConverter.mapEntityToDto(user, UserDTO.class);
         }
 
         throw new RuntimeException(MessageResponse.USER_NOT_FOUND);

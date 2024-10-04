@@ -1,6 +1,8 @@
 package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.dto.UserDTO;
+import com.pbl6.bookstore.dto.request.UserAccountRequest;
+import com.pbl6.bookstore.entity.Cart;
 import com.pbl6.bookstore.entity.User;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
@@ -27,14 +29,28 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<APIResponse> addUser(@RequestBody User user) {
+    public ResponseEntity<APIResponse> addUser(@RequestBody UserAccountRequest user) {
         if (userService.findByEmail(user.getEmail()) == null) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            UserDTO userDTO = userService.save(user);
+            UserDTO userDTO = userService.createUser(user);
+
             return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userDTO));
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new APIResponse(MessageResponse.USER_EXISTED, null));
+        return ResponseEntity.status(HttpStatus.CONFLICT).
+                body(new APIResponse(MessageResponse.USER_EXISTED, null));
+    }
+
+    @PostMapping("/sign-up/admin")
+    public ResponseEntity<APIResponse> addAdmin(@RequestBody UserAccountRequest user) {
+        if (userService.findByEmail(user.getEmail()) == null) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            UserDTO userDTO = userService.createAdmin(user);
+            return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userDTO));
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).
+                body(new APIResponse(MessageResponse.USER_EXISTED, null));
     }
 
     @GetMapping("/my-info")

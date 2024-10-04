@@ -34,6 +34,7 @@ public class SecurityConfig {
 
     public final String[] PUBLIC_POST_ENDPOINTS = {
             "/sign-up",
+            "/sign-up/admin",
             "/login",
             "/log-out",
             "/refresh",

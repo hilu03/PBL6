@@ -2,6 +2,7 @@ package com.pbl6.bookstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Setter
 @Getter
@@ -10,29 +11,38 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID")
-    private int id;
+    int id;
 
     @Column(name = "FullName")
-    private String fullName;
+    String fullName;
 
     @Column(name = "PhoneNumber")
-    private String phoneNumber;
+    String phoneNumber;
 
     @Column(name = "Password")
-    private String password;
+    String password;
 
     @Column(name = "Role")
-    private String role;
+    String role;
 
     @Column(name = "Email")
-    private String email;
+    String email;
 
     @Column(name = "Username")
-    private String username;
+    String username;
+
+    @Column(name = "Address")
+    String address;
+
+    @OneToOne(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    Cart cart;
 
 }
