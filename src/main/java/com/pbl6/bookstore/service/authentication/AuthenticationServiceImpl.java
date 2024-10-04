@@ -209,7 +209,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public LoginResponseDTO loginWithGoogle(String code) {
+    public LoginResponseDTO loginWithGoogleByWeb(String code) {
         var response = googleAuthClient.exchangeToken(ExchangeTokenRequestDTO.builder()
                         .code(code)
                         .clientId(WEB_CLIENT_ID)
@@ -219,6 +219,31 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build());
 
         var userInfo = googleUserInfoClient.getUserInfo("json", response.getAccessToken());
+
+        User user = userRepository.findByEmail(userInfo.getEmail());
+
+        if (user == null) {
+            user = User.builder()
+                    .email(userInfo.getEmail())
+                    .fullName(userInfo.getName())
+                    .role("user")
+                    .build();
+            userRepository.save(user);
+        }
+
+        String token = generateToken(user);
+
+        return LoginResponseDTO.builder()
+                .token(token)
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .role(user.getRole())
+                .build();
+    }
+
+    @Override
+    public LoginResponseDTO loginWithGoogleByApp(String googleToken) {
+        var userInfo = googleUserInfoClient.getUserInfo("json", googleToken);
 
         User user = userRepository.findByEmail(userInfo.getEmail());
 

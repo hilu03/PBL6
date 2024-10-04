@@ -1,10 +1,7 @@
 package com.pbl6.bookstore.controller;
 
 import com.nimbusds.jose.JOSEException;
-import com.pbl6.bookstore.dto.request.IntrospectRequest;
-import com.pbl6.bookstore.dto.request.LoginRequestDTO;
-import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
-import com.pbl6.bookstore.dto.request.RefreshRequestDTO;
+import com.pbl6.bookstore.dto.request.*;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.authentication.AuthenticationServiceImpl;
@@ -60,9 +57,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login/google")
-    public ResponseEntity<APIResponse> loginWithGoogle(@RequestParam("code") String code) {
+    public ResponseEntity<APIResponse> loginWithGoogleInWeb(@RequestParam("code") String code) {
         return ResponseEntity.ok(new APIResponse(MessageResponse.LOGIN_SUCCESS,
-                authenticationService.loginWithGoogle(code)));
+                authenticationService.loginWithGoogleByWeb(code)));
     }
 
     @PostMapping("/introspect")
@@ -70,5 +67,11 @@ public class AuthenticationController {
             throws ParseException, JOSEException {
         return ResponseEntity.ok(new APIResponse(MessageResponse.VALID_TOKEN,
                 authenticationService.introspect(request.getToken())));
+    }
+
+    @PostMapping("/login/app/google")
+    public ResponseEntity<APIResponse> loginWithGoogleInApp(@RequestBody LoginWIthGoogleRequestDTO request) {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.LOGIN_SUCCESS,
+                authenticationService.loginWithGoogleByApp(request.getToken())));
     }
 }

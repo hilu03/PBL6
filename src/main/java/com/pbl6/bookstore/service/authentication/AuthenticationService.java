@@ -19,5 +19,7 @@ public interface AuthenticationService {
 
     RefreshRequestDTO refreshToken(RefreshRequestDTO request) throws ParseException, JOSEException;
 
-    LoginResponseDTO loginWithGoogle(String code);
+    LoginResponseDTO loginWithGoogleByWeb(String code);
+
+    LoginResponseDTO loginWithGoogleByApp(String googleToken);
 }
