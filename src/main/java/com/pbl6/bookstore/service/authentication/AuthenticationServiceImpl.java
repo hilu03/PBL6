@@ -141,7 +141,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         boolean verified = signedJWT.verify(jwsVerifier);
 
         if (!(expireTime.after(new Date()) && verified)) {
-            throw new AppException(ErrorCode.DENIED_PERMISSION);
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
 
         if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID())) {

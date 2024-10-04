@@ -36,7 +36,7 @@ public class BookController {
                 page = "0";
             }
 
-            Pageable pageWithFortyBooks = PageRequest.of(Integer.parseInt(page), 40);
+            Pageable pageWithFortyBooks = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
 
             return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getBookPerPage(pageWithFortyBooks)));
         }

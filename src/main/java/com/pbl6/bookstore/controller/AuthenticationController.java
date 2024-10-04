@@ -1,6 +1,7 @@
 package com.pbl6.bookstore.controller;
 
 import com.nimbusds.jose.JOSEException;
+import com.pbl6.bookstore.dto.request.IntrospectRequest;
 import com.pbl6.bookstore.dto.request.LoginRequestDTO;
 import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
 import com.pbl6.bookstore.dto.request.RefreshRequestDTO;
@@ -62,5 +63,12 @@ public class AuthenticationController {
     public ResponseEntity<APIResponse> loginWithGoogle(@RequestParam("code") String code) {
         return ResponseEntity.ok(new APIResponse(MessageResponse.LOGIN_SUCCESS,
                 authenticationService.loginWithGoogle(code)));
+    }
+
+    @PostMapping("/introspect")
+    public ResponseEntity<APIResponse> introspect(@RequestBody IntrospectRequest request)
+            throws ParseException, JOSEException {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.VALID_TOKEN,
+                authenticationService.introspect(request.getToken())));
     }
 }
