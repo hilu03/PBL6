@@ -1,6 +1,7 @@
 package com.pbl6.bookstore.repository;
 
 import com.pbl6.bookstore.entity.Book;
+import com.pbl6.bookstore.entity.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,5 +25,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
     // 20 cuốn théo discount
     @Query(value = "SELECT * FROM book ORDER BY ((OriginalPrice - DiscountPrice) / OriginalPrice) DESC LIMIT 20", nativeQuery = true)
     List<Book> findTop20ByDiscountDesc();
+
+    long countByCategory(Category category);
 
 }

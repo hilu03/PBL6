@@ -2,8 +2,10 @@ package com.pbl6.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -11,15 +13,16 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "category")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CategoryID")
-    private int id;
+    int id;
 
     @Column(name = "CategoryName")
-    private String name;
+    String name;
 
     @OneToMany(mappedBy = "category",
                 cascade = {CascadeType.PERSIST, CascadeType.DETACH,
