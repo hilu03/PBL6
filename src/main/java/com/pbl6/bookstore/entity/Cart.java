@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cart")
 @Getter
@@ -21,4 +23,10 @@ public class Cart {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID")
     User user;
+
+    @OneToMany(mappedBy = "cart",
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+            CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    List<CartItem> items;
 }

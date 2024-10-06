@@ -37,20 +37,7 @@ public class BookServiceImpl implements BookService{
 
     public BookDetailDTO convertToBookDetailDTO(Book book) {
 
-        BookDetailDTO bookDetailDTO = modelMapper.map(book, BookDetailDTO.class);
-
-        bookDetailDTO.setCategory(book.getCategory().getName());
-        bookDetailDTO.setPublisher(book.getPublisher().getName());
-
-        for (Author author : book.getAuthors()) {
-            bookDetailDTO.addAuthor(author.getName());
-        }
-
-        for (Target target: book.getTargets()) {
-            bookDetailDTO.addTarget(target.getName());
-        }
-
-        return bookDetailDTO;
+        return modelMapper.map(book, BookDetailDTO.class);
     }
 
     public BookDTO convertToBookDTO(Book book) {
@@ -59,14 +46,14 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Page<BookDetailDTO> getBookPerPage(Pageable pageable) {
+    public Page<BookDTO> getAllBooks(Pageable pageable) {
         Page<Book> books = bookRepository.findAll(pageable);
 
-        List<BookDetailDTO> bookDetailDTOList = books.getContent().stream()
-                .map(this::convertToBookDetailDTO)
+        List<BookDTO> bookDTOList = books.getContent().stream()
+                .map(this::convertToBookDTO)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(bookDetailDTOList, pageable, books.getTotalElements());
+        return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
     }
 
     @Override

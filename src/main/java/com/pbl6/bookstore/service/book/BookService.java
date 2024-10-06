@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface BookService {
 
-    Page<BookDetailDTO> getBookPerPage(Pageable pageable);
+    Page<BookDTO> getAllBooks(Pageable pageable);
 
     BookDetailDTO findBookById(String id);
 

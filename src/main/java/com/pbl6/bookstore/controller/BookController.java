@@ -36,9 +36,10 @@ public class BookController {
                 page = "0";
             }
 
-            Pageable pageWithFortyBooks = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
+            Pageable pageable = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
 
-            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getBookPerPage(pageWithFortyBooks)));
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                    bookService.getAllBooks(pageable)));
         }
         catch (NumberFormatException e) {
             throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);

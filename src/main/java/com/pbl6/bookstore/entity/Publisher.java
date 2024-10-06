@@ -30,4 +30,9 @@ public class Publisher {
             fetch = FetchType.LAZY)
     @JsonIgnore
     List<Book> books;
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

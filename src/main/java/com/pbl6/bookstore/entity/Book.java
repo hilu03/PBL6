@@ -1,8 +1,10 @@
 package com.pbl6.bookstore.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,73 +14,78 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "book")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
 
     @Id
     @Column(name = "BookID")
-    private String id;
+    String id;
 
     @Column(name = "Title")
-    private String title;
+    String title;
 
     @Column(name = "DatePublish")
-    private Date datePublish;
+    Date datePublish;
 
     @Column(name = "Description")
-    private String description;
+    String description;
 
     @Column(name = "OriginalPrice")
-    private BigDecimal originalPrice;
+    BigDecimal originalPrice;
 
     @Column(name = "DiscountPrice")
-    private BigDecimal discountedPrice;
+    BigDecimal discountedPrice;
 
     @Column(name = "Image")
-    private String imageLink;
+    String imageLink;
 
     @Column(name = "SoldQuantity")
-    private int soldQuantity;
+    int soldQuantity;
 
     @Column(name = "AvailableQuantity")
-    private Integer availableQuantity;
+    Integer availableQuantity;
 
     @Column(name = "Pages")
-    private Integer pages;
+    Integer pages;
 
     @Column(name = "BookCover")
-    private String cover;
+    String cover;
 
     @Column(name = "Dimension")
-    private String dimension;
+    String dimension;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                             CascadeType.MERGE, CascadeType.REFRESH},
                 fetch = FetchType.LAZY)
     @JoinColumn(name = "CategoryID")
-    private Category category;
+    Category category;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
             CascadeType.MERGE, CascadeType.REFRESH},
             fetch = FetchType.LAZY)
     @JoinColumn(name = "PublisherID")
-    private Publisher publisher;
+    Publisher publisher;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "bookauthor",
+    @JoinTable(name = "BookAuthor",
             joinColumns = @JoinColumn(name = "BookID"),
             inverseJoinColumns = @JoinColumn(name = "AuthorID"))
-    private List<Author> authors;
+    List<Author> authors;
 
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "booktarget",
+    @JoinTable(name = "BookTarget",
             joinColumns = @JoinColumn(name = "BookID"),
             inverseJoinColumns = @JoinColumn(name = "TargetID"))
-    private List<Target> targets;
+    List<Target> targets;
 
-
+    @OneToMany(mappedBy = "book",
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+                    CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    List<CartItem> cartItems;
 }
