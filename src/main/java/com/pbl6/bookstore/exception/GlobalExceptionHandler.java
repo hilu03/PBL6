@@ -18,7 +18,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<APIResponse> handleRuntimeException(RuntimeException exception) {
+    ResponseEntity<APIResponse> handleGlobalException(Exception exception) {
         log.error("Exception: " + exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new APIResponse(MessageResponse.SERVER_ERROR, null));

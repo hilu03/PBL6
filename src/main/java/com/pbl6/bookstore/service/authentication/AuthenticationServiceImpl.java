@@ -36,6 +36,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -161,7 +162,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getEmail())
+                .subject(Integer.toString(user.getId()))
                 .issuer("bookstore.pbl6.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now()
@@ -205,13 +206,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         invalidatedTokenRepository.save(invalidatedToken);
 
-        User user = userRepository.findByEmail(signedJWT.getJWTClaimsSet().getSubject());
+        Optional<User> user = userRepository.findById(Integer.parseInt(signedJWT.getJWTClaimsSet().getSubject()));
 
-        String token = generateToken(user);
+        if (user.isPresent()) {
+            String token = generateToken(user.get());
 
-        return RefreshRequestDTO.builder()
-                .token(token)
-                .build();
+            return RefreshRequestDTO.builder()
+                    .token(token)
+                    .build();
+        }
+
+        throw new AppException(ErrorCode.UNAUTHENTICATED);
+
     }
 
     @Override
@@ -285,7 +291,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return tokenInfo.getError() == null && tokenInfo.getExpires_in() > 0;
 
         } catch (Exception e) {
-            return false; // Có lỗi trong quá trình xác thực
+            return false;
         }
     }
 

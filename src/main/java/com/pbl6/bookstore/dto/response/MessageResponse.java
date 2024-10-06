@@ -3,7 +3,7 @@ package com.pbl6.bookstore.dto.response;
 
 public class MessageResponse {
     public static String ADD_TO_CART_SUCCESS = "Add to cart successfully!";
-    public static String UPDATE_SUCCESS = "Resource updated successfully!";
+    public static String UPDATE_CART_SUCCESS = "Cart updated successfully!";
     public static String RESOURCE_FOUND = "Resource found!" ;
     public static String DELETE_SUCCESS = "Resource deleted successfully!";
     public static String LOGIN_SUCCESS = "Log in successfully!";
@@ -16,6 +16,7 @@ public class MessageResponse {
     public static String SERVER_ERROR = "Unknown error!";
     public static String DENIED_PERMISSION = "Permission denied!";
     public static String RESOURCE_NOT_FOUND = "Resource not found!";
+    public static String ITEM_NOT_FOUND = "Item not found!";
     public static String BOOK_ID_NOT_FOUND = "Book ID not found!";
     public static String INVALID_PAGE_NUMBER = "Invalid page number!";
     public static String USER_EXISTED = "Existed user!";

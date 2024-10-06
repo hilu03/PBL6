@@ -1,14 +1,16 @@
-package com.pbl6.bookstore.dto;
+package com.pbl6.bookstore.dto.response;
 
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookDTO {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CartItemInfoResponseDTO {
     String id;
 
     String title;
@@ -20,5 +22,9 @@ public class BookDTO {
     String imageLink;
 
     int soldQuantity;
+
+    Integer availableQuantity;
+
+    int addedQuantity;
 
 }

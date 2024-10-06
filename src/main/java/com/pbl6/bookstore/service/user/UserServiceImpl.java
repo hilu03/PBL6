@@ -2,6 +2,8 @@ package com.pbl6.bookstore.service.user;
 
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
 import com.pbl6.bookstore.entity.Cart;
+import com.pbl6.bookstore.exception.AppException;
+import com.pbl6.bookstore.exception.ErrorCode;
 import com.pbl6.bookstore.repository.UserRepository;
 import com.pbl6.bookstore.dto.Converter;
 import com.pbl6.bookstore.dto.UserDTO;
@@ -16,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -69,16 +72,12 @@ public class UserServiceImpl implements UserService {
     public UserDTO getMyInfo() {
         SecurityContext context = SecurityContextHolder.getContext();
 
-        String email = context.getAuthentication().getName();
-
-        User user = userRepository.findByEmail(email);
-
-        if (user != null) {
-            return userDTOConverter.mapEntityToDto(user, UserDTO.class);
+        int id = Integer.parseInt(context.getAuthentication().getName());
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
-
-        throw new RuntimeException(MessageResponse.USER_NOT_FOUND);
-
+        return userDTOConverter.mapEntityToDto(user.get(), UserDTO.class);
     }
 
 

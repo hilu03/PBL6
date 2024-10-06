@@ -20,7 +20,8 @@ public enum ErrorCode {
     BOOK_ID_NOT_FOUND(MessageResponse.BOOK_ID_NOT_FOUND, HttpStatus.NOT_FOUND),
     QUANTITY_EXCEED(MessageResponse.QUANTITY_EXCEED, HttpStatus.BAD_REQUEST),
     INVALID_QUANTITY(MessageResponse.INVALID_QUANTITY, HttpStatus.BAD_REQUEST),
-    INVALID_REQUEST_DATA(MessageResponse.INVALID_REQUEST_DATA, HttpStatus.BAD_REQUEST)
+    INVALID_REQUEST_DATA(MessageResponse.INVALID_REQUEST_DATA, HttpStatus.BAD_REQUEST),
+    ITEM_NOT_FOUND(MessageResponse.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND)
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {
