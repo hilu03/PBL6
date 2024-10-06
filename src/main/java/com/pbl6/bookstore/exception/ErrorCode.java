@@ -16,7 +16,11 @@ public enum ErrorCode {
     DENIED_PERMISSION(MessageResponse.DENIED_PERMISSION, HttpStatus.FORBIDDEN),
     WRONG_VARIABLE_TYPE(MessageResponse.WRONG_VARIABLE_TYPE, HttpStatus.BAD_REQUEST),
     INVALID_GRANT(MessageResponse.INVALID_GRANT, HttpStatus.BAD_REQUEST),
-    INVALID_TOKEN(MessageResponse.INVALID_TOKEN, HttpStatus.BAD_REQUEST)
+    INVALID_TOKEN(MessageResponse.INVALID_TOKEN, HttpStatus.BAD_REQUEST),
+    BOOK_ID_NOT_FOUND(MessageResponse.BOOK_ID_NOT_FOUND, HttpStatus.NOT_FOUND),
+    QUANTITY_EXCEED(MessageResponse.QUANTITY_EXCEED, HttpStatus.BAD_REQUEST),
+    INVALID_QUANTITY(MessageResponse.INVALID_QUANTITY, HttpStatus.BAD_REQUEST),
+    INVALID_REQUEST_DATA(MessageResponse.INVALID_REQUEST_DATA, HttpStatus.BAD_REQUEST)
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {

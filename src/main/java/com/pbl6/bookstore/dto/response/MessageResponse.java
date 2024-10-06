@@ -2,7 +2,7 @@ package com.pbl6.bookstore.dto.response;
 
 
 public class MessageResponse {
-    public static String CREATE_SUCCESS = "Resource created successfully!";
+    public static String ADD_TO_CART_SUCCESS = "Add to cart successfully!";
     public static String UPDATE_SUCCESS = "Resource updated successfully!";
     public static String RESOURCE_FOUND = "Resource found!" ;
     public static String DELETE_SUCCESS = "Resource deleted successfully!";
@@ -16,6 +16,7 @@ public class MessageResponse {
     public static String SERVER_ERROR = "Unknown error!";
     public static String DENIED_PERMISSION = "Permission denied!";
     public static String RESOURCE_NOT_FOUND = "Resource not found!";
+    public static String BOOK_ID_NOT_FOUND = "Book ID not found!";
     public static String INVALID_PAGE_NUMBER = "Invalid page number!";
     public static String USER_EXISTED = "Existed user!";
     public static String USER_NOT_FOUND = "User not found!";
@@ -23,4 +24,7 @@ public class MessageResponse {
     public static String WRONG_VARIABLE_TYPE = "Passing wrong type of variable!";
     public static String INVALID_GRANT = "Invalid code!";
     public static String INVALID_TOKEN = "Invalid token!";
+    public static String INVALID_QUANTITY = "Invalid quantity!";
+    public static String QUANTITY_EXCEED = "Not enough items in stock!";
+    public static String INVALID_REQUEST_DATA = "Invalid request data!";
 }

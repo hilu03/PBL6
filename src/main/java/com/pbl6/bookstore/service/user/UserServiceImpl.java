@@ -30,7 +30,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @PreAuthorize("hasRole('admin')")
     public List<UserDTO> findAll() {
-        return userRepository.findAll().stream().map(user -> userDTOConverter.mapEntityToDto(user, UserDTO.class)).toList();
+        return userRepository.findAll().stream()
+                .map(user -> userDTOConverter.mapEntityToDto(user, UserDTO.class))
+                .toList();
     }
 
     @Override

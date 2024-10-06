@@ -12,10 +12,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TokenInfoResponseDTO {
-    private String aud;
-    private String user_id;
-    private String scope;
-    private Long expires_in;
-    private String email;
-    private String error;
+    String aud;
+    String user_id;
+    String scope;
+    Long expires_in;
+    String email;
+    String error;
 }

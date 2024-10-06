@@ -12,6 +12,7 @@ import com.pbl6.bookstore.dto.response.TokenInfoResponseDTO;
 import com.pbl6.bookstore.entity.InvalidatedToken;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
+import com.pbl6.bookstore.repository.CartItemRepository;
 import com.pbl6.bookstore.repository.InvalidatedTokenRepository;
 import com.pbl6.bookstore.repository.UserRepository;
 import com.pbl6.bookstore.dto.Converter;
@@ -52,6 +53,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     GoogleAuthClient googleAuthClient;
 
     GoogleUserInfoClient googleUserInfoClient;
+
+    CartItemRepository cartItemRepository;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -98,6 +101,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 LoginResponseDTO loginResponseDTO = converter.mapEntityToDto(user, LoginResponseDTO.class);
 
                 loginResponseDTO.setToken(token);
+
+                loginResponseDTO.setItemQuantityInCart(cartItemRepository.countByCart(user.getCart()));
 
                 return loginResponseDTO;
             }

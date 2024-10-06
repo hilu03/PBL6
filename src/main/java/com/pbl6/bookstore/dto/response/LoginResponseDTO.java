@@ -1,25 +1,26 @@
 package com.pbl6.bookstore.dto.response;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoginResponseDTO {
 
-    private String token;
+    String token;
 
-    private String fullName;
+    String fullName;
 
-    private String role;
+    String role;
 
-    private String email;
+    String email;
 
-    private String username;
+    String username;
+
+    long itemQuantityInCart;
 
 }

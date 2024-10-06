@@ -6,7 +6,9 @@ import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -46,6 +48,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(ErrorCode.INVALID_GRANT.getHttpStatusCode())
                 .body(new APIResponse(ErrorCode.INVALID_GRANT.getMessage(), null));
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<APIResponse> handleInvalidArgument(MethodArgumentNotValidException exception) {
+        return ResponseEntity.status(ErrorCode.INVALID_QUANTITY.getHttpStatusCode())
+                .body(new APIResponse(ErrorCode.INVALID_QUANTITY.getMessage(), null));
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<APIResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException exception) {
+        return ResponseEntity.status(ErrorCode.INVALID_REQUEST_DATA.getHttpStatusCode())
+                .body(new APIResponse(ErrorCode.INVALID_REQUEST_DATA.getMessage(), null));
     }
 
 }

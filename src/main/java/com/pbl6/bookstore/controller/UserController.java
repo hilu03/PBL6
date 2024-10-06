@@ -2,8 +2,6 @@ package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
-import com.pbl6.bookstore.entity.Cart;
-import com.pbl6.bookstore.entity.User;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.user.UserServiceImpl;
@@ -59,7 +57,8 @@ public class UserController {
             return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, userService.getMyInfo()));
         }
         catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
         }
     }
 
