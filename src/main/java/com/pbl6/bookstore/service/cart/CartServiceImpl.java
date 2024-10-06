@@ -38,19 +38,25 @@ public class CartServiceImpl implements CartService {
 
     BookRepository bookRepository;
 
-    @Override
-    @PreAuthorize("hasRole('user')")
-    public CartItemQuantityResponseDTO addToCart(CartItemRequestDTO request) {
+
+    private User getUser() {
         SecurityContext context = SecurityContextHolder.getContext();
         int id = Integer.parseInt(context.getAuthentication().getName());
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
+        return user.get();
+    }
+
+    @Override
+    @PreAuthorize("hasRole('user')")
+    public CartItemQuantityResponseDTO addToCart(CartItemRequestDTO request) {
+        User user = getUser();
         Optional<Book> book = bookRepository.findById(request.getBookID());
         if (book.isPresent()) {
             if (book.get().getAvailableQuantity() >= request.getQuantity()) {
-                Cart cart = user.get().getCart();
+                Cart cart = user.getCart();
                 CartItem cartItem = cartItemRepository.findByCartAndBook(cart, book.get());
                 if (cartItem == null) {
                     cartItem = CartItem.builder()
@@ -84,13 +90,8 @@ public class CartServiceImpl implements CartService {
     @Override
     @PreAuthorize("hasRole('user')")
     public CartDetailResponseDTO getCartDetail() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        int id = Integer.parseInt(context.getAuthentication().getName());
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
-        }
-        Cart cart = user.get().getCart();
+        User user = getUser();
+        Cart cart = user.getCart();
 
         List<CartItem> cartItems = cartItemRepository.findByCart(cart);
 
@@ -115,13 +116,8 @@ public class CartServiceImpl implements CartService {
     @Override
     @PreAuthorize("hasRole('user')")
     public CartItemQuantityResponseDTO updateCart(CartItemRequestDTO request) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        int id = Integer.parseInt(context.getAuthentication().getName());
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new AppException(ErrorCode.USER_NOT_FOUND);
-        }
-        Cart cart = user.get().getCart();
+        User user = getUser();
+        Cart cart = user.getCart();
         Optional<Book> book = bookRepository.findById(request.getBookID());
         if (book.isEmpty()) {
             throw new AppException(ErrorCode.BOOK_ID_NOT_FOUND);
@@ -137,6 +133,27 @@ public class CartServiceImpl implements CartService {
                 + cartItem.getQuantity() - request.getQuantity());
         cartItem.setQuantity(request.getQuantity());
         cartItemRepository.save(cartItem);
+        return CartItemQuantityResponseDTO.builder()
+                .totalDistinctItems(cartItemRepository.countByCart(cart))
+                .build();
+    }
+
+    @Override
+    @PreAuthorize("hasRole('user')")
+    public CartItemQuantityResponseDTO removeItem(String bookID) {
+        User user = getUser();
+        Cart cart = user.getCart();
+        Optional<Book> book = bookRepository.findById(bookID);
+        if (book.isEmpty()) {
+            throw new AppException(ErrorCode.BOOK_ID_NOT_FOUND);
+        }
+        CartItem cartItem = cartItemRepository.findByCartAndBook(cart, book.get());
+        if (cartItem == null) {
+            throw new AppException(ErrorCode.ITEM_NOT_FOUND);
+        }
+        book.get().setAvailableQuantity(book.get().getAvailableQuantity()
+                + cartItem.getQuantity());
+        cartItemRepository.delete(cartItem);
         return CartItemQuantityResponseDTO.builder()
                 .totalDistinctItems(cartItemRepository.countByCart(cart))
                 .build();

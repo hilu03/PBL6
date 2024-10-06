@@ -34,4 +34,10 @@ public class CartController {
         return ResponseEntity.ok(new APIResponse(MessageResponse.UPDATE_CART_SUCCESS,
                 cartService.updateCart(request)));
     }
+
+    @DeleteMapping("/cart/{bookID}")
+    ResponseEntity<APIResponse> removeItem(@PathVariable String bookID) {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.REMOVE_ITEM_SUCCESS,
+                cartService.removeItem(bookID)));
+    }
 }

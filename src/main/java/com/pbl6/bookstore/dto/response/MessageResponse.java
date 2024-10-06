@@ -2,10 +2,10 @@ package com.pbl6.bookstore.dto.response;
 
 
 public class MessageResponse {
-    public static String ADD_TO_CART_SUCCESS = "Add to cart successfully!";
-    public static String UPDATE_CART_SUCCESS = "Cart updated successfully!";
+    public static String ADD_TO_CART_SUCCESS = "Added to cart successfully!";
+    public static String UPDATE_CART_SUCCESS = "Cart was successfully updated!";
     public static String RESOURCE_FOUND = "Resource found!" ;
-    public static String DELETE_SUCCESS = "Resource deleted successfully!";
+    public static String REMOVE_ITEM_SUCCESS = "Item was removed from cart successfully!";
     public static String LOGIN_SUCCESS = "Log in successfully!";
     public static String LOGOUT_SUCCESS = "Log out successfully!";
     public static String SIGNUP_SUCCESS = "Sign up successfully!";

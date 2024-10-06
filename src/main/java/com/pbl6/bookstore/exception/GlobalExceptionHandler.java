@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AccessDeniedException.class)
     ResponseEntity<APIResponse> handleAccessDeniedException(AccessDeniedException exception) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(new APIResponse(MessageResponse.DENIED_PERMISSION, null));
+        return ResponseEntity.status(ErrorCode.DENIED_PERMISSION.getHttpStatusCode())
+                .body(new APIResponse(ErrorCode.DENIED_PERMISSION.getMessage(), null));
     }
 
     @ExceptionHandler(value = AppException.class)

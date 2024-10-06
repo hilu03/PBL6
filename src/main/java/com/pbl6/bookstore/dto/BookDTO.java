@@ -21,4 +21,6 @@ public class BookDTO {
 
     int soldQuantity;
 
+    Integer availableQuantity;
+
 }

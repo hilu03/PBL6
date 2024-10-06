@@ -10,4 +10,6 @@ public interface CartService {
     CartDetailResponseDTO getCartDetail();
 
     CartItemQuantityResponseDTO updateCart(CartItemRequestDTO request);
+
+    CartItemQuantityResponseDTO removeItem(String bookID);
 }
