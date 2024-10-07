@@ -4,6 +4,11 @@
 .top {
     // background: rgba(255,255,135,59);
     background: #5E2E86;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     // background: rgb(173,216,230);
 }
 
@@ -227,6 +232,7 @@
         align-items: center;
         column-gap: 2px;
         // margin-right: 25px;
+        margin-left: 0px !important;
         li {
             position: relative;
             margin-left: 16px;
@@ -258,7 +264,7 @@
                     text-decoration: none;
                     display: flex;
                     align-items: center;
-                    color: map.get($theme_colors, "normal-text");
+                    color: white;
                     font-size: 18px;
                     font-weight: bold;
                 }
@@ -321,4 +327,14 @@ button:hover .submenu {
     font-size: 1.2em !important;
     font-weight: 700 !important;
     color: #c12121 !important;
+}
+
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .search {
+        button {
+            right: 3px;
+            top: 34px;  
+        }
+    }
 }

@@ -5,6 +5,7 @@ export const ROUTERS = {
         BEST_SELLER_BOOK: "/books/best-seller-book",
         SIGNIN: "/login",
         REGISTER: "/register",
-        PRODUCT_DETAILS: "/details/:id"
+        PRODUCT_DETAILS: "/details/:id",
+        PRODUCT_LISTING: "/listing/:slug",
     }
 }

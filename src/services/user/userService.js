@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from './customize_axios';
 export const processLogin = async (email, password) => {
  
   console.log(password)
     try {
-      const response = await axios.post('http://localhost:8080/api/login', { 
+      const response = await axios.post('/api/login', { 
           email,
           password,
 
@@ -18,7 +18,7 @@ export const processLogin = async (email, password) => {
   
 export const registerUser = async (fullName, email, phoneNumber, password) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/sign-up', { 
+      const response = await axios.post('/api/sign-up', { 
         fullName,
         phoneNumber,
         email,

@@ -6,9 +6,11 @@
   
   .image-slider-container {
     position: relative;
-    width: 1298px;
+    // width: 1298px;
+    width: 100%;
     margin: 0 auto;
-    // overflow: hidden;
+    margin-top: 73.36px;
+    overflow: hidden;
   }
   
   .image-slider-container .slick-slide img {
