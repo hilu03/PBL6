@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./style.scss";
 import { Rating } from "@mui/material";
 import { Button } from "@mui/material";
@@ -7,7 +7,7 @@ import { FormatDate } from "utils/formatDate";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect, useRef } from "react";
 import { getBookByID } from "services/user/bookService";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -15,15 +15,33 @@ import "./style.scss";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { CartContext } from "context/CartContext";
+import { processAddToCart } from "services/user/cartService";
+
 const ProductDetails = () => {
   const zoomSliderBig = useRef();
   const { id } = useParams(); // Lấy id từ URL
   const [book, setBook] = useState(null);
   const [quantityValue, setQuantityValue] = useState(1);
   const [estimateValue, setEstimateValue] = useState(0);
+  const navigate = useNavigate();
+
+  const { addToCart } = useContext(CartContext); // Lấy hàm addToCart từ context
 
   const handleAddToCart = async (e) => {
-   
+    const token = localStorage.getItem("token");
+    const quantity = quantityValue; // lấy sl sách từ state
+    try {
+      const response = await processAddToCart(token, id, quantity);
+      console.log("Book added to cart:", response);
+    } catch (error) {
+      console.error("Error adding book to cart:", error);
+    }
+  };
+
+  const handleBuyHot = async (e) => {
+    e.preventDefault();
+    navigate(`/confirm-order/${id}/${quantityValue}`); 
   };
 
   useEffect(() => {
@@ -201,8 +219,12 @@ const ProductDetails = () => {
               </div>
 
               <div className="buy d-flex align-items-center mt-3">
-                <Button className="addToCart" onClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
-                <Button className="addToOrder">Mua ngay cho nóng</Button>
+                <Button className="addToCart" onClick={handleAddToCart}>
+                  Thêm vào giỏ hàng
+                </Button>
+                <Button className="addToOrder" onClick={handleBuyHot}>
+                  Mua ngay cho nóng
+                </Button>
               </div>
             </div>
           </div>

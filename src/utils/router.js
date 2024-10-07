@@ -6,6 +6,7 @@ export const ROUTERS = {
         SIGNIN: "/login",
         REGISTER: "/register",
         PRODUCT_DETAILS: "/details/:id",
-        CARTITEMS: "/cart-items"
+        CARTITEMS: "/cart-items",
+        CONFIRMORDER: "/confirm-order/:id/:quantity"
     }
 }

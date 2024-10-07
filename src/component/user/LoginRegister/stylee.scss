@@ -4,7 +4,7 @@
     background-color: #5E2E86; 
     background-image: url(../../../assets/users/transparent.png); 
     background-size: 500px; 
-    background-position: 70px center; 
+    background-position: 110px center; 
     background-repeat: no-repeat; 
     display: flex;
     justify-content: flex-end;
@@ -14,15 +14,16 @@
 
 .login-form {
     background: white;
-    padding: 20px;
+    padding: 33px;
     border-radius: 8px;
     width: 500px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin-right: 130px;
-    // background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
 
 }
+
+
 
 .input-box {
   position: relative;
@@ -35,7 +36,16 @@
   padding-left: 40px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 18px;
+}
+.input-box input::placeholder {
+  color: #5E2E86;
+}
+.input-box input:focus {
+  border-color: #5E2E86; 
+  outline: none; 
+  box-shadow: 0 0 5px rgba(94, 46, 134, 0.5); 
+  border-width: 2px;
 }
 
 .input-box .icon {
@@ -43,7 +53,7 @@
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: #999;
+  color: #5E2E86 ;
 }
 
 button.login {
@@ -58,7 +68,7 @@ button.login {
   margin-top: 20px;
 }
 
-button:hover {
+button.login:hover {
   background-color: #472367;
 }
 
@@ -71,6 +81,11 @@ button:hover {
   color: #5E2E86;
   text-decoration: none;
 }
+.register-link:hover a {
+  font-size: 18px; 
+  font-weight: bold; 
+  transition: all 0.3s ease; 
+}
 
 
 .google-login {
@@ -79,17 +94,17 @@ button:hover {
   justify-content: center;
   width: 100%;
   padding: 10px;
-  background-color: #4285F4; 
-  color: white;
-  border: none;
-  border-radius: 4px;
+  // background-color: #4285F4; 
+  color: #5E2E86;
+  border: 3px solid #5E2E86;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px; /* Thêm khoảng cách trên nút này */
+  font-size: 20px;
+  margin-top: 20px; 
 }
 
 .google-login:hover {
-  background-color: #357ae8; /* Thay đổi màu khi hover */
+  background-color: #cba8e8; /* Thay đổi màu khi hover */
 }
 
 .google-login .icon {
@@ -102,6 +117,7 @@ button:hover {
   justify-content: space-between;
   font-size: 14.5px;
   margin: -15px 0 15px;
+  color: #5E2E86;
 
 }
 
@@ -109,4 +125,32 @@ button:hover {
   accent-color: #fff;
   margin-right: 4px;
   
+}
+
+.remember-forgot a {
+  color: #5E2E86;
+}
+
+.register-link p{
+  color: #5E2E86;
+  font-size: 18px;
+}
+
+
+.homepage {
+  text-align: center;
+  cursor: pointer;
+}
+
+.homepage svg {
+  color: #5E2E86; 
+  font-size: 25px;
+}
+
+.error-message {
+  color: red;
+  font-size: 20px; // Kích thước chữ lớn hơn
+  text-align: center; // Căn giữa
+  // margin: 10px 0; // Khoảng cách trên và dưới
+  font-weight: bold; // Chữ đậm nếu bạn muốn
 }

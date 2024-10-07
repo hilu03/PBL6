@@ -19,15 +19,13 @@ const CartItems = () => {
             <div>
               <span className="select-all">Chọn tất cả sản phẩm</span>
             </div>
-
             <div className="sl">Số lượng</div>
             <div className="total">Thành tiền</div>
           </div>
-
-          {/* Sản phẩm 1 */}  
+          {/* Sản phẩm 1 */}
           <div className="product-container p-2 mb-2">
             <div className="product-item d-flex align-items-center justify-content-between">
-              <div className="checkbox me-3">
+              <div className="choose-item me-3">
                 <input type="checkbox" id="item1" />
               </div>
               <img
@@ -36,13 +34,12 @@ const CartItems = () => {
                 className="img-fluid"
                 style={{ width: "auto", height: "100px" }}
               />
-              <div className="title">
+              <div className="product-title">
                 <h5>
                   "Cậu" ma nhà xí Hanako - Tập 11 - Bản đặc biệt (Tặng kèm 01
                   sách tranh màu độc quyền Ghost Hotel's Cafe)
                 </h5>
               </div>
-
               <div className="quantity align-items-center">
                 <Button className="ms-3">
                   <FaMinus />
@@ -52,96 +49,32 @@ const CartItems = () => {
                   <FaPlus />
                 </Button>
               </div>
-           <div className="price"> <span className="ms-3">450.000</span></div>
-            
-             
+              <div className="price">
+                <span className="ms-3">4500000</span>
+              </div>
             </div>
             <button className="remove">
-                <MdDelete />
-              </button>
-          </div>
-
-          {/* 
-
-          // <div className="product-container border p-2 mb-2">
-            <div className="product-item d-flex align-items-center">
-              <div className="checkbox me-2">
-                <input type="checkbox" id="item1" />
-              </div>
-              <img
-                src="https://product.hstatic.net/200000343865/product/tuoi-mui_77f921997bd144909822432079c1eb75.jpg"
-                alt="Sản phẩm"
-                className="img-fluid"
-                style={{ width: "auto", height: "100px" }}
-              />
-              <div className="title ms-3">
-                <h5>Hồ sơ tính cách 12 con giáp - Bí mật tuổi Mùi</h5>
-              </div>
-              <button className="ms-auto">
-                <MdDelete />
-              </button>
-            </div>
-          </div>
-
-          <div className="product-container border p-2 mb-2">
-            <div className="product-item d-flex align-items-center">
-              <div className="checkbox me-2">
-                <input type="checkbox" id="item1" />
-              </div>
-              <img
-                src="https://product.hstatic.net/200000343865/product/nobita-va-me-cung-thiec_bf6071b0975b4eb487ed1bcd5db641f9.jpg"
-                className="img-fluid"
-                style={{ width: "auto", height: "100px" }}
-              />
-              <div className="title ms-3">
-                <h5>Doraemon - Phiên bản điện ảnh màu - Tập 14 (2017)</h5>
-              </div>
-              <button className="ms-auto">
-                <MdDelete />
-              </button>
-            </div>
-          </div>
-
-          {/* Sản phẩm 2 */}
-          {/* <div className="product-container border p-2 mb-2">
-            <div className="product-item d-flex align-items-center">
-              <div className="checkbox me-2">
-                <input type="checkbox" id="item2" />
-              </div>
-              <img
-                src="https://product.hstatic.net/200000343865/product/3_db7d9150d9784287b49f105426d1e472.jpg"
-                alt="Sản phẩm"
-                className="img-fluid"
-                style={{ width: "auto", height: "100px" }}
-              />
-              <div className="title ms-3">
-                <h5>Chú thuật hồi chiến - Tập 3</h5>
-              </div>
-              <button className="ms-auto">
               <MdDelete />
-              </button>
-            </div>
-          </div> */}
+            </button>
+          </div>
         </div>
 
         <div className="col-4 box box2">
           <div>
-            <div className="test">
-              <div className="roww">
+            <div className="testt">
+              <div className="roww-gia">
                 <span>Tạm tính</span>
-                <span>10.000</span>
+                <span>10.00000</span>
               </div>
-              <div className="roww">
+              <div className="roww-gia">
                 <span>Giảm giá</span>
                 <span>0</span>
               </div>
-
               <hr />
-              <div className="roww">
+              <div className="roww-gia">
                 <span>Thành tiền</span>
                 <span>20.000</span>
               </div>
-
               <button className="btn">Mua hàng</button>
             </div>
           </div>

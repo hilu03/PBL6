@@ -1,139 +1,147 @@
 .product-container {
-  border: 1px solid #5E2E86;
+  border: 1px solid #5e2e86;
   border-radius: 7px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .quantity {
-  margin-left: 17px !important;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  width: 130px;
+  justify-content: space-between;
+  flex-shrink: 0;
 }
-
-
-
-
-
 .quantity Button {
   min-width: 25px;
   width: 27px;
   height: 27px;
   border-radius: 50%;
   background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1); 
+
 }
 .quantity input {
-      // margin-left: 5px;
-      outline: none;
-      border: 0px;
-      background: #5E2E86;
-      border-radius: 5px;
-      width: 25px;
-      color: white;
-      font-size: 16px;
-      text-align: center;
+  outline: none;
+  border: 0px;
+  background: #5e2e86;
+  border-radius: 5px;
+  width: 25px;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+
 }
 
-.price span {
-font-size: 17px;
-padding-left: 37px;
-color: #5E2E86;
-margin: 0 !important;
-display: flex;
-  justify-content: space-between; /* Đẩy phần tử span sang bên phải */
-  align-items: center; 
-}
-
-
-.product-infor {
+.price {
   display: flex;
-  align-items: center;
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  height: 100px; /* Thay đổi chiều cao nếu cần */
+}
+.price span {
+  font-size: 18px;
+  padding-left: 30px;
+  color: #5e2e86;
+  margin: 0 !important;
+  // display: flex;
+  // align-items: center;
+  // text-align: center;
+  width: 100px;
+  flex-shrink: 0;
 }
 
 .select-all {
-  font-size: 18px; /* Tăng kích thước chữ */
-  color: #5E2E86; /* Màu tím */
+  font-size: 18px;
+  color: #5e2e86;
   font-weight: 700;
 }
-
 .first_checkbox {
   margin-right: 10px;
-  // margin-top: 10px;
-  // padding: 5px;
   padding-top: 4px;
   transform: scale(1.5);
+  accent-color: #5E2E86;
 }
 
-.checkbox {
-  translate: 0px 10px;
-  transform: scale(1.2);
-  cursor: pointer;
-}
 
 .product-item {
-  margin-bottom: 15px;
+  // margin-bottom: 15px;
+  padding-right: 40px;
+
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  // width: 100%;
 }
 
-.title {
+.choose-item input[type="checkbox"] {
+  transform: scale(1.2); 
+  cursor: pointer; 
+  margin-left: 5px;
+  accent-color: #5E2E86;
+}
+
+
+
+
+.product-title {
   width: 400px;
   margin-top: -18px;
   margin-left: 10px;
 }
-
-//  button.remove{
-//   background: transparent;
-//   border: none;
-//   font-size: 25px;
-//   cursor: pointer;
-// }
+button.remove {
+  background: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  // position: absolute;
+  // right: 10px;
+  margin-left: auto;
+  color: #5e2e86;
+}
 
 .sl {
-  margin-left: 322px;
+  margin-left: 315px;
   font-size: 18px;
   font-weight: 600;
   color: #5e2e86;
 }
 .total {
-  margin-left: 47px;
+  margin-left: 55px;
   font-size: 18px;
   font-weight: 600;
   color: #5e2e86;
 }
-
 .header {
   display: flex;
   margin-bottom: 10px;
   font-size: 15px;
 }
-
-.test {
+.testt {
   padding-top: 170px;
   padding-left: 30px;
-
 }
-
-.test .roww {
+.testt .roww-gia {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px; /* Khoảng cách giữa các dòng */
 }
-
-.test .roww span {
+.testt .roww-gia span {
   font-size: 20px; /* Kích thước chữ có thể điều chỉnh tùy ý */
 }
-
 hr {
   margin: 20px 0;
   border: none;
-  border: 2px solid #4A246A;
+  border: 2px solid #4a246a;
 }
-
 button.btn {
   margin-top: 30px;
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #5E2E86; /* Màu nền #5E2E86 */
+  background-color: #5e2e86; /* Màu nền #5E2E86 */
   color: white;
   border: none;
   cursor: pointer;
@@ -141,11 +149,10 @@ button.btn {
   text-align: center;
   font-weight: 650;
 }
-
 button.btn:hover {
-  border: 5px solid #5E2E86; /* Viền hiển thị khi hover */
+  border: 5px solid #5e2e86; /* Viền hiển thị khi hover */
   background-color: white; /* Thay đổi màu nền khi hover, nếu cần */
-  color: #5E2E86; /* Thay đổi màu chữ khi hover, nếu cần */
-  border-radius: 10px; /* Giữ nguyên bo tròn các góc */
+  color: #5e2e86;
+  border-radius: 10px;
   font-size: 23px;
 }

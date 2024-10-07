@@ -8,6 +8,8 @@ import LoginForm from 'component/user/LoginRegister';
 import RegisterForm from 'component/user/Register/RegisterForm';
 import ProductDetails from 'pages/users/product_details';
 import CartItems from 'pages/users/cartItems';
+import CheckCode from 'component/user/checkCode';
+import ConfirmOrder from 'pages/users/confirmOrder';
 
 const renderUserRouter = () => {
     const userRouters = [
@@ -50,10 +52,16 @@ const renderUserRouter = () => {
             path: ROUTERS.USER.CARTITEMS,
             component: <CartItems/>
         },
+
+        {
+            path: ROUTERS.USER.CONFIRMORDER,
+            component: <ConfirmOrder/>
+        },
     ]
 
     return (
         <MasterLayout>
+            <CheckCode/>
             <Routes>
                 {
                     userRouters.map((item, key) => (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaUserAlt, FaLock   } from "react-icons/fa";
+import { FaUserAlt, FaLock, FaPhone, FaHome   } from "react-icons/fa";
 import { MdEmail  } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -27,8 +27,8 @@ const RegisterForm = () => {
 
     try {
       const response = await registerUser(fullName, email, phone, password);
-      if (response.status === 200) { // Giả sử API trả về status 201 khi đăng ký thành công
-        navigate('/'); // Điều hướng về trang đăng nhập
+      if (response.status === 200) { 
+        navigate('/login'); 
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Đăng ký thất bại');
@@ -40,13 +40,11 @@ const RegisterForm = () => {
 
 
   return (
-    <div className="heli">
-      <div className="container">
-      <div className="a">
-
-      <div className='wrapperRegister'>
+    <div className="helo">
+      <div className="register-form">
       <form onSubmit={handleSubmit}>
         <h1>Đăng kí</h1>
+        {error && <div className="error-message" style={{ color: "red" }}>{error}</div>}
         <div className="input-box">
           <input type="text" placeholder="Họ tên" 
             value={fullName} 
@@ -68,7 +66,7 @@ const RegisterForm = () => {
                       value={phone} 
                       onChange={(e) => setPhone(e.target.value)} 
                       required />
-          <FaLock className='icon' />
+          <FaPhone className='icon' />
         </div>
 
         <div className="input-box">
@@ -91,13 +89,17 @@ const RegisterForm = () => {
         <div className="remember-forgot">
           <label><input type="checkbox" /> Tôi đồng ý với các điều khoản </label>
         </div>
-        <button type="submit">Đăng kí</button>
+        <button className='register' type="submit">Đăng kí </button>
         <div className="register-link">
           <p>Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link></p> {/* Link to register */}
         </div>
+        <div className="homepage">
+          <Link to="/">
+          <FaHome /> 
+        </Link>
+          </div>
       </form>
-    </div>
-      </div>
+      
       </div>
       </div>
         

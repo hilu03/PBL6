@@ -31,3 +31,29 @@ export const registerUser = async (fullName, email, phoneNumber, password) => {
       throw error; 
     }
   };
+
+  export const processLoginGG = async (code) => {
+    try {
+      const response = await axios.post(`http://localhost:8080/api/login/google?code=${code}`);
+      console.log("Response from server:", response); 
+      return response;
+    } catch (error) {
+      console.error('Error logging in:', error);
+      throw error;
+    }
+  };
+
+
+  export const processLogout = async (token) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/log-out', { 
+        token
+      });
+      console.log(response)
+      return response; 
+     
+    } catch (error) {
+      console.error(error);
+      throw error; 
+    }
+  };

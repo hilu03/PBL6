@@ -1,0 +1,200 @@
+.boxConfirm {
+    background-color: rgb(196, 164, 226); /* Màu nền cho phần xác nhận đơn hàng */
+    padding: 20px; /* Khoảng cách bên trong */
+    border-radius: 15px; /* Bo tròn các góc nếu cần */
+}
+
+.custom-product-item {
+    padding: 0;
+}
+
+.header-container {
+    background-color: #f8f9fa; /* Màu nền */
+    padding: 20px; /* Khoảng cách bên trong */
+    text-align: center; /* Canh giữa chữ */
+    border-bottom: 5px solid #5e2e86; /* Đường viền dưới */
+    border-radius: 15px;
+    display: inline-block;
+    
+}
+
+.header-container h1 {
+    font-size: 27px; 
+    color:#5e2e86 ; 
+    margin: 0; 
+}
+
+.label-width {
+    padding-top: 7px;
+    width: 25%; 
+    font-size: 18px;
+}
+
+.input-width {
+    width: 75%; 
+    font-size: 18px;
+}
+
+.shipping-info h5 {
+    padding-top: 18px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.product-infor h5 {
+    padding-top: 20px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.custom-product-container {
+    background-color: white;
+    color: #5e2e86;
+}
+
+.custom-product-container span {
+    font-size: 17px; /* Điều chỉnh cỡ chữ theo ý muốn */
+    color: #5e2e86; /* Tùy chọn: thay đổi màu chữ nếu cần */
+    font-weight: 600;
+}
+
+.sluong {
+    margin-left: 30px;
+}
+
+.payment-info h5 {
+    padding-top: 20px;
+    font-weight: 700;
+    padding-bottom: 10px;
+
+}
+
+
+
+
+.form-check-input {
+    appearance: none; 
+    width: 20px;
+    height: 20px;
+    border: 2px solid #5e2e86; 
+    border-radius: 50%; 
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease; 
+    margin-top: 5px;
+}
+
+.form-check-input:checked {
+    background-color: transparent; 
+    border-color: #5e2e86; 
+}
+
+.form-check-input:checked::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #5e2e86;
+    top: 3px;
+    left: 4px;
+    transition: all 0.3s ease;
+}
+
+.form-check-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.form-check-input:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+
+.form-check-input:hover {
+    border-color: #8a50a5; /* Đổi màu khi hover */
+}
+
+.form-check-label {
+    margin-top: 8px;
+    margin-left: 10px;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+
+.order-infor span {
+    display: inline-block; /* Tất cả các thẻ span sẽ tự động xuống hàng */
+}
+
+
+.order-infor span:nth-child(3) {
+    margin-left: 15px; /* Tạo khoảng cách giữa thẻ span thứ 2 và thẻ span thứ 3 */
+}
+
+.payment-container {
+    border: 4px solid #5e2e86; 
+    border-radius: 10px; 
+    padding: 20px; 
+    margin-top: 30px; 
+    background: #5e2e86;
+    // background-color: #f8f9fa; 
+    color: white;
+}
+
+.boxOrder {
+    padding: 0;
+    padding-left: 40px;
+    font-size: 20px;
+    margin-top: 30px;
+    color: #5e2e86;
+}
+
+.roww {
+    display: flex;
+    justify-content: space-between; /* Đẩy hai phần tử sang hai phía */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 10px; /* Khoảng cách giữa các hàng */
+    color: white;
+    font-weight: 600px;
+}
+
+.highlight-price {
+    color: #fe9711; /* Màu chữ */
+    font-weight: bold; /* Chữ đậm */
+    font-size: 1.3em; /* Kích thước chữ lớn hơn */
+}
+hr.aaa {
+    margin: 20px 0;
+    border: none;
+    border: 2px solid white;
+  }
+.btn-buy {
+    margin-top: 30px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #ebb30c; /* Màu nền #5E2E86 */
+    color: #333 ;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 7px;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.btn-buy:hover {
+    background-color: #63e910; /* Màu nền khi hover */
+    transform: scale(1.05); /* Tăng nhẹ kích thước nút khi hover */
+}
