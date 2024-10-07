@@ -25,7 +25,7 @@ const ConfirmOrder = () => {
   }
   return (
     <div className="container mt-4">
-      <div className="row">
+      <div className="row confirm">
         {/* Phần bên trái chiếm 8/12 chiều rộng */}
         <div className="col-8 box boxConfirm" style={{ padding: "20px" }}>
           <div className="header-container">

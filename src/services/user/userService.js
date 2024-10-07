@@ -34,7 +34,7 @@ export const registerUser = async (fullName, email, phoneNumber, password) => {
 
   export const processLoginGG = async (code) => {
     try {
-      const response = await axios.post(`http://localhost:8080/api/login/google?code=${code}`);
+      const response = await axios.post(`/api/login/google?code=${code}`);
       console.log("Response from server:", response); 
       return response;
     } catch (error) {
@@ -46,7 +46,7 @@ export const registerUser = async (fullName, email, phoneNumber, password) => {
 
   export const processLogout = async (token) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/log-out', { 
+      const response = await axios.post('/api/log-out', { 
         token
       });
       console.log(response)

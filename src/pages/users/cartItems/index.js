@@ -8,7 +8,8 @@ import { Button } from "@mui/material";
 
 const CartItems = () => {
   return (
-    <div className="container mt-4">
+
+    <div className="container sumary mt-4">
       <div className="row">
         <div className="col-8 box box1">
           <h2>Giỏ hàng</h2>

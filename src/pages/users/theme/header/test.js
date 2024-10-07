@@ -1,12 +1,12 @@
 import "./style.scss";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { FaRegHeart, FaSearch, FaRegUser } from "react-icons/fa";
-import { Link, useNavigate  } from "react-router-dom";
+import { FaRegHeart, FaSearch, FaRegUser, FaBars } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 // import { Formatter } from "utils/formatter";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect, useContext } from "react";
 // import DropDownCategory from "component/user/dropdownCategory";
-import { getCategory } from "services/user/bookService";
+import { getCategories } from "services/user/bookService";
 import { processLogout } from "services/user/userService";
 import { BiCategory } from "react-icons/bi";
 import logo from "../../../../assets/users/transparent.png";
@@ -14,7 +14,7 @@ import { CartContext } from "context/CartContext";
 import { generateSlug } from "utils/createSlug";
 
 const Test = () => {
-//   const [openCategory, setOpenCategory] = useState(false);
+  //   const [openCategory, setOpenCategory] = useState(false);
   const token = localStorage.getItem("token");
   const name = localStorage.getItem("name");
   console.log(name, token);
@@ -25,7 +25,7 @@ const Test = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await getCategory();
+        const response = await getCategories();
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -36,18 +36,18 @@ const Test = () => {
   }, []);
 
   const handleLogout = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       try {
         await processLogout(token);
-        localStorage.removeItem('token');
-        localStorage.removeItem('name');
-        navigate('/login');
+        localStorage.removeItem("token");
+        localStorage.removeItem("name");
+        navigate("/login");
       } catch (error) {
-        console.error('Logout failed:', error);
+        console.error("Logout failed:", error);
       }
     } else {
-      console.error('No token found');
+      console.error("No token found");
     }
   };
 
@@ -56,12 +56,14 @@ const Test = () => {
       <div className="top">
         <div className="container">
           <div className="row">
-            <div className="col-xl-2">
+            <div className="col-lg-2 col-md-2 col-sm-3 col-3">
               <div className="logo">
-                <img src={logo} alt="" />
+                <Link to="">
+                  <img src={logo} alt="" />
+                </Link>
               </div>
             </div>
-            <div className="col-xl-1">
+            <div className="col-lg-1 col-md-1 d-none d-md-block">
               <div className="category">
                 <button type="button">
                   <BiCategory />
@@ -71,21 +73,20 @@ const Test = () => {
                       {categories && categories.length > 0 ? (
                         categories.map((category) => (
                           <li key={category.id}>
-                            {" "}
-                            {/* Sử dụng ID duy nhất nếu có */}
-                            <a href="">{category.name}</a>{" "}
-                            {/* Thay đổi theo thuộc tính thực tế */}
+
+<Link to={`/listing/${generateSlug(category.name)}`}>{category.name}</Link>
+                           
                           </li>
                         ))
                       ) : (
-                        <li>no</li>
+                        <li>No categories available</li>
                       )}
                     </ul>
                   </div>
                 </button>
               </div>
             </div>
-            <div className="col-xl-6">
+            <div className="col-lg-6 col-md-6 col-sm-7 col-7">
               <div className="search">
                 <input type="text" placeholder="Search...!!!" />
                 <button type="button">
@@ -93,35 +94,37 @@ const Test = () => {
                 </button>
               </div>
             </div>
-            <div className="col-xl-3">
+            <div className="col-lg-3 col-md-3 col-sm-2 col-2">
               <div className="header_cart">
-                <ul>
+                <ul className="ms-auto">
                   <li>
-                    <Link to="">
+                  <Link to="" className="d-none d-md-block">
                       <FaRegHeart /> <span>0</span>
                     </Link>
                   </li>
 
                   <li>
                     <Link to="/cart-items">
-                      <AiOutlineShoppingCart />  <span>{cartCount}</span>
+                      <AiOutlineShoppingCart /> <span>{cartCount}</span>
                     </Link>
                   </li>
-                  <li className="signin">
+                  <li className="signin d-none d-md-block">
                     {token ? (
                       <button>
                         {name}
                         {/* <FaRegUser/> */}
                         <div className="submenu">
                           <ul>
-                            <li>    
+                            <li>
                               <a href="">Thông tin cá nhân</a>
                             </li>
                             <li>
                               <a href="">Lịch sử mua hàng</a>
                             </li>
                             <li>
-                              <a href="#" onClick={handleLogout}>Đăng xuất</a>
+                              <a href="#" onClick={handleLogout}>
+                                Đăng xuất
+                              </a>
                             </li>
                           </ul>
                         </div>
@@ -134,12 +137,11 @@ const Test = () => {
                     )}
                   </li>
 
-                  {/* <li>
-                                        <Link to="" onClick={() => setOpenCategory(
-                                        (prev) => !prev)}>
+                  <li>
+                                        <Link to="" className="d-md-none">
                                             <FaBars />
                                         </Link>
-                                    </li> */}
+                                    </li>
                 </ul>
               </div>
             </div>

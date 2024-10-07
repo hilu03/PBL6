@@ -1,9 +1,8 @@
-import axios from 'axios';
-
+import axios from './customize_axios';
 export const processAddToCart = async (token, bookID, quantity) => {
  
     try {
-      const response = await axios.post('http://localhost:8080/api/cart',
+      const response = await axios.post('/api/cart',
         { bookID, quantity },
         {
           headers: {
