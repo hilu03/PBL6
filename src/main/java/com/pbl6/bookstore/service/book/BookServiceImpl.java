@@ -45,6 +45,23 @@ public class BookServiceImpl implements BookService{
         return modelMapper.map(book, BookDTO.class);
     }
 
+    public BookDetailDTO convertToBookDetailDTO_CategId(Book book) {
+        BookDetailDTO bookDetailDTO = modelMapper.map(book, BookDetailDTO.class);
+        bookDetailDTO.setCategory(Integer.toString(book.getCategory().getId()));
+
+        bookDetailDTO.setAuthors(new ArrayList<>());
+        for (Author author: book.getAuthors()) {
+            bookDetailDTO.addAuthor(author.getName());
+        }
+
+        bookDetailDTO.setTargets(new ArrayList<>());
+        for (Target target: book.getTargets()) {
+            bookDetailDTO.addTarget(target.getName());
+        }
+
+        return bookDetailDTO;
+    }
+
     @Override
     public Page<BookDTO> getAllBooks(Pageable pageable) {
         Page<Book> books = bookRepository.findAll(pageable);
@@ -55,6 +72,8 @@ public class BookServiceImpl implements BookService{
 
         return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
     }
+
+
 
     @Override
     public BookDetailDTO findBookById(String id) {
@@ -95,6 +114,23 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<BookDTO> getSaleBooks() {
         return bookRepository.findTop20ByDiscountDesc().stream().map(this::convertToBookDTO).toList();
+    }
+
+
+    @Override
+    public List<BookDetailDTO> getSpecialBooks() {
+        return bookRepository.findTop20ByOrderBySoldQuantityDesc().stream().map(this::convertToBookDetailDTO).toList();
+    }
+
+    @Override
+    public  Page<BookDetailDTO> getDetailBooks_CategoryId(Pageable pageable) {
+        Page<Book> books = bookRepository.findAll(pageable);
+
+        List<BookDetailDTO> bookDetailDTOList = books.getContent().stream()
+                .map(this::convertToBookDetailDTO_CategId)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(bookDetailDTOList, pageable, books.getTotalElements());
     }
 
 

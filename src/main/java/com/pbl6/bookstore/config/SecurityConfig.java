@@ -30,6 +30,8 @@ public class SecurityConfig {
             "/books/sale-books",
             "/categories",
             "/targets",
+            "books/special_books",
+            "books_categId"
     };
 
     public final String[] PUBLIC_POST_ENDPOINTS = {

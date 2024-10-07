@@ -69,7 +69,7 @@ public class Book {
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "BookAuthor",
+    @JoinTable(name = "bookauthor",
             joinColumns = @JoinColumn(name = "BookID"),
             inverseJoinColumns = @JoinColumn(name = "AuthorID"))
     List<Author> authors;

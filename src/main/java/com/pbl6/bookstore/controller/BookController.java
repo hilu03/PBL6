@@ -100,6 +100,27 @@ public class BookController {
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getSaleBooks()));
     }
 
+    @GetMapping("books/special_books")
+    public ResponseEntity<APIResponse> getSpecialBooks() {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getSpecialBooks()));
+    }
+
+    @GetMapping("books_categId")
+    public ResponseEntity<APIResponse> getDetailBooks_CategoryId(@RequestParam(required = false) String page) {
+        try {
+            if (page == null) {
+                page = "0";
+            }
+
+            Pageable TotalBooks = PageRequest.of(Integer.parseInt(page), 300);
+
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getDetailBooks_CategoryId(TotalBooks)));
+        }
+        catch (NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(MessageResponse.INVALID_PAGE_NUMBER, null));
+        }
+//        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getDetailBooks_CategoryId()));
+    }
     //    @GetMapping("/books/category-name/{category}")
 //    public ResponseEntity<APIResponse> getBooksByCategoryName(@PathVariable String category,
 //                                                          @RequestParam(required = false) String page) {
