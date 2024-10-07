@@ -10,6 +10,7 @@ import ProductDetails from 'pages/users/product_details';
 import CartItems from 'pages/users/cartItems';
 import CheckCode from 'component/user/checkCode';
 import ConfirmOrder from 'pages/users/confirmOrder';
+import ProductListing from 'pages/users/product_listing';
 
 const renderUserRouter = () => {
     const userRouters = [
@@ -56,6 +57,10 @@ const renderUserRouter = () => {
         {
             path: ROUTERS.USER.CONFIRMORDER,
             component: <ConfirmOrder/>
+        },
+        {
+            path: ROUTERS.USER.PRODUCT_LISTING,
+            component: <ProductListing/>
         },
     ]
 

@@ -11,6 +11,7 @@ import { processLogout } from "services/user/userService";
 import { BiCategory } from "react-icons/bi";
 import logo from "../../../../assets/users/transparent.png";
 import { CartContext } from "context/CartContext";
+import { generateSlug } from "utils/createSlug";
 
 const Test = () => {
 //   const [openCategory, setOpenCategory] = useState(false);

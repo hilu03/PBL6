@@ -31,9 +31,24 @@ const BookSection = ({title, books, type}) => {
                     navigation={true}
                     pagination = {{ clickable: true }}
                     modules={[Navigation]} 
-                    className="mySwiper">
+                    className="mySwiper"
+                    breakpoints={{
+                        360: {
+                            slidesPerView: 2, // Từ 768px đến 992px hiển thị 4 slides
+                            spaceBetween: 10
+                        },
+                        768: {
+                            slidesPerView: 4, // Từ 768px đến 992px hiển thị 4 slides
+                            spaceBetween: 10
+                        },
+                        993: {
+                            slidesPerView: 6, // Từ 992px trở lên hiển thị 6 slides
+                            spaceBetween: 10
+                        }
+                    }}
+                >
 
-                    {books && books.length > 0 ? (
+                    {books && Array.isArray(books) && books.length > 0 ? (
                             books.map(book => (
                                 <SwiperSlide key={book.id} onClick={() => navigate(`/details/${book.id}`)}>
                                     <div className="item productItem">
@@ -41,7 +56,10 @@ const BookSection = ({title, books, type}) => {
                                             <img src={book.imageLink} alt={book.title} className='w-100' />
                                             <span className="badge bg-danger">- {Discount(book.originalPrice, book.discountedPrice)}%</span>
                                             <div className='actions'>
-                                                <Button><FaRegHeart /></Button>
+                                                <Button
+                                                    onClick={(e) => { e.stopPropagation();}}>
+                                                    <FaRegHeart />
+                                                </Button>
                                             </div>
                                             <h4>{book.title}</h4>
                                             <span className='text-success'>In Stock</span>

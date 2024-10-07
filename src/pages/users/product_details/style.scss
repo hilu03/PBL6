@@ -1,5 +1,6 @@
 .section {
   padding: 45px 0px;
+  margin-top: 73.36px;
 }
 
 .productDetails {
@@ -17,7 +18,7 @@
     padding-right: 15px;
   }
 
-  .badge {
+  .stock {
     display: inline-block;
     height: 100%;
     font-size: 14px;
@@ -104,6 +105,10 @@
       border-radius: 50%;
       background: white;
       border: 1px solid rgba(0, 0, 0, 0.1);
+
+      svg {
+        color: #5E2E86;
+      }
     }
 
     input {
@@ -152,6 +157,107 @@
       margin-right: 50px;
       padding-right: 20px;
       padding-left: 20px;
+    }
+  }
+  .detailsPageTabs {
+    border-radius: 25px;
+
+    .customTabs {
+      margin-top: -30px;
+      li {
+        margin-right: 20px;
+        button {
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          padding: 7px 20px;
+          font-size: 15px;
+          text-transform: capitalize;
+          color: #333;
+          border-radius: 30px;
+          font-weight: bold;
+        }
+        button.active {
+          // color: rgb(13, 110, 253);
+          color: #9d2ff7;
+        }
+      }
+      
+    }
+
+    .tabContent {
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      p {
+
+      }
+
+      .card {
+        border-radius: 10px;
+      }
+
+      .reviewsCard {
+        // margin-bottom: 0px;
+        padding: 12px;
+        .image {
+          width: 60px;
+          .rounded-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            width: 60px;
+            height: 60px;
+  
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          span {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+            color: green;
+          }
+        }
+
+        .datePublish {
+          font-weight: 600;
+          padding-bottom: 3px;
+        }
+      }
+
+      .reviewForm {
+        h5 {
+          margin-bottom: -10px;
+        }
+        .form-group {
+          margin-bottom: 25px;
+
+          .form-control {
+            border-radius: 10px;
+          }
+
+          button {
+            background: #5E2E86;
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+          }
+        }
+
+        textarea {
+          height: 180px;
+        }
+      }
+
+      .progressBarBox {
+        margin-top: 10px;
+        width: 100%;
+
+        .progress-bar {
+          background: orange;
+        }
+      }
     }
   }
 }

@@ -27,10 +27,10 @@ const SliderComponent = () => {
           <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img5.jpg?v=1385" alt="" />
         </div>
         <div>
-          <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img3.jpg?v=1379" alt="" />
+          <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img4.jpg?v=1412" alt="" />
         </div>
         <div>
-          <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1385" alt="" />
+          <img src="https://theme.hstatic.net/200000343865/1001052087/14/ms_banner_img1.jpg?v=1412" alt="" />
         </div>
       </Slider>
     </div>

@@ -34,9 +34,9 @@ const LoginForm = () => {
     try {
       const response = await processLogin(email, password);
       if (response.status === 200) {
-        const userID = response.data.data.id
-        const name = response.data.data.fullName
         const token = response.data.data.token
+        const name = response.data.data.fullName
+        
         localStorage.setItem("name", name)
         localStorage.setItem("token", token)
         navigate('/');
