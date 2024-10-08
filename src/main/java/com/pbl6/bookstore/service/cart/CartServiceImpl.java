@@ -1,6 +1,7 @@
 package com.pbl6.bookstore.service.cart;
 
 import com.pbl6.bookstore.dto.request.CartItemRequestDTO;
+import com.pbl6.bookstore.dto.request.RemoveItemInCartRequest;
 import com.pbl6.bookstore.dto.response.CartDetailResponseDTO;
 import com.pbl6.bookstore.dto.response.CartItemInfoResponseDTO;
 import com.pbl6.bookstore.dto.response.CartItemQuantityResponseDTO;
@@ -29,8 +30,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CartServiceImpl implements CartService {
-
-    CartRepository cartRepository;
 
     CartItemRepository cartItemRepository;
 
@@ -67,11 +66,7 @@ public class CartServiceImpl implements CartService {
                 }
                 else {
                     cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
-
                 }
-
-                book.get().setAvailableQuantity(book.get().getAvailableQuantity()
-                        - request.getQuantity());
 
                 cartItemRepository.save(cartItem);
 
@@ -126,11 +121,9 @@ public class CartServiceImpl implements CartService {
         if (cartItem == null) {
             throw new AppException(ErrorCode.ITEM_NOT_FOUND);
         }
-        if (book.get().getAvailableQuantity() + cartItem.getQuantity() < request.getQuantity()) {
+        if (book.get().getAvailableQuantity() < request.getQuantity()) {
             throw new AppException(ErrorCode.QUANTITY_EXCEED);
         }
-        book.get().setAvailableQuantity(book.get().getAvailableQuantity()
-                + cartItem.getQuantity() - request.getQuantity());
         cartItem.setQuantity(request.getQuantity());
         cartItemRepository.save(cartItem);
         return CartItemQuantityResponseDTO.builder()
@@ -140,20 +133,20 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @PreAuthorize("hasRole('user')")
-    public CartItemQuantityResponseDTO removeItem(String bookID) {
+    public CartItemQuantityResponseDTO removeItem(RemoveItemInCartRequest request) {
         User user = getUser();
         Cart cart = user.getCart();
-        Optional<Book> book = bookRepository.findById(bookID);
-        if (book.isEmpty()) {
-            throw new AppException(ErrorCode.BOOK_ID_NOT_FOUND);
+        for (String bookID: request.getBookIDs()) {
+            Optional<Book> book = bookRepository.findById(bookID);
+            if (book.isEmpty()) {
+                throw new AppException(ErrorCode.BOOK_ID_NOT_FOUND);
+            }
+            CartItem cartItem = cartItemRepository.findByCartAndBook(cart, book.get());
+            if (cartItem == null) {
+                throw new AppException(ErrorCode.ITEM_NOT_FOUND);
+            }
+            cartItemRepository.delete(cartItem);
         }
-        CartItem cartItem = cartItemRepository.findByCartAndBook(cart, book.get());
-        if (cartItem == null) {
-            throw new AppException(ErrorCode.ITEM_NOT_FOUND);
-        }
-        book.get().setAvailableQuantity(book.get().getAvailableQuantity()
-                + cartItem.getQuantity());
-        cartItemRepository.delete(cartItem);
         return CartItemQuantityResponseDTO.builder()
                 .totalDistinctItems(cartItemRepository.countByCart(cart))
                 .build();

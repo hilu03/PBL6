@@ -5,7 +5,7 @@ public class MessageResponse {
     public static String ADD_TO_CART_SUCCESS = "Added to cart successfully!";
     public static String UPDATE_CART_SUCCESS = "Cart was successfully updated!";
     public static String RESOURCE_FOUND = "Resource found!" ;
-    public static String REMOVE_ITEM_SUCCESS = "Item was removed from cart successfully!";
+    public static String REMOVE_ITEM_SUCCESS = "Items were removed from cart successfully!";
     public static String LOGIN_SUCCESS = "Log in successfully!";
     public static String LOGOUT_SUCCESS = "Log out successfully!";
     public static String SIGNUP_SUCCESS = "Sign up successfully!";
@@ -16,8 +16,8 @@ public class MessageResponse {
     public static String SERVER_ERROR = "Unknown error!";
     public static String DENIED_PERMISSION = "Permission denied!";
     public static String RESOURCE_NOT_FOUND = "Resource not found!";
-    public static String ITEM_NOT_FOUND = "Item not found!";
-    public static String BOOK_ID_NOT_FOUND = "Book ID not found!";
+    public static String ITEM_NOT_FOUND = "Item not found in cart!";
+    public static String BOOK_ID_NOT_FOUND = "One of the book IDs does not exist!";
     public static String INVALID_PAGE_NUMBER = "Invalid page number!";
     public static String USER_EXISTED = "Existed user!";
     public static String USER_NOT_FOUND = "User not found!";

@@ -1,6 +1,7 @@
 package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.dto.request.CartItemRequestDTO;
+import com.pbl6.bookstore.dto.request.RemoveItemInCartRequest;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.cart.CartServiceImpl;
@@ -35,9 +36,9 @@ public class CartController {
                 cartService.updateCart(request)));
     }
 
-    @DeleteMapping("/cart/{bookID}")
-    ResponseEntity<APIResponse> removeItem(@PathVariable String bookID) {
+    @DeleteMapping("/cart")
+    ResponseEntity<APIResponse> removeItem(@RequestBody RemoveItemInCartRequest request) {
         return ResponseEntity.ok(new APIResponse(MessageResponse.REMOVE_ITEM_SUCCESS,
-                cartService.removeItem(bookID)));
+                cartService.removeItem(request)));
     }
 }
