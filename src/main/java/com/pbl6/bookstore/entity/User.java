@@ -37,9 +37,6 @@ public class User {
     @Column(name = "Username")
     String username;
 
-    @Column(name = "Address")
-    String address;
-
     @OneToOne(mappedBy = "user",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
