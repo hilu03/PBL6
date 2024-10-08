@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Builder
@@ -41,5 +43,17 @@ public class User {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     Cart cart;
+
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+                    CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    List<ShippingAddress> addressList;
+
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+                    CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    List<Order> orders;
 
 }
