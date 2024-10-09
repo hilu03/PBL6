@@ -12,10 +12,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TokenInfoResponseDTO {
-    String aud;
-    String user_id;
-    String scope;
-    Long expires_in;
+    boolean emailVerified;
+    Long expiresIn;
     String email;
-    String error;
+    String errorDescription;
 }

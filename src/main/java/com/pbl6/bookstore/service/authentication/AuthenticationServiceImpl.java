@@ -288,7 +288,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             TokenInfoResponseDTO tokenInfo = googleUserInfoClient.verifyToken(token);
 
-            return tokenInfo.getError() == null && tokenInfo.getExpires_in() > 0;
+            return tokenInfo.getErrorDescription() == null && tokenInfo.getExpiresIn() > 0
+                    && tokenInfo.isEmailVerified();
 
         } catch (Exception e) {
             return false;
