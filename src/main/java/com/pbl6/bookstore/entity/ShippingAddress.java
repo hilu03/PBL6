@@ -39,6 +39,9 @@ public class ShippingAddress {
     @Column(name = "Ward")
     String ward;
 
+    @Column(name = "IsDefault")
+    boolean isDefault;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
             CascadeType.MERGE, CascadeType.REFRESH},
             fetch = FetchType.LAZY)

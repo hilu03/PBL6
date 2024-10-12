@@ -32,4 +32,5 @@ public class MessageResponse {
     public static String PAYMENT_METHOD_NOT_FOUND = "Payment method not found!";
     public static String ORDER_CODE_NOT_FOUND = "Order code not found!";
     public static String ORDER_ALREADY_PAID = "Order already paid!";
+    public static String ADDRESS_NOT_FOUND = "Address not found!";
 }

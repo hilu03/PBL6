@@ -23,6 +23,7 @@ public enum ErrorCode {
     INVALID_REQUEST_DATA(MessageResponse.INVALID_REQUEST_DATA, HttpStatus.BAD_REQUEST),
     ITEM_NOT_FOUND(MessageResponse.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND),
     PAYMENT_METHOD_NOT_FOUND(MessageResponse.PAYMENT_METHOD_NOT_FOUND, HttpStatus.NOT_FOUND),
+    ADDRESS_NOT_FOUND(MessageResponse.ADDRESS_NOT_FOUND, HttpStatus.NOT_FOUND)
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {

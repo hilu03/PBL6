@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,9 @@ import vn.payos.type.ItemData;
 import vn.payos.type.PaymentData;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -72,16 +71,29 @@ public class OrderServiceImpl implements OrderService {
         if (paymentMethod.isEmpty()) {
             throw new AppException(ErrorCode.PAYMENT_METHOD_NOT_FOUND);
         }
-
-        ShippingAddress address = ShippingAddress.builder()
-                .user(user)
-                .receiver(request.getReceiver())
-                .phoneNumber(request.getPhoneNumber())
-                .city(request.getCity())
-                .district(request.getDistrict())
-                .ward(request.getWard())
-                .address(request.getAddress())
-                .build();
+        ShippingAddress address;
+        if (request.getShippingAddressID() == null) {
+            address = ShippingAddress.builder()
+                    .user(user)
+                    .receiver(request.getReceiver())
+                    .phoneNumber(request.getPhoneNumber())
+                    .city(request.getCity())
+                    .district(request.getDistrict())
+                    .ward(request.getWard())
+                    .address(request.getAddress())
+                    .build();
+            if (user.getAddressList().isEmpty()) {
+                address.setDefault(true);
+            }
+        }
+        else {
+            try {
+                address = shippingAddressRepository.findById(request.getShippingAddressID()).orElseThrow();
+            }
+            catch (NoSuchElementException exception) {
+                throw new AppException(ErrorCode.ADDRESS_NOT_FOUND);
+            }
+        }
 
         Order order = Order.builder()
                 .user(user)
@@ -92,8 +104,11 @@ public class OrderServiceImpl implements OrderService {
                 .paymentStatus(PaymentStatus.PENDING.getStatus())
                 .build();
 
+        log.info("Creating order {}", order.getId());
+
         BigDecimal total = BigDecimal.valueOf(0);
         List<ItemData> itemDataList = new ArrayList<>();
+        List<OrderItem> orderItemList = new ArrayList<>();
 
         for (ItemRequestDTO item: request.getItems()) {
             Optional<Book> book = bookRepository.findById(item.getBookID());
@@ -112,6 +127,8 @@ public class OrderServiceImpl implements OrderService {
                     .quantity(item.getQuantity())
                     .build();
 
+            orderItemList.add(orderItem);
+
             ItemData itemData = ItemData.builder()
                     .name(book.get().getTitle())
                     .quantity(item.getQuantity()).price(book.get().getDiscountedPrice().intValue())
@@ -128,12 +145,11 @@ public class OrderServiceImpl implements OrderService {
         }
 
         order.setTotalPrice(total);
-
+        order.setItems(orderItemList);
+        orderRepository.save(order);
         if (paymentMethod.get().getName().equals("COD")) {
 
-            System.out.println("COD");
-            
-            orderRepository.save(order);
+            log.info("Saving COD order {}", order.getId());
 
             return CreateCodOrderResponse.builder()
                     .orderID(order.getId())
@@ -147,6 +163,7 @@ public class OrderServiceImpl implements OrderService {
                     .build();
         }
         else {
+
             PaymentData paymentData = PaymentData.builder()
                     .orderCode((long) order.getId())
                     .amount(order.getTotalPrice().intValue())
@@ -166,9 +183,9 @@ public class OrderServiceImpl implements OrderService {
 
             order.setPaymentLinkID(responseData.getPaymentLinkId());
 
-            System.out.println("before save");
             orderRepository.save(order);
-            System.out.println("after save");
+
+            log.info("Creating checkoutUrl for order {}", order.getId());
 
             return CreatePaymentLinkResponse.builder()
                     .orderID(order.getId())

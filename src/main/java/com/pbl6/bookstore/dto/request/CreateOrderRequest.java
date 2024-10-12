@@ -18,6 +18,8 @@ public class CreateOrderRequest {
     @NotNull
     int paymentMethodID;
 
+    Integer shippingAddressID;
+
     @NotNull
     String receiver;
 
