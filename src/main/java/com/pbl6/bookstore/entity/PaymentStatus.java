@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum PaymentStatus {
     PENDING("Chưa thanh toán"),
     COMPLETED("Đã thanh toán"),
-    ERROR("Thanh toán không thành công")
+    ERROR("Thanh toán không thành công"),
+    EXPIRED("Hết hạn")
     ;
 
     PaymentStatus(String status) {

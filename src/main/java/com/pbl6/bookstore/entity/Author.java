@@ -1,15 +1,19 @@
 package com.pbl6.bookstore.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "author")
-@Setter
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Author {
 
 

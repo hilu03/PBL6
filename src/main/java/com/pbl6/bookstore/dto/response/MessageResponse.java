@@ -11,6 +11,7 @@ public class MessageResponse {
     public static String SIGNUP_SUCCESS = "Sign up successfully!";
     public static String TOKEN_REFRESH = "Token has been refreshed!";
     public static String VALID_TOKEN = "Valid token!";
+    public static String ORDER_CREATE_SUCCESS = "Create order successfully!";
 
     public static String UNAUTHENTICATED = "Unauthenticated request!";
     public static String SERVER_ERROR = "Unknown error!";
@@ -28,4 +29,7 @@ public class MessageResponse {
     public static String INVALID_QUANTITY = "Invalid quantity!";
     public static String QUANTITY_EXCEED = "Not enough items in stock!";
     public static String INVALID_REQUEST_DATA = "Invalid request data!";
+    public static String PAYMENT_METHOD_NOT_FOUND = "Payment method not found!";
+    public static String ORDER_CODE_NOT_FOUND = "Order code not found!";
+    public static String ORDER_ALREADY_PAID = "Order already paid!";
 }

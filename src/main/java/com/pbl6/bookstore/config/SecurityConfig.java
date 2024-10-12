@@ -30,6 +30,8 @@ public class SecurityConfig {
             "/books/sale-books",
             "/categories",
             "/targets",
+            "/payment/success",
+            "/payment/cancel"
     };
 
     public final String[] PUBLIC_POST_ENDPOINTS = {
@@ -40,11 +42,11 @@ public class SecurityConfig {
             "/refresh",
             "/login/google",
             "/introspect",
-            "/login/app/google"
+            "/login/app/google",
+            "/payment/create/{orderCode}",
+            "/payment/handle-transfer",
+            "/payment/cancel/{orderCode}"
     };
-
-    @Value("${jwt.signerKey}")
-    private String signerKey;
 
     @Autowired
     CustomJwtDecoder customJwtDecoder;

@@ -28,6 +28,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -158,7 +160,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return signedJWT;
     }
 
-    private String generateToken(User user) {
+     @Override
+     public String generateToken(User user) {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
@@ -294,6 +297,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public User getUserFromToken() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        int id = Integer.parseInt(context.getAuthentication().getName());
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new AppException(ErrorCode.USER_NOT_FOUND);
+        }
+        return user.get();
     }
 
 

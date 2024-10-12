@@ -1,9 +1,7 @@
 package com.pbl6.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 @Table(name = "PaymentMethod")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentMethod {
 

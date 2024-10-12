@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemRequestDTO {
+public class ItemRequestDTO {
     String bookID;
 
     @Min(1)

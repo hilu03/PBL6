@@ -2,9 +2,7 @@ package com.pbl6.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
@@ -14,6 +12,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Publisher {
 
     @Id

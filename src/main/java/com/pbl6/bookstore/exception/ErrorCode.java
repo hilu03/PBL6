@@ -21,7 +21,8 @@ public enum ErrorCode {
     QUANTITY_EXCEED(MessageResponse.QUANTITY_EXCEED, HttpStatus.BAD_REQUEST),
     INVALID_QUANTITY(MessageResponse.INVALID_QUANTITY, HttpStatus.BAD_REQUEST),
     INVALID_REQUEST_DATA(MessageResponse.INVALID_REQUEST_DATA, HttpStatus.BAD_REQUEST),
-    ITEM_NOT_FOUND(MessageResponse.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND)
+    ITEM_NOT_FOUND(MessageResponse.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND),
+    PAYMENT_METHOD_NOT_FOUND(MessageResponse.PAYMENT_METHOD_NOT_FOUND, HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {

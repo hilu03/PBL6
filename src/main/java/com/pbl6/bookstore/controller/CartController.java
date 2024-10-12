@@ -1,6 +1,6 @@
 package com.pbl6.bookstore.controller;
 
-import com.pbl6.bookstore.dto.request.CartItemRequestDTO;
+import com.pbl6.bookstore.dto.request.ItemRequestDTO;
 import com.pbl6.bookstore.dto.request.RemoveItemInCartRequest;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
@@ -19,7 +19,7 @@ public class CartController {
     CartServiceImpl cartService;
 
     @PostMapping("/cart")
-    ResponseEntity<APIResponse> addToCart(@RequestBody @Valid CartItemRequestDTO request) {
+    ResponseEntity<APIResponse> addToCart(@RequestBody @Valid ItemRequestDTO request) {
         return ResponseEntity.ok(new APIResponse(MessageResponse.ADD_TO_CART_SUCCESS,
                 cartService.addToCart(request)));
     }
@@ -31,7 +31,7 @@ public class CartController {
     }
 
     @PutMapping("/cart")
-    ResponseEntity<APIResponse> updateQuantity(@RequestBody @Valid CartItemRequestDTO request) {
+    ResponseEntity<APIResponse> updateQuantity(@RequestBody @Valid ItemRequestDTO request) {
         return ResponseEntity.ok(new APIResponse(MessageResponse.UPDATE_CART_SUCCESS,
                 cartService.updateCart(request)));
     }

@@ -1,19 +1,19 @@
 package com.pbl6.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "`Order`")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order {
@@ -26,11 +26,14 @@ public class Order {
     @Column(name = "DateOrder")
     Date dateOrder;
 
-    @Column(name = "PaymentLink")
-    String paymentLink;
+    @Column(name = "PaymentLinkID")
+    String paymentLinkID;
 
     @Column(name = "PaymentStatus")
     String paymentStatus;
+
+    @Column(name = "TotalPrice")
+    BigDecimal totalPrice;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
             CascadeType.MERGE, CascadeType.REFRESH},

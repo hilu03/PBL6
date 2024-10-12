@@ -1,6 +1,6 @@
 package com.pbl6.bookstore.service.cart;
 
-import com.pbl6.bookstore.dto.request.CartItemRequestDTO;
+import com.pbl6.bookstore.dto.request.ItemRequestDTO;
 import com.pbl6.bookstore.dto.request.RemoveItemInCartRequest;
 import com.pbl6.bookstore.dto.response.CartDetailResponseDTO;
 import com.pbl6.bookstore.dto.response.CartItemInfoResponseDTO;
@@ -13,8 +13,8 @@ import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
 import com.pbl6.bookstore.repository.BookRepository;
 import com.pbl6.bookstore.repository.CartItemRepository;
-import com.pbl6.bookstore.repository.CartRepository;
 import com.pbl6.bookstore.repository.UserRepository;
+import com.pbl6.bookstore.service.authentication.AuthenticationServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -33,25 +33,15 @@ public class CartServiceImpl implements CartService {
 
     CartItemRepository cartItemRepository;
 
-    UserRepository userRepository;
+    AuthenticationServiceImpl authenticationService;
 
     BookRepository bookRepository;
 
 
-    private User getUser() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        int id = Integer.parseInt(context.getAuthentication().getName());
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new AppException(ErrorCode.USER_NOT_FOUND);
-        }
-        return user.get();
-    }
-
     @Override
     @PreAuthorize("hasRole('user')")
-    public CartItemQuantityResponseDTO addToCart(CartItemRequestDTO request) {
-        User user = getUser();
+    public CartItemQuantityResponseDTO addToCart(ItemRequestDTO request) {
+        User user = authenticationService.getUserFromToken();
         Optional<Book> book = bookRepository.findById(request.getBookID());
         if (book.isPresent()) {
             if (book.get().getAvailableQuantity() >= request.getQuantity()) {
@@ -85,7 +75,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @PreAuthorize("hasRole('user')")
     public CartDetailResponseDTO getCartDetail() {
-        User user = getUser();
+        User user = authenticationService.getUserFromToken();;
         Cart cart = user.getCart();
 
         List<CartItem> cartItems = cartItemRepository.findByCart(cart);
@@ -110,8 +100,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @PreAuthorize("hasRole('user')")
-    public CartItemQuantityResponseDTO updateCart(CartItemRequestDTO request) {
-        User user = getUser();
+    public CartItemQuantityResponseDTO updateCart(ItemRequestDTO request) {
+        User user = authenticationService.getUserFromToken();;
         Cart cart = user.getCart();
         Optional<Book> book = bookRepository.findById(request.getBookID());
         if (book.isEmpty()) {
@@ -134,7 +124,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @PreAuthorize("hasRole('user')")
     public CartItemQuantityResponseDTO removeItem(RemoveItemInCartRequest request) {
-        User user = getUser();
+        User user = authenticationService.getUserFromToken();;
         Cart cart = user.getCart();
         for (String bookID: request.getBookIDs()) {
             Optional<Book> book = bookRepository.findById(bookID);

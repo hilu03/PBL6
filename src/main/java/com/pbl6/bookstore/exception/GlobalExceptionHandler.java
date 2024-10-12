@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import vn.payos.exception.PayOSException;
 
 @ControllerAdvice
 @Slf4j
@@ -19,7 +20,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<APIResponse> handleGlobalException(Exception exception) {
-        log.error("Exception: " + exception);
+        log.error("Exception: {}", String.valueOf(exception));
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new APIResponse(MessageResponse.SERVER_ERROR, null));
     }
@@ -32,6 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<APIResponse> handleAppException(AppException exception) {
+        log.error("Exception: {}", exception.getMessage());
         return ResponseEntity.status(exception.getErrorCode().getHttpStatusCode())
                 .body(new APIResponse(exception.getErrorCode().getMessage(), null));
     }
@@ -58,6 +61,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public ResponseEntity<APIResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException exception) {
+        return ResponseEntity.status(ErrorCode.INVALID_REQUEST_DATA.getHttpStatusCode())
+                .body(new APIResponse(ErrorCode.INVALID_REQUEST_DATA.getMessage(), null));
+    }
+
+    @ExceptionHandler(value = PayOSException.class)
+    public ResponseEntity<APIResponse> handlePayOSException(PayOSException exception) {
+        log.error("Error code: {}", exception.getCode());
+        log.error("Message: {}", exception.getMessage());
+        if (exception.getCode().equals("401")) {
+            return ResponseEntity.status(ErrorCode.UNAUTHENTICATED.getHttpStatusCode())
+                    .body(new APIResponse(ErrorCode.UNAUTHENTICATED.getMessage(), null));
+        }
         return ResponseEntity.status(ErrorCode.INVALID_REQUEST_DATA.getHttpStatusCode())
                 .body(new APIResponse(ErrorCode.INVALID_REQUEST_DATA.getMessage(), null));
     }
