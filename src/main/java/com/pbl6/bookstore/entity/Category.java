@@ -24,6 +24,9 @@ public class Category {
     @Column(name = "CategoryName")
     String name;
 
+    @Column(name = "Slug")
+    private String slug;
+
     @OneToMany(mappedBy = "category",
                 cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                             CascadeType.MERGE, CascadeType.REFRESH},

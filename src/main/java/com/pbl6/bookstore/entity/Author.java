@@ -26,6 +26,9 @@ public class Author {
     @Column(name = "AuthorName")
     private String name;
 
+    @Column(name = "Slug")
+    private String slug;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH})

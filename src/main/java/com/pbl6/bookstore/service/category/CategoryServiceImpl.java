@@ -32,6 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
                     .id(category.getId())
                     .name(category.getName())
                     .quantity(bookRepository.countByCategory(category))
+                    .slug(category.getSlug())
                     .build();
             categoryDTOList.add(categoryDTO);
         }

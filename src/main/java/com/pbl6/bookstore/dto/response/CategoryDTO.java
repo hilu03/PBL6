@@ -12,4 +12,5 @@ public class CategoryDTO {
     int id;
     String name;
     long quantity;
+    String slug;
 }
