@@ -17,13 +17,14 @@ public enum ErrorCode {
     WRONG_VARIABLE_TYPE(MessageResponse.WRONG_VARIABLE_TYPE, HttpStatus.BAD_REQUEST),
     INVALID_GRANT(MessageResponse.INVALID_GRANT, HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(MessageResponse.INVALID_TOKEN, HttpStatus.BAD_REQUEST),
-    BOOK_ID_NOT_FOUND(MessageResponse.BOOK_ID_NOT_FOUND, HttpStatus.NOT_FOUND),
+    BOOK_ID_NOT_FOUND(MessageResponse.BOOK_IDs_NOT_FOUND, HttpStatus.NOT_FOUND),
     QUANTITY_EXCEED(MessageResponse.QUANTITY_EXCEED, HttpStatus.BAD_REQUEST),
     INVALID_QUANTITY(MessageResponse.INVALID_QUANTITY, HttpStatus.BAD_REQUEST),
     INVALID_REQUEST_DATA(MessageResponse.INVALID_REQUEST_DATA, HttpStatus.BAD_REQUEST),
     ITEM_NOT_FOUND(MessageResponse.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND),
     PAYMENT_METHOD_NOT_FOUND(MessageResponse.PAYMENT_METHOD_NOT_FOUND, HttpStatus.NOT_FOUND),
-    ADDRESS_NOT_FOUND(MessageResponse.ADDRESS_NOT_FOUND, HttpStatus.NOT_FOUND)
+    ADDRESS_NOT_FOUND(MessageResponse.ADDRESS_NOT_FOUND, HttpStatus.NOT_FOUND),
+    ORDER_ID_NOT_FOUND(MessageResponse.ORDER_ID_NOT_FOUND, HttpStatus.NOT_FOUND)
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {

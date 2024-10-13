@@ -18,7 +18,7 @@ public class MessageResponse {
     public static String DENIED_PERMISSION = "Permission denied!";
     public static String RESOURCE_NOT_FOUND = "Resource not found!";
     public static String ITEM_NOT_FOUND = "Item not found in cart!";
-    public static String BOOK_ID_NOT_FOUND = "One of the book IDs does not exist!";
+    public static String BOOK_IDs_NOT_FOUND = "One of the book IDs does not exist!";
     public static String INVALID_PAGE_NUMBER = "Invalid page number!";
     public static String USER_EXISTED = "Existed user!";
     public static String USER_NOT_FOUND = "User not found!";
@@ -33,4 +33,5 @@ public class MessageResponse {
     public static String ORDER_CODE_NOT_FOUND = "Order code not found!";
     public static String ORDER_ALREADY_PAID = "Order already paid!";
     public static String ADDRESS_NOT_FOUND = "Address not found!";
+    public static String ORDER_ID_NOT_FOUND = "Order ID not found!";
 }

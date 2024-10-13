@@ -4,6 +4,7 @@ import com.pbl6.bookstore.dto.request.CreateOrderRequest;
 import com.pbl6.bookstore.dto.request.ItemRequestDTO;
 import com.pbl6.bookstore.dto.response.CreateCodOrderResponse;
 import com.pbl6.bookstore.dto.response.CreatePaymentLinkResponse;
+import com.pbl6.bookstore.dto.response.PaymentStatusResponse;
 import com.pbl6.bookstore.entity.*;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
@@ -197,5 +198,14 @@ public class OrderServiceImpl implements OrderService {
         return address.getAddress() + ", " + address.getWard()
                 + ", " + address.getDistrict()
                 + ", " + address.getCity();
+    }
+
+    @Override
+    public PaymentStatusResponse getPaymentStatus(int orderID) {
+        Order order = orderRepository.findById(orderID)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_ID_NOT_FOUND));
+        return PaymentStatusResponse.builder()
+                .status(order.getPaymentStatus())
+                .build();
     }
 }
