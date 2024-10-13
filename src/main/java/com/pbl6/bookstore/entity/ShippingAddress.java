@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Entity
-@Table(name = "ShippingAddress")
+@Table(name = "shippingaddress")
 @Getter
 @Setter
 @AllArgsConstructor

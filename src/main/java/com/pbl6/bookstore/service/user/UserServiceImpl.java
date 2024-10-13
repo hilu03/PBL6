@@ -4,10 +4,9 @@ import com.pbl6.bookstore.dto.request.UserAccountRequest;
 import com.pbl6.bookstore.entity.Cart;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
+import com.pbl6.bookstore.mapper.UserMapper;
 import com.pbl6.bookstore.repository.UserRepository;
-import com.pbl6.bookstore.dto.Converter;
 import com.pbl6.bookstore.dto.UserDTO;
-import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.entity.User;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,35 +26,34 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
 
-    Converter<User, UserDTO> userDTOConverter;
-    Converter<User, UserAccountRequest> userAccountRequestConverter;
+    UserMapper userMapper;
 
     @Override
     @PreAuthorize("hasRole('admin')")
     public List<UserDTO> findAll() {
         return userRepository.findAll().stream()
-                .map(user -> userDTOConverter.mapEntityToDto(user, UserDTO.class))
+                .map(userMapper::toUserDTO)
                 .toList();
     }
 
     @Override
     public UserDTO createUser(UserAccountRequest userAccountRequest) {
-        User user = userAccountRequestConverter.mapDtoToEntity(userAccountRequest, User.class);
+        User user = userMapper.toUser(userAccountRequest);
         user.setRole("user");
         Cart cart = Cart.builder()
                 .user(user)
                 .build();
         user.setCart(cart);
         userRepository.save(user);
-        return userDTOConverter.mapEntityToDto(user, UserDTO.class);
+        return userMapper.toUserDTO(user);
     }
 
     @Override
     public UserDTO createAdmin(UserAccountRequest userAccountRequest) {
-        User user = userAccountRequestConverter.mapDtoToEntity(userAccountRequest, User.class);
+        User user = userMapper.toUser(userAccountRequest);
         user.setRole("admin");
         userRepository.save(user);
-        return userDTOConverter.mapEntityToDto(user, UserDTO.class);
+        return userMapper.toUserDTO(user);
     }
 
     @Override
@@ -77,7 +75,7 @@ public class UserServiceImpl implements UserService {
         if (user.isEmpty()) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
-        return userDTOConverter.mapEntityToDto(user.get(), UserDTO.class);
+        return userMapper.toUserDTO(user.get());
     }
 
 

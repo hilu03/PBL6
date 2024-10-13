@@ -13,6 +13,8 @@ public class BookDTO {
 
     String title;
 
+    String slug;
+
     BigDecimal originalPrice;
 
     BigDecimal discountedPrice;

@@ -5,7 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "CartItem")
+@Table(name = "cartitem")
 @Getter
 @Setter
 @Builder

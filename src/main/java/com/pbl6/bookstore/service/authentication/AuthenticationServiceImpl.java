@@ -12,10 +12,10 @@ import com.pbl6.bookstore.dto.response.TokenInfoResponseDTO;
 import com.pbl6.bookstore.entity.InvalidatedToken;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
+import com.pbl6.bookstore.mapper.UserMapper;
 import com.pbl6.bookstore.repository.CartItemRepository;
 import com.pbl6.bookstore.repository.InvalidatedTokenRepository;
 import com.pbl6.bookstore.repository.UserRepository;
-import com.pbl6.bookstore.dto.Converter;
 import com.pbl6.bookstore.dto.response.IntrospectResponse;
 import com.pbl6.bookstore.dto.response.LoginResponseDTO;
 import com.pbl6.bookstore.entity.User;
@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     UserRepository userRepository;
 
-    Converter<User, LoginResponseDTO> converter;
+    UserMapper userMapper;
 
     InvalidatedTokenRepository invalidatedTokenRepository;
 
@@ -101,7 +101,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
                 String token = generateToken(user);
 
-                LoginResponseDTO loginResponseDTO = converter.mapEntityToDto(user, LoginResponseDTO.class);
+                LoginResponseDTO loginResponseDTO = userMapper.toLoginResponseDto(user);
 
                 loginResponseDTO.setToken(token);
 

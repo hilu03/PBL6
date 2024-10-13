@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Entity
-@Table(name = "PaymentMethod")
+@Table(name = "paymentmethod")
 @Getter
 @Setter
 @AllArgsConstructor

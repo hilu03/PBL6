@@ -1,24 +1,20 @@
 package com.pbl6.bookstore.service.book;
 
+import com.pbl6.bookstore.mapper.BookMapper;
 import com.pbl6.bookstore.repository.BookRepository;
 import com.pbl6.bookstore.repository.TargetRepository;
 import com.pbl6.bookstore.dto.BookDTO;
 import com.pbl6.bookstore.dto.BookDetailDTO;
-import com.pbl6.bookstore.entity.Author;
 import com.pbl6.bookstore.entity.Book;
-import com.pbl6.bookstore.entity.Target;
 import lombok.AccessLevel;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,17 +28,16 @@ public class BookServiceImpl implements BookService{
 
     TargetRepository targetRepository;
 
-    ModelMapper modelMapper;
+    BookMapper bookMapper;
 
 
     public BookDetailDTO convertToBookDetailDTO(Book book) {
-
-        return modelMapper.map(book, BookDetailDTO.class);
+        return bookMapper.toBookDetailDto(book);
     }
 
     public BookDTO convertToBookDTO(Book book) {
 
-        return modelMapper.map(book, BookDTO.class);
+        return bookMapper.toBookDto(book);
     }
 
     @Override

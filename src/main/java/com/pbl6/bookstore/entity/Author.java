@@ -1,5 +1,6 @@
 package com.pbl6.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Author {
     @JoinTable(name = "bookauthor",
             joinColumns = @JoinColumn(name = "AuthorID"),
             inverseJoinColumns = @JoinColumn(name = "BookID"))
+    @JsonIgnore
     private List<Book> books;
 
     @Override

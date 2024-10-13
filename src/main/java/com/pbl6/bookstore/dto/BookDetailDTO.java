@@ -1,5 +1,8 @@
 package com.pbl6.bookstore.dto;
 
+import com.pbl6.bookstore.entity.Author;
+import com.pbl6.bookstore.entity.Category;
+import com.pbl6.bookstore.entity.Target;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +18,8 @@ public class BookDetailDTO {
     String id;
 
     String title;
+
+    String slug;
 
     String publisher;
 
@@ -40,22 +45,8 @@ public class BookDetailDTO {
 
     String category;
 
-    List<String> authors;
+    List<Author> authors;
 
-    List<String> targets;
-
-    public void addTarget(String target) {
-        if (targets == null) {
-            targets = new ArrayList<>();
-        }
-        targets.add(target);
-    }
-
-    public void addAuthor(String author) {
-        if (authors == null) {
-            authors = new ArrayList<>();
-        }
-        authors.add(author);
-    }
+    List<Target> targets;
 
 }

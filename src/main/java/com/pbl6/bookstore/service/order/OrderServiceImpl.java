@@ -87,12 +87,8 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         else {
-            try {
-                address = shippingAddressRepository.findById(request.getShippingAddressID()).orElseThrow();
-            }
-            catch (NoSuchElementException exception) {
-                throw new AppException(ErrorCode.ADDRESS_NOT_FOUND);
-            }
+            address = shippingAddressRepository.findById(request.getShippingAddressID())
+                    .orElseThrow(() -> new AppException(ErrorCode.ADDRESS_NOT_FOUND));
         }
 
         Order order = Order.builder()

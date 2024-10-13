@@ -54,6 +54,9 @@ public class Book {
     @Column(name = "Dimension")
     String dimension;
 
+    @Column(name = "Slug")
+    String slug;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                             CascadeType.MERGE, CascadeType.REFRESH},
                 fetch = FetchType.LAZY)
@@ -69,7 +72,7 @@ public class Book {
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "BookAuthor",
+    @JoinTable(name = "bookauthor",
             joinColumns = @JoinColumn(name = "BookID"),
             inverseJoinColumns = @JoinColumn(name = "AuthorID"))
     List<Author> authors;
@@ -78,7 +81,7 @@ public class Book {
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "BookTarget",
+    @JoinTable(name = "booktarget",
             joinColumns = @JoinColumn(name = "BookID"),
             inverseJoinColumns = @JoinColumn(name = "TargetID"))
     List<Target> targets;
@@ -88,4 +91,5 @@ public class Book {
                     CascadeType.MERGE, CascadeType.REFRESH},
             fetch = FetchType.LAZY)
     List<CartItem> cartItems;
+
 }
