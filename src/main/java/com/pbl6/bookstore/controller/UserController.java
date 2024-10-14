@@ -70,6 +70,12 @@ public class UserController {
                 userService.addNewAddress(request)));
     }
 
+    @GetMapping("/user/address")
+    public ResponseEntity<APIResponse> getAllAddress() {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                userService.getAllAddress()));
+    }
+
 //    @PutMapping("/users")
 //    public UserDTO updateUser(@RequestBody UserDTO userDTO) {
 //        return userService.save(user);

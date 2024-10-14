@@ -117,5 +117,12 @@ public class UserServiceImpl implements UserService {
         return user.getAddressList();
     }
 
+    @Override
+    @PreAuthorize("hasRole('user')")
+    public List<ShippingAddress> getAllAddress() {
+        User user = authenticationService.getUserFromToken();
+        return user.getAddressList();
+    }
+
 
 }

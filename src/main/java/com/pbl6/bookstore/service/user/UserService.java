@@ -23,4 +23,6 @@ public interface UserService {
     UserDTO getMyInfo();
 
     List<ShippingAddress> addNewAddress(ShippingAddressRequest request);
+
+    List<ShippingAddress> getAllAddress();
 }
