@@ -1,7 +1,9 @@
 package com.pbl6.bookstore.service.user;
 
 import com.pbl6.bookstore.dto.UserDTO;
+import com.pbl6.bookstore.dto.request.ShippingAddressRequest;
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
+import com.pbl6.bookstore.entity.ShippingAddress;
 import com.pbl6.bookstore.entity.User;
 
 import java.util.List;
@@ -19,4 +21,6 @@ public interface UserService {
     User findByEmail(String email);
 
     UserDTO getMyInfo();
+
+    List<ShippingAddress> addNewAddress(ShippingAddressRequest request);
 }

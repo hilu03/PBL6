@@ -24,7 +24,9 @@ public enum ErrorCode {
     ITEM_NOT_FOUND(MessageResponse.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND),
     PAYMENT_METHOD_NOT_FOUND(MessageResponse.PAYMENT_METHOD_NOT_FOUND, HttpStatus.NOT_FOUND),
     ADDRESS_NOT_FOUND(MessageResponse.ADDRESS_NOT_FOUND, HttpStatus.NOT_FOUND),
-    ORDER_ID_NOT_FOUND(MessageResponse.ORDER_ID_NOT_FOUND, HttpStatus.NOT_FOUND)
+    ORDER_ID_NOT_FOUND(MessageResponse.ORDER_ID_NOT_FOUND, HttpStatus.NOT_FOUND),
+    DUPLICATED_ADDRESS(MessageResponse.DUPLICATED_ADDRESS, HttpStatus.BAD_REQUEST),
+    DEFAULT_ADDRESS_EXIST(MessageResponse.DEFAULT_ADDRESS_EXIST, HttpStatus.CONFLICT)
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {

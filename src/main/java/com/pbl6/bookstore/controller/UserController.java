@@ -1,10 +1,12 @@
 package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.dto.UserDTO;
+import com.pbl6.bookstore.dto.request.ShippingAddressRequest;
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.service.user.UserServiceImpl;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -60,6 +62,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
         }
+    }
+
+    @PostMapping("/user/add-address")
+    public ResponseEntity<APIResponse> addNewAddress(@RequestBody @Valid ShippingAddressRequest request) {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.SHIPPING_ADDRESS_CREATE_SUCCESS,
+                userService.addNewAddress(request)));
     }
 
 //    @PutMapping("/users")

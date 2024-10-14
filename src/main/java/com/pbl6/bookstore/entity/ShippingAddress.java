@@ -1,5 +1,6 @@
 package com.pbl6.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -7,7 +8,12 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Entity
-@Table(name = "shippingaddress")
+@Table(name = "shippingaddress",
+        uniqueConstraints = {
+        @UniqueConstraint(name = "UniqueAddress",
+                columnNames = { "receiver", "phoneNumber", "address",
+                "city", "district" , "ward"})
+        })
 @Getter
 @Setter
 @AllArgsConstructor
@@ -46,11 +52,13 @@ public class ShippingAddress {
             CascadeType.MERGE, CascadeType.REFRESH},
             fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID")
+    @JsonIgnore
     User user;
 
     @OneToMany(mappedBy = "address",
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH},
             fetch = FetchType.LAZY)
+    @JsonIgnore
     List<Order> orders;
 }

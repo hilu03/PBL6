@@ -12,6 +12,7 @@ public class MessageResponse {
     public static String TOKEN_REFRESH = "Token has been refreshed!";
     public static String VALID_TOKEN = "Valid token!";
     public static String ORDER_CREATE_SUCCESS = "Create order successfully!";
+    public static String SHIPPING_ADDRESS_CREATE_SUCCESS = "Added address successfully!";
 
     public static String UNAUTHENTICATED = "Unauthenticated request!";
     public static String SERVER_ERROR = "Unknown error!";
@@ -34,4 +35,6 @@ public class MessageResponse {
     public static String ORDER_ALREADY_PAID = "Order already paid!";
     public static String ADDRESS_NOT_FOUND = "Address not found!";
     public static String ORDER_ID_NOT_FOUND = "Order ID not found!";
+    public static String DUPLICATED_ADDRESS= "Duplicated address!";
+    public static String DEFAULT_ADDRESS_EXIST= "Conflict default address!";
 }

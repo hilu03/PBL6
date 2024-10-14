@@ -1,13 +1,18 @@
 package com.pbl6.bookstore.service.user;
 
+import com.pbl6.bookstore.dto.request.ShippingAddressRequest;
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
 import com.pbl6.bookstore.entity.Cart;
+import com.pbl6.bookstore.entity.ShippingAddress;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
+import com.pbl6.bookstore.mapper.AddressMapper;
 import com.pbl6.bookstore.mapper.UserMapper;
+import com.pbl6.bookstore.repository.ShippingAddressRepository;
 import com.pbl6.bookstore.repository.UserRepository;
 import com.pbl6.bookstore.dto.UserDTO;
 import com.pbl6.bookstore.entity.User;
+import com.pbl6.bookstore.service.authentication.AuthenticationServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,7 +31,13 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
 
+    ShippingAddressRepository addressRepository;
+
     UserMapper userMapper;
+
+    AuthenticationServiceImpl authenticationService;
+
+    AddressMapper addressMapper;
 
     @Override
     @PreAuthorize("hasRole('admin')")
@@ -76,6 +87,34 @@ public class UserServiceImpl implements UserService {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
         return userMapper.toUserDTO(user.get());
+    }
+
+    @Override
+    @PreAuthorize("hasRole('user')")
+    public List<ShippingAddress> addNewAddress(ShippingAddressRequest request) {
+        User user = authenticationService.getUserFromToken();
+
+        ShippingAddress address = addressMapper.toShippingAddress(request);
+
+        if (user.getAddressList().isEmpty()) {
+            address.setDefault(true);
+        }
+        else if (request.getIsDefault() != null) {
+            if (request.getIsDefault()) {
+                ShippingAddress defaultAddress = addressRepository.findByUserAndIsDefault(user, true);
+                defaultAddress.setDefault(false);
+                addressRepository.save(defaultAddress);
+            }
+
+            address.setDefault(request.getIsDefault());
+        }
+
+        address.setUser(user);
+        user.getAddressList().add(address);
+
+        userRepository.save(user);
+
+        return user.getAddressList();
     }
 
 

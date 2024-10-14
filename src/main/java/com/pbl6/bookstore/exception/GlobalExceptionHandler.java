@@ -4,6 +4,7 @@ import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -75,6 +76,21 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.status(ErrorCode.INVALID_REQUEST_DATA.getHttpStatusCode())
                 .body(new APIResponse(ErrorCode.INVALID_REQUEST_DATA.getMessage(), null));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<APIResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+
+        if (ex.getMessage().contains("UniqueAddress")) {
+            return ResponseEntity.status(ErrorCode.DUPLICATED_ADDRESS.getHttpStatusCode())
+                    .body(new APIResponse(ErrorCode.DUPLICATED_ADDRESS.getMessage(), null));
+        }
+        else if (ex.getMessage().contains("UniqueDefaultAddress")) {
+            return ResponseEntity.status(ErrorCode.DEFAULT_ADDRESS_EXIST.getHttpStatusCode())
+                    .body(new APIResponse(ErrorCode.DEFAULT_ADDRESS_EXIST.getMessage(), null));
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new APIResponse(MessageResponse.SERVER_ERROR, null));
     }
 
 }
