@@ -1,6 +1,7 @@
 package com.pbl6.bookstore.service.user;
 
-import com.pbl6.bookstore.dto.request.ShippingAddressRequest;
+import com.pbl6.bookstore.dto.request.CreateShippingAddressRequest;
+import com.pbl6.bookstore.dto.request.UpdateShippingAddressRequest;
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
 import com.pbl6.bookstore.entity.Cart;
 import com.pbl6.bookstore.entity.ShippingAddress;
@@ -91,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @PreAuthorize("hasRole('user')")
-    public List<ShippingAddress> addNewAddress(ShippingAddressRequest request) {
+    public List<ShippingAddress> addNewAddress(CreateShippingAddressRequest request) {
         User user = authenticationService.getUserFromToken();
 
         ShippingAddress address = addressMapper.toShippingAddress(request);
@@ -121,6 +122,40 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('user')")
     public List<ShippingAddress> getAllAddress() {
         User user = authenticationService.getUserFromToken();
+        return user.getAddressList();
+    }
+
+    @Override
+    public List<ShippingAddress> updateAddress(UpdateShippingAddressRequest request) {
+        ShippingAddress address = addressRepository.findById(request.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.ADDRESS_NOT_FOUND));
+
+        User user = authenticationService.getUserFromToken();
+
+        if (user.getAddressList().size() > 1) {
+            ShippingAddress defaultAddress = addressRepository.findByUserAndIsDefault(user, true);
+
+            if (request.getId() == defaultAddress.getId() && !request.getIsDefault()) {
+                throw new AppException(ErrorCode.CONFLICT_DEFAULT_ADDRESS);
+            }
+            else if (request.getIsDefault()) {
+                defaultAddress.setDefault(false);
+                addressRepository.save(defaultAddress);
+            }
+
+            address.setDefault(request.getIsDefault());
+
+        }
+
+        address.setReceiver(request.getReceiver());
+        address.setPhoneNumber(request.getPhoneNumber());
+        address.setAddress(request.getAddress());
+        address.setWard(request.getWard());
+        address.setDistrict(request.getDistrict());
+        address.setCity(request.getCity());
+
+        addressRepository.save(address);
+
         return user.getAddressList();
     }
 

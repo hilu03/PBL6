@@ -26,7 +26,7 @@ public enum ErrorCode {
     ADDRESS_NOT_FOUND(MessageResponse.ADDRESS_NOT_FOUND, HttpStatus.NOT_FOUND),
     ORDER_ID_NOT_FOUND(MessageResponse.ORDER_ID_NOT_FOUND, HttpStatus.NOT_FOUND),
     DUPLICATED_ADDRESS(MessageResponse.DUPLICATED_ADDRESS, HttpStatus.BAD_REQUEST),
-    DEFAULT_ADDRESS_EXIST(MessageResponse.DEFAULT_ADDRESS_EXIST, HttpStatus.CONFLICT)
+    CONFLICT_DEFAULT_ADDRESS(MessageResponse.CONFLICT_DEFAULT_ADDRESS, HttpStatus.BAD_REQUEST)
     ;
 
     ErrorCode(String message, HttpStatusCode httpStatusCode) {

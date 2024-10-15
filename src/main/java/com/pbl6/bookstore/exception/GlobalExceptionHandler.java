@@ -85,10 +85,6 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(ErrorCode.DUPLICATED_ADDRESS.getHttpStatusCode())
                     .body(new APIResponse(ErrorCode.DUPLICATED_ADDRESS.getMessage(), null));
         }
-        else if (ex.getMessage().contains("UniqueDefaultAddress")) {
-            return ResponseEntity.status(ErrorCode.DEFAULT_ADDRESS_EXIST.getHttpStatusCode())
-                    .body(new APIResponse(ErrorCode.DEFAULT_ADDRESS_EXIST.getMessage(), null));
-        }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new APIResponse(MessageResponse.SERVER_ERROR, null));
     }

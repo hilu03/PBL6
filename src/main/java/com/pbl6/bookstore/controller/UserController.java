@@ -1,7 +1,8 @@
 package com.pbl6.bookstore.controller;
 
 import com.pbl6.bookstore.dto.UserDTO;
-import com.pbl6.bookstore.dto.request.ShippingAddressRequest;
+import com.pbl6.bookstore.dto.request.CreateShippingAddressRequest;
+import com.pbl6.bookstore.dto.request.UpdateShippingAddressRequest;
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
 import com.pbl6.bookstore.dto.response.APIResponse;
 import com.pbl6.bookstore.dto.response.MessageResponse;
@@ -65,7 +66,7 @@ public class UserController {
     }
 
     @PostMapping("/user/add-address")
-    public ResponseEntity<APIResponse> addNewAddress(@RequestBody @Valid ShippingAddressRequest request) {
+    public ResponseEntity<APIResponse> addNewAddress(@RequestBody @Valid CreateShippingAddressRequest request) {
         return ResponseEntity.ok(new APIResponse(MessageResponse.SHIPPING_ADDRESS_CREATE_SUCCESS,
                 userService.addNewAddress(request)));
     }
@@ -74,6 +75,12 @@ public class UserController {
     public ResponseEntity<APIResponse> getAllAddress() {
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
                 userService.getAllAddress()));
+    }
+
+    @PostMapping("/user/update-address")
+    public ResponseEntity<APIResponse> updateAddress(@RequestBody @Valid UpdateShippingAddressRequest request) {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.SHIPPING_ADDRESS_UPDATE_SUCCESS,
+                userService.updateAddress(request)));
     }
 
 //    @PutMapping("/users")

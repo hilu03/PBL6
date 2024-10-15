@@ -1,7 +1,8 @@
 package com.pbl6.bookstore.service.user;
 
 import com.pbl6.bookstore.dto.UserDTO;
-import com.pbl6.bookstore.dto.request.ShippingAddressRequest;
+import com.pbl6.bookstore.dto.request.CreateShippingAddressRequest;
+import com.pbl6.bookstore.dto.request.UpdateShippingAddressRequest;
 import com.pbl6.bookstore.dto.request.UserAccountRequest;
 import com.pbl6.bookstore.entity.ShippingAddress;
 import com.pbl6.bookstore.entity.User;
@@ -22,7 +23,9 @@ public interface UserService {
 
     UserDTO getMyInfo();
 
-    List<ShippingAddress> addNewAddress(ShippingAddressRequest request);
+    List<ShippingAddress> addNewAddress(CreateShippingAddressRequest request);
 
     List<ShippingAddress> getAllAddress();
+
+    List<ShippingAddress> updateAddress(UpdateShippingAddressRequest request);
 }
