@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import vn.payos.exception.PayOSException;
 
 @ControllerAdvice
@@ -87,6 +88,12 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new APIResponse(MessageResponse.SERVER_ERROR, null));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<APIResponse> handleNoResourceFoundException(NoResourceFoundException ex) {
+        return ResponseEntity.status(ErrorCode.RESOURCE_NOT_FOUND.getHttpStatusCode())
+                .body(new APIResponse(MessageResponse.RESOURCE_NOT_FOUND, null));
     }
 
 }

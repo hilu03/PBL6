@@ -1,5 +1,6 @@
 package com.pbl6.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,5 +28,6 @@ public class PaymentMethod {
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
                     CascadeType.MERGE, CascadeType.REFRESH},
             fetch = FetchType.LAZY)
+    @JsonIgnore
     List<Order> orders;
 }

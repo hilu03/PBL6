@@ -56,7 +56,6 @@ public class OrderServiceImpl implements OrderService {
     @Value("${payos.cancelUrl}")
     String cancelUrl;
 
-
     @Override
     @PreAuthorize("hasRole('user')")
     @Transactional(rollbackFor = Exception.class)
@@ -200,9 +199,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String getPaymentStatus(int orderID) {
+    public String getOrderPaymentStatus(int orderID) {
         Order order = orderRepository.findById(orderID)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_ID_NOT_FOUND));
         return order.getPaymentStatus();
+    }
+
+    @Override
+    public List<PaymentMethod> getAllPaymentMethod() {
+        return paymentMethodRepository.findAll();
     }
 }

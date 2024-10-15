@@ -1,7 +1,10 @@
 package com.pbl6.bookstore.service.order;
 
 import com.pbl6.bookstore.dto.request.CreateOrderRequest;
+import com.pbl6.bookstore.entity.PaymentMethod;
 import com.pbl6.bookstore.entity.ShippingAddress;
+
+import java.util.List;
 
 public interface OrderService {
 
@@ -9,6 +12,8 @@ public interface OrderService {
 
     String getAddressString(ShippingAddress address);
 
-    String getPaymentStatus(int orderID);
+    String getOrderPaymentStatus(int orderID);
+
+    List<PaymentMethod> getAllPaymentMethod();
 
 }

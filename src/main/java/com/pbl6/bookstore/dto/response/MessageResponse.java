@@ -36,6 +36,6 @@ public class MessageResponse {
     public static String ORDER_ALREADY_PAID = "Order already paid!";
     public static String ADDRESS_NOT_FOUND = "Address not found!";
     public static String ORDER_ID_NOT_FOUND = "Order ID not found!";
-    public static String DUPLICATED_ADDRESS= "Duplicated address!";
-    public static String CONFLICT_DEFAULT_ADDRESS= "Choose another address to be default first!";
+    public static String DUPLICATED_ADDRESS = "Duplicated address!";
+    public static String CONFLICT_DEFAULT_ADDRESS = "Choose another address to be default first!";
 }
