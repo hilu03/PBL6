@@ -9,6 +9,7 @@ import com.pbl6.bookstore.dto.request.ExchangeTokenRequestDTO;
 import com.pbl6.bookstore.dto.request.LogoutRequestDTO;
 import com.pbl6.bookstore.dto.request.RefreshRequestDTO;
 import com.pbl6.bookstore.dto.response.TokenInfoResponseDTO;
+import com.pbl6.bookstore.entity.Cart;
 import com.pbl6.bookstore.entity.InvalidatedToken;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
@@ -243,6 +244,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .fullName(userInfo.getName())
                     .role("user")
                     .build();
+
+            Cart cart = Cart.builder()
+                    .user(user)
+                    .build();
+            user.setCart(cart);
+
             userRepository.save(user);
         }
 
@@ -272,6 +279,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .fullName(userInfo.getName())
                     .role("user")
                     .build();
+
+            Cart cart = Cart.builder()
+                    .user(user)
+                    .build();
+            user.setCart(cart);
+
             userRepository.save(user);
         }
 
