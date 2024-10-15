@@ -260,6 +260,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .role(user.getRole())
+                .itemQuantityInCart(cartItemRepository.countByCart(user.getCart()))
                 .build();
     }
 
@@ -295,6 +296,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .role(user.getRole())
+                .itemQuantityInCart(cartItemRepository.countByCart(user.getCart()))
                 .build();
     }
 
