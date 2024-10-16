@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Date;
 
 @Entity
-@Table(name = "InvalidatedToken")
+@Table(name = "invalidatedtoken")
 @Getter
 @Setter
 @Builder
