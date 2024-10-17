@@ -56,6 +56,10 @@ public class OrderServiceImpl implements OrderService {
     @Value("${payos.cancelUrl}")
     String cancelUrl;
 
+    @NonFinal
+    @Value("${vietqr.quickLink}")
+    String vietQrLink;
+
     @Override
     @PreAuthorize("hasRole('user')")
     @Transactional(rollbackFor = Exception.class)
@@ -182,10 +186,16 @@ public class OrderServiceImpl implements OrderService {
 
             log.info("Creating checkoutUrl for order {}", order.getId());
 
+            String qrLink = vietQrLink + "/" + responseData.getBin()
+                    + "-" + responseData.getAccountNumber()
+                    + "-print.png?" + "amount=" + responseData.getAmount()
+                    + "&addInfo=" + responseData.getDescription()
+                    + "&accountName=" + responseData.getAccountName();
+
             return CreatePaymentLinkResponse.builder()
                     .orderID(order.getId())
                     .checkoutUrl(responseData.getCheckoutUrl())
-                    .qrCode(responseData.getQrCode())
+                    .qrCode(qrLink)
                         .build();
         }
 
