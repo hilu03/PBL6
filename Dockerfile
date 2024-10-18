@@ -7,7 +7,7 @@ COPY pom.xml .
 COPY src ./src
 
 # Build the project with Maven
-RUN mvn clean install -DskipTests
+RUN mvn clean package -DskipTests
 
 # Stage 2: Create image
 # Use a smaller base image for better performance

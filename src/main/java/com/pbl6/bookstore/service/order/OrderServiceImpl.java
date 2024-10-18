@@ -74,25 +74,9 @@ public class OrderServiceImpl implements OrderService {
         if (paymentMethod.isEmpty()) {
             throw new AppException(ErrorCode.PAYMENT_METHOD_NOT_FOUND);
         }
-        ShippingAddress address;
-        if (request.getShippingAddressID() == null) {
-            address = ShippingAddress.builder()
-                    .user(user)
-                    .receiver(request.getReceiver())
-                    .phoneNumber(request.getPhoneNumber())
-                    .city(request.getCity())
-                    .district(request.getDistrict())
-                    .ward(request.getWard())
-                    .address(request.getAddress())
-                    .build();
-            if (user.getAddressList().isEmpty()) {
-                address.setDefault(true);
-            }
-        }
-        else {
-            address = shippingAddressRepository.findById(request.getShippingAddressID())
-                    .orElseThrow(() -> new AppException(ErrorCode.ADDRESS_NOT_FOUND));
-        }
+
+        ShippingAddress address = shippingAddressRepository.findById(request.getShippingAddressID())
+                .orElseThrow(() -> new AppException(ErrorCode.ADDRESS_NOT_FOUND));
 
         Order order = Order.builder()
                 .user(user)
@@ -153,8 +137,8 @@ public class OrderServiceImpl implements OrderService {
             return CreateCodOrderResponse.builder()
                     .orderID(order.getId())
                     .orderStatus(orderStatus.getName())
-                    .receiver(request.getReceiver())
-                    .phoneNumber(request.getPhoneNumber())
+                    .receiver(address.getReceiver())
+                    .phoneNumber(address.getPhoneNumber())
                     .address(getAddressString(address))
                     .dateOrder(order.getDateOrder().toString())
                     .paymentMethod("COD")
@@ -170,8 +154,8 @@ public class OrderServiceImpl implements OrderService {
                     .returnUrl(returnUrl)
                     .cancelUrl(cancelUrl)
                     .items(itemDataList)
-                    .buyerName(request.getReceiver())
-                    .buyerPhone(request.getPhoneNumber())
+                    .buyerName(address.getReceiver())
+                    .buyerPhone(address.getPhoneNumber())
                     .buyerAddress(getAddressString(address))
                     .buyerEmail(user.getEmail())
 //                    .expiredAt(Instant.now()

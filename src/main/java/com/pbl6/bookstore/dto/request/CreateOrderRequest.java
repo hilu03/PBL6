@@ -13,29 +13,13 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateOrderRequest {
 
+    @NotNull
     List<ItemRequestDTO> items;
 
     @NotNull
     int paymentMethodID;
 
+    @NotNull
     Integer shippingAddressID;
-
-    @NotNull
-    String receiver;
-
-    @NotNull
-    String phoneNumber;
-
-    @NotNull
-    String address;
-
-    @NotNull
-    String city;
-
-    @NotNull
-    String district;
-
-    @NotNull
-    String ward;
 
 }
