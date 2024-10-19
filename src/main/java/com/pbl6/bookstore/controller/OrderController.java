@@ -37,4 +37,22 @@ public class OrderController {
                 orderService.getAllPaymentMethod()));
     }
 
+    @GetMapping("/get-all-status")
+    public ResponseEntity<APIResponse> getAllOrderStatus() {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                orderService.getAllOrderStatus()));
+    }
+
+    @GetMapping("/status/{statusID}")
+    public ResponseEntity<APIResponse> getOrderByStatusID(@PathVariable int statusID) {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                orderService.getOrderByStatusID(statusID)));
+    }
+
+    @GetMapping("/{orderID}")
+    public ResponseEntity<APIResponse> getOrderByOrderID(@PathVariable int orderID) {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                orderService.getOrderByOrderID(orderID)));
+    }
+
 }

@@ -17,6 +17,7 @@ import com.pbl6.bookstore.service.authentication.AuthenticationServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,7 +57,13 @@ public class UserServiceImpl implements UserService {
                 .user(user)
                 .build();
         user.setCart(cart);
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
         return userMapper.toUserDTO(user);
     }
 
@@ -64,7 +71,12 @@ public class UserServiceImpl implements UserService {
     public UserDTO createAdmin(UserAccountRequest userAccountRequest) {
         User user = userMapper.toUser(userAccountRequest);
         user.setRole("admin");
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
         return userMapper.toUserDTO(user);
     }
 

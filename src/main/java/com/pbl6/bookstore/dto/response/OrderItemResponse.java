@@ -5,25 +5,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateCodOrderResponse {
+public class OrderItemResponse {
 
-    int orderID;
+    String bookID;
 
-    String orderStatus;
+    String title;
 
-    String receiver;
+    String imageLink;
 
-    String phoneNumber;
+    int quantity;
 
-    String address;
+    BigDecimal originalPrice;
 
-    String dateOrder;
-
-    String paymentMethod;
-
-    String paymentStatus;
+    BigDecimal discountedPrice;
 
 }

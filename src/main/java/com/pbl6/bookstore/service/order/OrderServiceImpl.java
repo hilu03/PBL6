@@ -4,6 +4,8 @@ import com.pbl6.bookstore.dto.request.CreateOrderRequest;
 import com.pbl6.bookstore.dto.request.ItemRequestDTO;
 import com.pbl6.bookstore.dto.response.CreateCodOrderResponse;
 import com.pbl6.bookstore.dto.response.CreatePaymentLinkResponse;
+import com.pbl6.bookstore.dto.response.OrderItemResponse;
+import com.pbl6.bookstore.dto.response.OrderResponse;
 import com.pbl6.bookstore.entity.*;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
@@ -165,6 +167,7 @@ public class OrderServiceImpl implements OrderService {
             CheckoutResponseData responseData = payOS.createPaymentLink(paymentData);
 
             order.setPaymentLinkID(responseData.getPaymentLinkId());
+            order.setOrderStatus(orderStatusRepository.findByName("Chờ thanh toán"));
 
             orderRepository.save(order);
 
@@ -202,5 +205,77 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<PaymentMethod> getAllPaymentMethod() {
         return paymentMethodRepository.findAll();
+    }
+
+    @Override
+    public List<OrderStatus> getAllOrderStatus() {
+        return orderStatusRepository.findAll();
+    }
+
+    @Override
+    @PreAuthorize("hasRole('user')")
+    public List<OrderResponse> getOrderByStatusID(int statusID) {
+        User user = authenticationService.getUserFromToken();
+
+        OrderStatus orderStatus = orderStatusRepository.findById(statusID)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_STATUS_ID_NOT_FOUND));
+
+        List<Order> orders = orderRepository.findByUserAndOrderStatus(user, orderStatus);
+
+        return orders.stream().map(
+                order -> {
+
+                    List<OrderItemResponse> items = order.getItems().stream()
+                            .map(item -> OrderItemResponse.builder()
+                                    .bookID(item.getBook().getId())
+                                    .title(item.getBook().getTitle())
+                                    .imageLink(item.getBook().getImageLink())
+                                    .quantity(item.getQuantity())
+                                    .originalPrice(item.getBook().getOriginalPrice())
+                                    .discountedPrice(item.getBook().getDiscountedPrice())
+                                    .build())
+                            .toList();
+
+                    return OrderResponse.builder()
+                            .orderID(order.getId())
+                            .orderStatus(order.getOrderStatus().getName())
+                            .paymentStatus(order.getPaymentStatus())
+                            .paymentMethod(order.getPaymentMethod().getName())
+                            .totalPrice(order.getTotalPrice())
+                            .items(items)
+                            .build();
+                }
+        ).toList();
+    }
+
+    @Override
+    public OrderDetailResponse getOrderByOrderID(int orderID) {
+        Order order = orderRepository.findById(orderID)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_ID_NOT_FOUND));
+
+        List<OrderItemResponse> items = order.getItems().stream()
+                .map(item -> OrderItemResponse.builder()
+                        .bookID(item.getBook().getId())
+                        .title(item.getBook().getTitle())
+                        .imageLink(item.getBook().getImageLink())
+                        .quantity(item.getQuantity())
+                        .originalPrice(item.getBook().getOriginalPrice())
+                        .discountedPrice(item.getBook().getDiscountedPrice())
+                        .build())
+                .toList();
+
+        return OrderDetailResponse.builder()
+                .orderID(order.getId())
+                .orderStatus(order.getOrderStatus().getName())
+                .receiver(order.getAddress().getReceiver())
+                .phoneNumber(order.getAddress().getPhoneNumber())
+                .address(getAddressString(order.getAddress()))
+                .dateOrder(order.getDateOrder().toString())
+                .paymentMethod(order.getPaymentMethod().getName())
+                .paymentStatus(order.getPaymentStatus())
+                .totalPrice(order.getTotalPrice())
+                .items(items)
+                .build();
+
     }
 }

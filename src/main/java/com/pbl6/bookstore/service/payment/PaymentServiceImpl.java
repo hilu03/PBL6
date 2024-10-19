@@ -6,6 +6,7 @@ import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.entity.Order;
 import com.pbl6.bookstore.entity.PaymentStatus;
 import com.pbl6.bookstore.repository.OrderRepository;
+import com.pbl6.bookstore.repository.OrderStatusRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,6 +28,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     OrderRepository orderRepository;
 
+    OrderStatusRepository orderStatusRepository;
+
     @Override
     public void handlePayOSTransfer(ObjectNode body) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -39,6 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
         // check if it's first time confirm webhook URL to payOS
         if (webhookData.getDescription().equals("VQRIO123")
             && webhookData.getAccountNumber().equals("12345678")) {
+            log.info("Confirm webhook URL from PayOS!");
             return;
         }
 
@@ -57,6 +61,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         order.get().setPaymentStatus(PaymentStatus.COMPLETED.getStatus());
+        order.get().setOrderStatus(orderStatusRepository.findByName("Chờ xác nhận"));
         orderRepository.save(order.get());
         log.info("Updated payment status of order {}!", order.get().getId());
     }

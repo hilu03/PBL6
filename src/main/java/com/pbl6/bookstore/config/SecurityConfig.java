@@ -30,7 +30,9 @@ public class SecurityConfig {
             "/categories",
             "/targets",
             "/payment/success",
-            "/payment/cancel"
+            "/payment/cancel",
+            "/order/payment-method",
+            "/order/get-all-status"
     };
 
     public final String[] PUBLIC_POST_ENDPOINTS = {

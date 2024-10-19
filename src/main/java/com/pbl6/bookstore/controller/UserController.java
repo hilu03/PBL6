@@ -31,27 +31,19 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<APIResponse> addUser(@RequestBody UserAccountRequest user) {
-        if (userService.findByEmail(user.getEmail()) == null) {
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            UserDTO userDTO = userService.createUser(user);
 
-            return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userDTO));
-        }
-        return ResponseEntity.status(HttpStatus.CONFLICT).
-                body(new APIResponse(MessageResponse.USER_EXISTED, null));
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userService.createUser(user)));
     }
 
     @PostMapping("/sign-up/admin")
     public ResponseEntity<APIResponse> addAdmin(@RequestBody UserAccountRequest user) {
-        if (userService.findByEmail(user.getEmail()) == null) {
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            UserDTO userDTO = userService.createAdmin(user);
-            return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userDTO));
-        }
-        return ResponseEntity.status(HttpStatus.CONFLICT).
-                body(new APIResponse(MessageResponse.USER_EXISTED, null));
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return ResponseEntity.ok(new APIResponse(MessageResponse.SIGNUP_SUCCESS, userService.createAdmin(user)));
     }
 
     @GetMapping("/my-info")

@@ -33,7 +33,7 @@ public class User {
     @Column(name = "Role")
     String role;
 
-    @Column(name = "Email")
+    @Column(name = "Email", unique = true)
     String email;
 
     @Column(name = "Username")

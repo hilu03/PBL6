@@ -38,4 +38,5 @@ public class MessageResponse {
     public static String ORDER_ID_NOT_FOUND = "Order ID not found!";
     public static String DUPLICATED_ADDRESS = "Duplicated address!";
     public static String CONFLICT_DEFAULT_ADDRESS = "Choose another address to be default first!";
+    public static String ORDER_STATUS_ID_NOT_FOUND = "Order status ID not found!";
 }
