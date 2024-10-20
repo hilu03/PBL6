@@ -1,6 +1,9 @@
 package com.pbl6.bookstore.service.book;
 
+import com.pbl6.bookstore.exception.AppException;
+import com.pbl6.bookstore.exception.ErrorCode;
 import com.pbl6.bookstore.mapper.BookMapper;
+import com.pbl6.bookstore.repository.AuthorRepository;
 import com.pbl6.bookstore.repository.BookRepository;
 import com.pbl6.bookstore.repository.TargetRepository;
 import com.pbl6.bookstore.dto.BookDTO;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +34,7 @@ public class BookServiceImpl implements BookService{
 
     BookMapper bookMapper;
 
+    AuthorRepository authorRepository;
 
     public BookDetailDTO convertToBookDetailDTO(Book book) {
         return bookMapper.toBookDetailDto(book);
@@ -63,11 +68,11 @@ public class BookServiceImpl implements BookService{
     public Page<BookDTO> findBooksByCategoryID(int id, Pageable pageable) {
         Page<Book> books = bookRepository.findAllByCategoryID(id, pageable);
 
-        List<BookDTO> bookDetailDTOList = books.getContent().stream()
+        List<BookDTO> bookDTOList = books.getContent().stream()
                 .map(this::convertToBookDTO)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(bookDetailDTOList, pageable, books.getTotalElements());
+        return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
     }
 
     @Override
@@ -75,11 +80,11 @@ public class BookServiceImpl implements BookService{
 
         Page<Book> books = targetRepository.findBooksByTargetID(id, pageable);
 
-        List<BookDTO> bookDetailDTOList = books.getContent().stream()
+        List<BookDTO> bookDTOList = books.getContent().stream()
                 .map(this::convertToBookDTO)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(bookDetailDTOList, pageable, books.getTotalElements());
+        return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
     }
 
     @Override
@@ -90,6 +95,25 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<BookDTO> getSaleBooks() {
         return bookRepository.findTop20ByDiscountDesc().stream().map(this::convertToBookDTO).toList();
+    }
+
+    @Override
+    public List<BookDTO> getSameCategoryBooks(String bookID) {
+        Book book = bookRepository.findById(bookID).orElseThrow(() -> new AppException(ErrorCode.BOOK_ID_NOT_FOUND));
+        List<Book> books = bookRepository.findByCategoryAndIdNot(book.getCategory(), bookID);
+        Collections.shuffle(books);
+        return books.stream().limit(20).map(this::convertToBookDTO).toList();
+    }
+
+    @Override
+    public Page<BookDTO> findBooksByAuthorID(int id, Pageable pageable) {
+        Page<Book> books = authorRepository.findBooksByAuthorID(id, pageable);
+
+        List<BookDTO> bookDTOList = books.getContent().stream()
+                .map(this::convertToBookDTO)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
     }
 
 

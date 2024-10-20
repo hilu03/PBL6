@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/books")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookController {
 
@@ -29,7 +30,7 @@ public class BookController {
     @Value("${book-per-page}")
     int BOOK_PER_PAGE;
 
-    @GetMapping("/books")
+    @GetMapping()
     public ResponseEntity<APIResponse> getBookPerPage(@RequestParam(required = false) String page) {
         try {
             if (page == null) {
@@ -46,7 +47,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books/{bookID}")
+    @GetMapping("/{bookID}")
     public ResponseEntity<APIResponse> findBookByID(@PathVariable String bookID) {
         BookDetailDTO bookDetailDTO = bookService.findBookById(bookID);
         if (bookDetailDTO != null) {
@@ -55,7 +56,7 @@ public class BookController {
         throw new AppException(ErrorCode.RESOURCE_NOT_FOUND);
     }
 
-    @GetMapping("/books/category/{id}")
+    @GetMapping("/category/{id}")
     public ResponseEntity<APIResponse> getBooksByCategoryID(@PathVariable int id,
                                                               @RequestParam(required = false) String page) {
         try {
@@ -71,7 +72,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books/target/{id}")
+    @GetMapping("/target/{id}")
     public ResponseEntity<APIResponse> getBooksByTargetID(@PathVariable String id,
                                                             @RequestParam(required = false) String page) {
 
@@ -90,15 +91,38 @@ public class BookController {
 
     }
 
-    @GetMapping("/books/hot-books")
+    @GetMapping("/hot-books")
     public ResponseEntity<APIResponse> getHotBook() {
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getHotBooks()));
     }
 
-    @GetMapping("/books/sale-books")
+    @GetMapping("/sale-books")
     public ResponseEntity<APIResponse> getBestSellerBook() {
         return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND, bookService.getSaleBooks()));
     }
+
+    @GetMapping("/same-category/{bookID}")
+    public ResponseEntity<APIResponse> getSameCategoryBooks(@PathVariable String bookID) {
+        return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                bookService.getSameCategoryBooks(bookID)));
+    }
+
+    @GetMapping("/author/{id}")
+    public ResponseEntity<APIResponse> getBooksByAuthorID(@PathVariable int id,
+                                                            @RequestParam(required = false) String page) {
+        try {
+            if (page == null) {
+                page = "0";
+            }
+            Pageable pageable = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                    bookService.findBooksByAuthorID(id, pageable)));
+        }
+        catch (NumberFormatException e) {
+            throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
+        }
+    }
+
 
     //    @GetMapping("/books/category-name/{category}")
 //    public ResponseEntity<APIResponse> getBooksByCategoryName(@PathVariable String category,

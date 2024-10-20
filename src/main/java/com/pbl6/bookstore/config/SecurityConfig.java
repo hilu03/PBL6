@@ -32,7 +32,9 @@ public class SecurityConfig {
             "/payment/success",
             "/payment/cancel",
             "/order/payment-method",
-            "/order/get-all-status"
+            "/order/get-all-status",
+            "/books/same-category/{bookID}",
+            "/books/author/{id}"
     };
 
     public final String[] PUBLIC_POST_ENDPOINTS = {

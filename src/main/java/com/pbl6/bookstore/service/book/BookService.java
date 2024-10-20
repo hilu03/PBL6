@@ -27,6 +27,10 @@ public interface BookService {
 
     List<BookDTO> getSaleBooks();
 
+    List<BookDTO> getSameCategoryBooks(String bookID);
+
+    Page<BookDTO> findBooksByAuthorID(int id, Pageable pageable);
+
 //    Page<BookDTO> findBookByAuthor(String author);
 
 //    Book addBook(BookDetailDTO book);

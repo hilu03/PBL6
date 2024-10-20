@@ -2,10 +2,8 @@ package com.pbl6.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -15,19 +13,19 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Author {
-
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AuthorID")
-    private int id;
+    int id;
 
     @Column(name = "AuthorName")
-    private String name;
+    String name;
 
     @Column(name = "Slug")
-    private String slug;
+    String slug;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.DETACH,
@@ -36,7 +34,7 @@ public class Author {
             joinColumns = @JoinColumn(name = "AuthorID"),
             inverseJoinColumns = @JoinColumn(name = "BookID"))
     @JsonIgnore
-    private List<Book> books;
+    List<Book> books;
 
     @Override
     public String toString() {
