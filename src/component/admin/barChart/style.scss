@@ -1,0 +1,13 @@
+.css-o7z55h-MuiChartsSurface-root {
+    .MuiChartsAxis-label {
+        text {
+            transform: rotate(-90deg) translateY(-54px) translateX(26px);
+            transform-origin: left center;
+        }
+    }
+}
+
+// .MuiChartsAxis-directionX .MuiChartsAxis-tickLabel {
+//     transform: rotate(-10deg) translateX(50px) translateY(10px); /* Xoay và điều chỉnh vị trí */
+//     text-anchor: end; /* Định vị trí nhãn */
+//   }

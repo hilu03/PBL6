@@ -13,21 +13,26 @@ import logo from "../../../../assets/users/transparent.png";
 import { CartContext } from "context/CartContext";
 import { generateSlug } from "utils/createSlug";
 
+
 const Test = () => {
 
   const token = localStorage.getItem("token");
   const name = localStorage.getItem("name");
-  console.log(name, token);
+  const role = localStorage.getItem("role");
   const [categories, setCategories] = useState([]);
   // const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
   const { cartCount } = useContext(CartContext);
+  const { fetchCartCount } = useContext(CartContext); 
+
+
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await getCategories();
         setCategories(response.data);
+        await fetchCartCount();
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -44,6 +49,7 @@ const Test = () => {
         await processLogout(token);
         localStorage.removeItem("token");
         localStorage.removeItem("name");
+
         navigate("/login");
       } catch (error) {
         console.error("Logout failed:", error);
@@ -72,11 +78,14 @@ const Test = () => {
 
                   <div className="submenu">
                     <ul>
+                      <li>
+                        <Link to={`/listing/alls`}>Tất cả sản phẩm</Link>
+                      </li>
                       {categories && categories.length > 0 ? (
                         categories.map((category) => (
                           <li key={category.id}>
 
-<Link to={`/listing/${generateSlug(category.name)}`}>{category.name}</Link>
+                            <Link to={`/listing/${generateSlug(category.name)}`}>{category.name}</Link>
                            
                           </li>
                         ))
@@ -91,7 +100,9 @@ const Test = () => {
             <div className="col-lg-6 col-md-6 col-sm-7 col-7">
               <div className="search">
                 <input type="text" placeholder="Search...!!!" />
-                <button type="button">
+                <button type="button"
+                  onClick={() => {navigate('/books')}}
+                >
                   <FaSearch />
                 </button>
               </div>
@@ -111,7 +122,7 @@ const Test = () => {
                     </Link>
                   </li>
                   <li className="signin d-none d-md-block">
-                    {token ? (
+                    {role === "user" ? (
                       <button>
                         {name}
                         {/* <FaRegUser/> */}
@@ -140,10 +151,10 @@ const Test = () => {
                   </li>
 
                   <li>
-                                        <Link to="" className="d-md-none">
-                                            <FaBars />
-                                        </Link>
-                                    </li>
+                      <Link to="" className="d-md-none">
+                          <FaBars />
+                      </Link>
+                  </li>
                 </ul>
               </div>
             </div>

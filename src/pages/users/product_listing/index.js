@@ -5,8 +5,13 @@ import { useState, useEffect } from "react";
 import  Slider  from "@mui/material/Slider";
 import { Formatter } from "utils/formatter";
 import Checkbox from '@mui/material/Checkbox';
-import { getBookByCategoryID, getCategories, getTargets } from "services/user/bookService";
+import { getAllBooks, getBookByCategoryID, getCategories, getTargets } from "services/user/bookService";
 import { Button } from "@mui/material";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { FaRegHeart } from "react-icons/fa";
 import Pagination from '@mui/material/Pagination';
 import { Discount } from "utils/discount";
@@ -23,15 +28,18 @@ const ProductListing = () => {
     const searchParams = new URLSearchParams(location.search);
     const page1 = searchParams.get('page') || 1;
 
-    const [value, setValue] = React.useState([0, 1000000]); // filter price
+    const [value, setValue] = useState([0, 1000000]); // filter price
     const [categories, setCategories] = useState([]);
     const [targets, setTargets] = useState([]);
     const [selectedCategoryId, setSelectedCategoryId] = useState(null); // click chọn category trong listing á
     const [books, setBooks] = useState([]);
     const [page, setPage] = useState(+page1);
     const [totalPage, setTotalPage] = useState(1);
+
+    const [sortValue, setSortValue] = useState("1"); // giá trị chọn trong sort filter
     const navigate = useNavigate();
 
+    // getBookByCategoryId
     useEffect(() => {
         const categoryId = findCategoryIdBySlug(categories, slug);
         if (categoryId) {
@@ -40,13 +48,66 @@ const ProductListing = () => {
             const fetchBookByCategory = async () => {
                 const response = await getBookByCategoryID(categoryId, page - 1);
                 setBooks(response.data.content);
-                setTotalPage(response.data.totalPages);
+                setTotalPage(response.data.page.totalPages);
             };
             fetchBookByCategory();
         }
+        else if (slug === "gosho") {
+            const bookData = [
+                {
+                  "id": "1033632359",
+                  "title": "Búp sen xanh (2020)",
+                  "originalPrice": 72000.00,
+                  "discountedPrice": 64800.00,
+                  "imageLink": "https://product.hstatic.net/200000343865/product/bup-sen-xanh_bia_phien-ban-ky-niem-2020_7ed4b795a252443e899a875b19b69d0c.jpg",
+                  "soldQuantity": 45,
+                  "availableQuantity": 500
+                },
+                {
+                  "id": "1033632371",
+                  "title": "Thăng Long Kinh Kì - Kẻ Chợ - Thời Lê - Trịnh",
+                  "originalPrice": 60000.00,
+                  "discountedPrice": 30000.00,
+                  "imageLink": "https://product.hstatic.net/200000343865/product/thang-long-kinh-ki-ke-cho-thoi-le-trinh_0a60c17a9ca04513a9e68728e53d7cbd.jpg",
+                  "soldQuantity": 54,
+                  "availableQuantity": 500
+                },
+                {
+                  "id": "1033632411",
+                  "title": "Những sư tử non",
+                  "originalPrice": 40000.00,
+                  "discountedPrice": 20000.00,
+                  "imageLink": "https://product.hstatic.net/200000343865/product/nhung-su-tu-non_bia_fbf4f254e6744c6b975b50d61ce8c53d.jpg",
+                  "soldQuantity": 52,
+                  "availableQuantity": 500
+                }
+              ];
+          
+              // Cập nhật trạng thái với dữ liệu sách
+              setBooks(bookData);
+        } 
+        else if (slug === "alls") {
+            setSelectedCategoryId(0); // allBoooks
+        }
+        
         window.scrollTo(0, 0);
     }, [slug, page, page1, categories]);
 
+    // getAllBooks
+    useEffect(() => {
+        if (selectedCategoryId === 0) {
+          setPage(+page1);
+          const fetchAllBooks = async () => {
+            const response = await getAllBooks(page - 1);
+            setBooks(response.data.content);
+            setTotalPage(response.data.page.totalPages);
+          };
+    
+          fetchAllBooks();
+        }
+      }, [selectedCategoryId, page1, page]);
+
+    // getCategories
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -78,17 +139,33 @@ const ProductListing = () => {
     };
 
     const handleChangePage = (event, value) => {
-        const category = categories.find(category => category.id === selectedCategoryId);
-        const slug = generateSlug(category.name);  
-        setPage(value);
-        navigate(`/listing/${slug}?page=${value}`);
+        if (selectedCategoryId === 0) {
+            setPage(value);
+            navigate(`/listing/alls?page=${value}`);
+        }
+        else {
+            const category = categories.find(category => category.id === selectedCategoryId);
+            const slug = generateSlug(category.name);  
+            setPage(value);
+            navigate(`/listing/${slug}?page=${value}`);
+        }
     };
 
     const handleCategoryClick = (id) => {
-        const category = categories.find(category => category.id === id);
-        const slug = generateSlug(category.name); 
-        setSelectedCategoryId(id);
-        navigate(`/listing/${slug}`); 
+        if (id === 0) {
+            setSelectedCategoryId(id);
+            navigate(`/listing/alls`);
+        }
+        else {
+            const category = categories.find(category => category.id === id);
+            const slug = generateSlug(category.name); 
+            setSelectedCategoryId(id);
+            navigate(`/listing/${slug}`);
+        }
+    };
+
+    const handleChangeSort = (event) => {
+        setSortValue(event.target.value);
     };
     return (
         <>
@@ -134,7 +211,7 @@ const ProductListing = () => {
                                                     Tất cả sản phẩm
                                                 </h5>
                                                 <span className="d-flex justify-content-center align-items-center rounded-circle ms-auto">
-                                                1008
+                                                {categories.reduce((acc, category) => acc + category.quantity, 0)}
                                                 </span>
                                             </div>
                                             {categories.map((category) => (
@@ -234,7 +311,43 @@ const ProductListing = () => {
                         </div>
 
                         <div className="col-lg-9 rightContent">
-                            <div className="productRow ms-3 mb-3">
+                            <div className="sort d-flex align-items-center mt-3 mb-3 ms-3">
+                                <h3>{(selectedCategoryId === 0 ? 'Tất cả sản phẩm' : categories.find(category => category.id === selectedCategoryId)?.name || 'Tất cả sản phẩm')}</h3>
+                                <Box className="ms-auto" sx={{ mr:1.6, minWidth: 120 }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Sort</InputLabel >
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={sortValue}
+                                            label="Age"
+                                            onChange={handleChangeSort}
+                                            MenuProps={{
+                                                disableScrollLock: true,
+                                            }}
+                                            sx={{
+                                                '&.MuiOutlinedInput-root': {
+                                                    // '& fieldset': {
+                                                    //     borderColor: 'blue'
+                                                    // },
+                                                    '&:hover fieldset': {
+                                                        borderColor: 'blue',
+                                                    },
+                                                    '&.Mui-focused fieldset': {
+                                                        borderColor: '#5E2E86',
+                                                    },
+                                                },
+                                            }}
+                                        >
+                                        <MenuItem value="1">Mặc định</MenuItem>
+                                        <MenuItem value="2">Giá tăng dần</MenuItem>
+                                        <MenuItem value="3">Giá giảm dần</MenuItem>
+                                        <MenuItem value="4">Bán chạy</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    </Box>
+                            </div>
+                            <div className="productRow ms-3">
                             {books && Array.isArray(books) && books.length > 0 ? (
                                 books.map(book => (
                                     <div className="item1 productItem1">

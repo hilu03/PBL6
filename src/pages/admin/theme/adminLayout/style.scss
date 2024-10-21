@@ -1,0 +1,35 @@
+.contentWrapper {
+    margin-left: 18%;
+    width: calc(100% - 18%);
+    position: relative;
+    min-height: 100vh;
+    overflow-y: auto; 
+    background: #FAFBFB;
+    display: flex; 
+    flex-direction: column;
+    width: 82%;
+    flex: 0 0 82%;
+    transition: all 0.3s ease-in-out;
+
+    .children {
+        // flex: 1;
+        // overflow-y: auto;
+    }
+}
+
+.contentWrapper.toggle {
+    margin-left: 0;
+    width: 100%;
+    flex: 0 0 100%;
+}
+
+.sidebarWrapper1 {
+    width: 18%;
+    flex: 0 0 18%;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+.sidebarWrapper1.toggle {
+    width: 0%;
+    flex: 0 0 0%;
+}

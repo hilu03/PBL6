@@ -21,18 +21,20 @@ import { CartContext } from "context/CartContext";
 import { processAddToCart } from "services/user/cartService";
 import HotBook from "component/user/hot_book";
 import { useLocation } from "react-router-dom";
+import { generateSlug } from "utils/createSlug";
+import BookRandomByCate from "component/user/randomBookByCate";
 
 const labelsRating = {
   0.5: "Useless",
-  1: "Useless+",
+  1: "Tệ",
   1.5: "Poor",
-  2: "Poor+",
+  2: "Trung Bình",
   2.5: "Ok",
-  3: "Ok+",
+  3: "Ổn",
   3.5: "Good",
-  4: "Good+",
+  4: "Tốt",
   4.5: "Excellent",
-  5: "Tuyệt",
+  5: "Tuyệt vời",
 };
 
 const ProductDetails = () => {
@@ -229,18 +231,33 @@ const ProductDetails = () => {
                   <tr>
                     <td className="label">Tác giả:</td>
                     <td className="content">
-                      {book.authors.map((author) => author.name).join(", ")}
+                    {book.authors.map((author, index) => (
+                        <span>
+                            {/* <Link to="" className="author_link">{author}</Link> */}
+                            <Link
+                              to={{
+                                pathname: `/listing/${author.slug}`,  // k truyền gosho mà truyền slug tên tác giả
+                              }}
+                              className="author_link"
+                            >{author.name}</Link>
+                            {index < book.authors.length - 1 && ", "}
+                        </span>
+                    ))}
                     </td>
                   </tr>
                   <tr>
                     <td className="label">Thể loại:</td>
-                    <td className="content">{book.category}</td>
+                    <td className="content">
+                      <Link to={`/listing/${generateSlug(book.category)}`} className="cate_link">{book.category}</Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="label">Nhà xuất bản:</td>
+                    <td className="content">{book.publisher}</td>
                   </tr>
                   <tr>
                     <td className="label">Đối tượng:</td>
-                    <td className="content">
-                      {book.targets.map((target) => target.name).join(", ")}
-                    </td>
+                    <td className="content">{book.targets[0].name}</td>
                   </tr>
                   <tr>
                     <td className="label">Khuôn khổ:</td>
@@ -356,7 +373,7 @@ const ProductDetails = () => {
 
                       <div className="info ps-5">
                         <div className="d-flex align-items-center">
-                          <span className="datePublish">24/12/2003</span>
+                          <span className="datePublish">24/12/2024</span>
                           <div className="ps-3">
                             <Rating
                               name="read-only"
@@ -384,7 +401,7 @@ const ProductDetails = () => {
 
                       <div className="info ps-5">
                         <div className="d-flex align-items-center">
-                          <span className="datePublish">24/12/2003</span>
+                          <span className="datePublish">24/12/2024</span>
                           <div className="ps-3">
                             <Rating
                               name="read-only"
@@ -411,7 +428,7 @@ const ProductDetails = () => {
                       <div className="mb-3">
                         <Box
                           sx={{
-                            width: 200,
+                            width: "100%",
                             display: "flex",
                             alignItems: "center",
                           }}
@@ -562,6 +579,9 @@ const ProductDetails = () => {
 
           {/* 3 */}
           <HotBook />
+          <BookRandomByCate
+            bookID={id}
+          />
         </div>
       </section>
     </>

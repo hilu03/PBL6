@@ -18,7 +18,7 @@ const BestSellerBooks  = () => {
 
     return (
         <BookSection
-            title="Sale Books"
+            title="Sách siêu giảm giá"
             books={books}
             type="best-seller-book"
         />

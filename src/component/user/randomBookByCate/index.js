@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { getHotBooks } from 'services/user/bookService';
 
+import { getBookRandomByCategory } from 'services/user/bookService';
 import BookSection from '../book_section';
 
-const HotBook = () => {
+const BookRandomByCate  = ({bookID}) => {
+    //
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
         const fetchBooks = async () => {
-            const data = await getHotBooks();
+            const data = await getBookRandomByCategory(bookID);
             setBooks(data.data);
         };
 
         fetchBooks();
-    }, []);
+    }, [bookID]);
 
     return (
         <BookSection
-            title="SÁCH BÁN CHẠY"
+            title="Sách cùng thể loại"
             books={books}
-            type="hot-book"
+            type="randomBookByCate"
         />
     );
 }
 
-export default HotBook;
+export default BookRandomByCate ;

@@ -10,6 +10,7 @@ export const CartProvider = ({ children }) => {
   
 
   const fetchCartCount = async () => {
+    // setCartCount(0); 
     try {
       const cartData = await getDetailedCart(token);
       if (cartData) {
@@ -20,9 +21,10 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchCartCount(); 
-  }, []);
+  // useEffect(() => {
+
+  //   fetchCartCount(); 
+  // }, []);
 
   const addToCart = async (bookID, quantity) => {
     try {

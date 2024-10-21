@@ -157,9 +157,13 @@
         padding: 0px 0px; 
         overflow-x: hidden;
 
+        .css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+            padding: 10px 14px !important;
+            padding-right: 32px !important;
+        }
         .productRow {
             display: flex;
-            padding: 30px 0;
+            // padding: 30px 0;
             // // margin: 0 -15px;
             flex-wrap: wrap;
             gap: 20px;
@@ -270,7 +274,12 @@
 
 
 @media (max-width: 768px) {
+    .rightContent {
+        padding: 0px 0px; 
+        overflow-x: hidden;
+        
+    }
     .productItem1 {
-        width: calc(50% - 18px) !important; /* Thay đổi thành 2 cột */
+        width: calc(50% - 18px) !important; // Thay đổi thành 2 cột
     }
 }

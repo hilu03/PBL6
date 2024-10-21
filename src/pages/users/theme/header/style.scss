@@ -269,6 +269,7 @@
                     color: white;
                     font-size: 18px;
                     font-weight: bold;
+                    margin-right: -20px;
                 }
             }
         }
@@ -280,6 +281,7 @@
     border: none;
     font-weight: 700;
     color: white;
+    margin-right: -20px;
 }
 
 
@@ -332,11 +334,21 @@ button:hover .submenu {
 }
 
 
-@media (min-width: 768px) and (max-width: 1199px) {
+
+@media (min-width: 768px) and (max-width: 991px) {
     .search {
         button {
             right: 3px;
-            top: 34px;  
+            top: 32px;  
+        }
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .search {
+        button {
+            right: 3px;
+            top: 20px;  
         }
     }
 }

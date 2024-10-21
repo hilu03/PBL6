@@ -1,0 +1,88 @@
+header {
+    padding: 0px 50px;
+    .part1 {
+        svg {
+            cursor: pointer;
+            // margin-left: 3px;
+            font-size: 30px;
+            color: #9d2ff7;
+        }
+        .searchBox {
+            position: relative;
+            width: 100%;
+            background: #FAFBFB;
+            padding: 10px 8px;
+            svg {
+                margin-left: 3px;
+                font-size: 25px;
+                color: #9d2ff7;
+            }
+            input {
+                width: 100%;
+                background: transparent;
+                border: 0px;
+                outline: none;
+                padding-left: 7px;
+                font-size: 13px;
+                color: #9d2ff7;
+            }
+            input::-webkit-input-placeholder{
+                color: #9d2ff7;
+            }
+        }
+    }
+
+    .part2 {
+        svg {
+            cursor: pointer;
+            font-size: 28px;
+            color: #9d2ff7;
+            margin-right: 8px;
+        }
+
+        .myAccWrapper {
+            margin-left: 10px;
+            .myAcc {
+                cursor: pointer;
+                .userImg {
+                    .rounded-circle {
+                        cursor: pointer;
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        overflow: hidden;
+                        width: 28px;
+                        height: 28px;
+                        img {
+                            object-fit: cover;
+                            width: 100%;
+                        }
+                    }
+                }
+    
+                .userInfo {
+                    align-items: center;
+                    padding-left: 8px;
+                    h6 {
+                        color: #9d2ff7;
+                        padding-top: 3px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        margin-bottom: 0px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#account-menu {
+    li {
+        font-size: 14px !important;
+        padding: 8px 8px;
+        svg {
+            font-size: 18px ;
+        }
+    }
+}

@@ -11,7 +11,15 @@ export const ROUTERS = {
         PRODUCT_LISTING: "/listing/:slug",
         PERSONAL_INFOR: "/personal-infor",
         ORDER_SUCCESS: "/order-success",
-        PAYMENT_ONLINE: "/payment-online"
+        PAYMENT_ONLINE: "/payment-online",
+        PRODUCT_SEARCH: "/books"
+    },
 
+    ADMIN: {
+        DASHBOARD: "/admin",
+        ADDBOOK: "/admin/add-book",
+        LISTBOOK: "/admin/list-book/:slug",
+        LISTCATEGORY: "/admin/list-category",
+        LISTORDER: "/admin/list-order",
     }
 }

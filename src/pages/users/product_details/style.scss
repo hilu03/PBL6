@@ -68,9 +68,21 @@
     }
 
     .content {
-        font-size: 14px;
+      font-size: 14px;
       width: 600px;
       text-align: left;
+
+      .author_link{
+        text-decoration: none;
+        color: #5E2E86;
+        font-weight: bold;
+      }
+
+      .cate_link{
+        text-decoration: none;
+        color: #5E2E86;
+        font-weight: bold;
+      }
     }
 
     table {
@@ -238,6 +250,7 @@
           }
 
           button {
+            width: 100%;
             background: #5E2E86;
             color: white;
             font-size: 18px;

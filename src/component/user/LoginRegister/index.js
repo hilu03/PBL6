@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import "./stylee.scss";
 import { FaUserAlt, FaLock, FaGoogle, FaHome} from "react-icons/fa";
 import { Link, useNavigate} from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { processLogin, processLoginGG } from "services/user/userService";
 import { OAuthConfig } from "Configurations/configGG";
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const [userInfors, setUserInfors] = useState([]);
   const navigate = useNavigate();
+
 
 
   const handleGoogleLogin = () => {
@@ -32,14 +34,23 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); //
     try {
+      
       const response = await processLogin(email, password);
       if (response.status === 200) {
         const token = response.data.data.token
         const name = response.data.data.fullName
+        const role = response.data.data.role
         
         localStorage.setItem("name", name)
         localStorage.setItem("token", token)
-        navigate('/');
+        localStorage.setItem("role", role)
+
+        if (role === "user"){
+          navigate('/');
+        }
+         
+        else if (role === "admin")
+          navigate('/admin')
       }
       // else if (response.status === 401){
       //   setError("Fail to login: Incorrect email or password.");

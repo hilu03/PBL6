@@ -53,6 +53,26 @@ export const getBookByCategoryID = async (categoryID, page) => {
     }
 }
 
+export const getAllBooks = async (page) => {
+    try {
+        const response = await axios.get(`/api/books?page=${page}`)
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
+
+export const getBookRandomByCategory = async (categoryID) => {
+    try {
+        const response = await axios.get(`/api/books/random/${categoryID}`)
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
+
 export const getTargets = async () => {
     try {
         const response = await axios.get('/api/targets')

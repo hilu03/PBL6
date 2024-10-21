@@ -1,0 +1,99 @@
+.ranking {
+    width: 100%;
+    height: auto;
+    margin-top: 100px;
+    .card {
+        border-radius: 10px;
+    }
+    .rankingCard {
+        padding: 20px;
+        background: #5E2E86;
+        .rankingHeader {
+            svg {
+                font-size:30px;
+                margin-right: 20px;
+                margin-bottom: 2px;
+                padding-bottom: 8px;
+                color: white;
+            }
+            h4 {
+                color: white;
+                font-size: 25px;
+                font-weight: 600;
+            }
+        }
+
+        .rankingTabs {
+            button {
+                color: white;
+                border-radius: 0;
+                font-family: inherit;
+                font-weight: 600;
+                padding: 10px 100px;
+            }
+
+            button.active {
+                background: white;
+                color: rgb(179, 0, 179);
+            }
+        }
+        
+        .booksInfo {
+            background: white;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            .bookCard {
+                cursor: pointer;
+                width: 100%;
+                max-height: 110px;
+                .rankingNumber {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    h1 {
+                        color: #ffee00;
+                    }
+                }
+
+                .bookImage {
+                    img {
+                        max-height: 110px; 
+                        width: auto;     
+                        object-fit: contain; 
+                    }
+                }
+
+                .bookInfo {
+                    margin-left: 20px;
+                    h4 {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #9d2ff7;
+                        margin-bottom: -2px;
+                    }
+                    span {
+                        font-size: 13px;
+                    }
+
+                    .curPrice_ranking {
+                        font-size: 15px;
+                        font-weight: 600;
+                    }
+                    .oriPrice_ranking {
+                        margin-left: 30px;
+                        padding-top: 7px;
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: rgba(0, 0, 0, 0.3);
+                        text-decoration: line-through;
+                    }
+                }
+            }
+            hr {
+                border: none;     
+                margin: 15px 0; 
+                border-top: 1px solid rgba(0, 0, 0, 0.2) !important;
+            }
+        }
+    }
+}

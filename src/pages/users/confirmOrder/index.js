@@ -537,7 +537,7 @@ const ConfirmOrder = () => {
                 onChange={handlePaymentMethodChange}
               />
               <label className="form-check-label" htmlFor="vnpayPayment">
-                Thanh toán qua VNPAY
+                Thanh toán trực tuyến
               </label>
             </div>
           </div>
