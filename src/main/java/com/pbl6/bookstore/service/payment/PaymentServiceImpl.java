@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.entity.Order;
 import com.pbl6.bookstore.entity.PaymentStatus;
+import com.pbl6.bookstore.exception.AppException;
+import com.pbl6.bookstore.exception.ErrorCode;
 import com.pbl6.bookstore.repository.OrderRepository;
 import com.pbl6.bookstore.repository.OrderStatusRepository;
 import lombok.AccessLevel;
@@ -64,5 +66,19 @@ public class PaymentServiceImpl implements PaymentService {
         order.get().setOrderStatus(orderStatusRepository.findByName("Chờ xác nhận"));
         orderRepository.save(order.get());
         log.info("Updated payment status of order {}!", order.get().getId());
+    }
+
+    @Override
+    public void cancelPayment(long orderCode) throws Exception {
+
+        Order order = orderRepository.findById((int) orderCode)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_ID_NOT_FOUND));
+
+        if (!order.getPaymentStatus().equals(PaymentStatus.ERROR.getStatus())) {
+            payOS.cancelPaymentLink(orderCode, null);
+            order.setPaymentStatus(PaymentStatus.ERROR.getStatus());
+            orderRepository.save(order);
+        }
+
     }
 }

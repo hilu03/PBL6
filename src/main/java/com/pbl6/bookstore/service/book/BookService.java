@@ -31,6 +31,8 @@ public interface BookService {
 
     Page<BookDTO> findBooksByAuthorID(int id, Pageable pageable);
 
+    Page<BookDTO> searchByTitle(String keyword, Pageable pageable);
+
 //    Page<BookDTO> findBookByAuthor(String author);
 
 //    Book addBook(BookDetailDTO book);

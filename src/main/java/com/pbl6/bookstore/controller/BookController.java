@@ -123,6 +123,22 @@ public class BookController {
         }
     }
 
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<APIResponse> searchByTitle(@PathVariable String keyword,
+                                                          @RequestParam(required = false) String page) {
+        try {
+            if (page == null) {
+                page = "0";
+            }
+            Pageable pageable = PageRequest.of(Integer.parseInt(page), BOOK_PER_PAGE);
+            return ResponseEntity.ok(new APIResponse(MessageResponse.RESOURCE_FOUND,
+                    bookService.searchByTitle(keyword, pageable)));
+        }
+        catch (NumberFormatException e) {
+            throw new AppException(ErrorCode.INVALID_PAGE_NUMBER);
+        }
+    }
+
 
     //    @GetMapping("/books/category-name/{category}")
 //    public ResponseEntity<APIResponse> getBooksByCategoryName(@PathVariable String category,

@@ -32,5 +32,8 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     List<Book> findByCategoryAndIdNot(Category category, String Id);
 
+    @Query(value = "SELECT * FROM book WHERE MATCH (Title) AGAINST (?1)",
+            nativeQuery = true)
+    Page<Book> searchByTitle(String keyword, Pageable pageable);
 
 }

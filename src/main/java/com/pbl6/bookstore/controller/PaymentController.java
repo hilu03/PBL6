@@ -2,6 +2,7 @@ package com.pbl6.bookstore.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pbl6.bookstore.dto.response.APIResponse;
+import com.pbl6.bookstore.dto.response.MessageResponse;
 import com.pbl6.bookstore.dto.response.WebhookResponse;
 import com.pbl6.bookstore.service.payment.PaymentServiceImpl;
 import lombok.AccessLevel;
@@ -60,8 +61,9 @@ public class PaymentController {
     }
 
     @PostMapping("/cancel/{orderCode}")
-    public void cancelUrl(@PathVariable long orderCode) throws Exception {
-        payOS.cancelPaymentLink(orderCode, null);
+    public ResponseEntity<APIResponse> cancelUrl(@PathVariable long orderCode) throws Exception {
+        paymentService.cancelPayment(orderCode);
+        return ResponseEntity.ok(new APIResponse(MessageResponse.CANCEL_PAYMENT_LINK_SUCCESS, null));
     }
 
     @PostMapping("/handle-transfer")

@@ -6,4 +6,6 @@ public interface PaymentService {
 
     void handlePayOSTransfer(ObjectNode body) throws Exception;
 
+    void cancelPayment(long orderCode) throws Exception;
+
 }

@@ -34,7 +34,8 @@ public class SecurityConfig {
             "/order/payment-method",
             "/order/get-all-status",
             "/books/same-category/{bookID}",
-            "/books/author/{id}"
+            "/books/author/{id}",
+            "/books/search/{keyword}"
     };
 
     public final String[] PUBLIC_POST_ENDPOINTS = {
@@ -48,7 +49,6 @@ public class SecurityConfig {
             "/login/app/google",
             "/payment/create/{orderCode}",
             "/payment/handle-transfer",
-            "/payment/cancel/{orderCode}"
     };
 
     @Autowired

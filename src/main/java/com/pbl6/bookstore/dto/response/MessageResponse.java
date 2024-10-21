@@ -14,6 +14,7 @@ public class MessageResponse {
     public static String ORDER_CREATE_SUCCESS = "Create order successfully!";
     public static String SHIPPING_ADDRESS_CREATE_SUCCESS = "Added address successfully!";
     public static String SHIPPING_ADDRESS_UPDATE_SUCCESS = "Updated address successfully!";
+    public static String CANCEL_PAYMENT_LINK_SUCCESS = "Payment has been canceled";
 
     public static String UNAUTHENTICATED = "Unauthenticated request!";
     public static String SERVER_ERROR = "Unknown error!";

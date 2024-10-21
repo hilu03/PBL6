@@ -116,6 +116,17 @@ public class BookServiceImpl implements BookService{
         return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
     }
 
+    @Override
+    public Page<BookDTO> searchByTitle(String keyword, Pageable pageable) {
+        Page<Book> books = bookRepository.searchByTitle(keyword, pageable);
+
+        List<BookDTO> bookDTOList = books.getContent().stream()
+                .map(this::convertToBookDTO)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(bookDTOList, pageable, books.getTotalElements());
+    }
+
 
     //    @Override
 //    public Page<BookDTO> findBooksByCategoryName(String categoryName, Pageable pageable) {
