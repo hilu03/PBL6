@@ -2,10 +2,7 @@ package com.pbl6.bookstore.service.order;
 
 import com.pbl6.bookstore.dto.request.CreateOrderRequest;
 import com.pbl6.bookstore.dto.request.ItemRequestDTO;
-import com.pbl6.bookstore.dto.response.CreateCodOrderResponse;
-import com.pbl6.bookstore.dto.response.CreatePaymentLinkResponse;
-import com.pbl6.bookstore.dto.response.OrderItemResponse;
-import com.pbl6.bookstore.dto.response.OrderResponse;
+import com.pbl6.bookstore.dto.response.*;
 import com.pbl6.bookstore.entity.*;
 import com.pbl6.bookstore.exception.AppException;
 import com.pbl6.bookstore.exception.ErrorCode;
@@ -183,6 +180,14 @@ public class OrderServiceImpl implements OrderService {
                     .orderID(order.getId())
                     .checkoutUrl(responseData.getCheckoutUrl())
                     .qrCode(qrLink)
+                    .paymentInfo(PaymentInfoResponse.builder()
+                            .accountName(responseData.getAccountName())
+                            .accountNumber(responseData.getAccountNumber())
+                            .amount(responseData.getAmount())
+                            .description(responseData.getDescription())
+                            .bankName("Ngân hàng TMCP Đầu tư và Phát triển Việt Nam")
+                            .bankShortName("BIDV")
+                            .build())
                         .build();
         }
 
