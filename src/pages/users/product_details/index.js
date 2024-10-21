@@ -20,6 +20,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { CartContext } from "context/CartContext";
 import { processAddToCart } from "services/user/cartService";
 import HotBook from "component/user/hot_book";
+import { useLocation } from "react-router-dom";
 
 const labelsRating = {
   0.5: "Useless",
@@ -46,35 +47,56 @@ const ProductDetails = () => {
 
   const zoomSliderBig = useRef();
   const { id } = useParams(); // Lấy id từ URL
+  const [idState, setIdState] = useState(null);
   const [book, setBook] = useState(null); // lưu trữ sách
   const [quantityValue, setQuantityValue] = useState(1); // lưu trữ số lượng sách mà user chọn
   const [estimateValue, setEstimateValue] = useState(0); // lưu trữ giá tiền tạm tính
   const [activeTabs, setActiveTabs] = useState(0); // chuyển tab đánh giá với mô tả nội dung
   const navigate = useNavigate();
 
-  const { addToCart } = useContext(CartContext); // Lấy hàm addToCart từ context
+  const { addToCart } = useContext(CartContext);
+  const location = useLocation(); // Lấy thông tin state khi điều hướng
+  const { oneBook } = location.state || { oneBook: [] };
+
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleAddToCart = async (e) => {
-    const token = localStorage.getItem("token");
     const quantity = quantityValue; // lấy sl sách từ state
     try {
-      const response = await processAddToCart(token, id, quantity);
-      console.log("Book added to cart:", response);
+      await addToCart(id, quantity); // Gọi hàm addToCart từ context
+      console.log("Added to cart successfully");
     } catch (error) {
       console.error("Error adding book to cart:", error);
     }
   };
 
-  const handleBuyHot = async (e) => {
-    e.preventDefault();
-    navigate(`/confirm-order/${id}/${quantityValue}`); 
-  };
-  
+  useEffect(() => {
+    setIdState(id); // Lưu id vào state
+  }, [id]);
 
+  const handleBuyHot = async (e) => {
+
+    const quantity = quantityValue; 
+    // setSelectedItems(prevSelectedItems => [
+    //   ...prevSelectedItems,
+    //   {
+    //     bookId: id,  // Lấy id từ state hoặc URL
+    //     quantity: quantity,
+    //   }
+    // ]);
+    // console.log("id và quantity từ product_detail: " + JSON.stringify([...selectedItems, { bookId: id, quantity: quantity }]));
+    // navigate("/confirm-order", { state: { oneBook: [...selectedItems, { bookId: id, quantity: quantity }] } });
+
+    const item = { id: id, quantity: quantity }; 
+    navigate('/confirm-order', { state: { items: [item] } });
+  };
+
+  
   useEffect(() => {
     const fetchBookDetails = async () => {
       const response = await getBookByID(id);
       setBook(response.data);
+      console.log(response.data);
     };
     window.scrollTo(0, 0);
 
@@ -206,7 +228,9 @@ const ProductDetails = () => {
                 <table>
                   <tr>
                     <td className="label">Tác giả:</td>
-                    <td className="content">{book.authors.join(", ")}</td>
+                    <td className="content">
+                      {book.authors.map((author) => author.name).join(", ")}
+                    </td>
                   </tr>
                   <tr>
                     <td className="label">Thể loại:</td>
@@ -214,7 +238,9 @@ const ProductDetails = () => {
                   </tr>
                   <tr>
                     <td className="label">Đối tượng:</td>
-                    <td className="content">{book.targets}</td>
+                    <td className="content">
+                      {book.targets.map((target) => target.name).join(", ")}
+                    </td>
                   </tr>
                   <tr>
                     <td className="label">Khuôn khổ:</td>
@@ -341,9 +367,7 @@ const ProductDetails = () => {
                             />
                           </div>
                         </div>
-                        <p>
-                          Toẹt vời ông mặt trời ẻwtgergergerger
-                        </p>
+                        <p>Toẹt vời ông mặt trời ẻwtgergergerger</p>
                       </div>
                     </div>
 
@@ -372,11 +396,11 @@ const ProductDetails = () => {
                           </div>
                         </div>
                         <p>
-                          Toẹt vời ông mặt trời good so good man! ô hô hô a ha ha. Đố report được tau
+                          Toẹt vời ông mặt trời good so good man! ô hô hô a ha
+                          ha. Đố report được tau
                         </p>
                       </div>
                     </div>
-                    
 
                     <br />
                     <br />

@@ -1,0 +1,23 @@
+.account-info-container {
+    padding-top: 76px; /* Khoảng trống tương ứng với chiều cao của header */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   
+}   
+.row.infor {
+    padding-top: 70px;
+  }
+.personal-info-box{
+    background-color: rgb(196, 164, 226);
+    border-radius: 10px;
+}
+.text {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 10px;
+        font-weight: bold;
+}
+
+  

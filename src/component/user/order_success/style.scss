@@ -1,0 +1,49 @@
+.order-success-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+
+  .order-success-con {
+    margin: 0 200px;
+    background-color: aqua;
+    text-align: center;
+  }
+
+  .checkmark-icon {
+    background: none;
+    border: none;
+    font-size: 6.5em;
+
+  }
+}
+
+
+.order-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+.btn-order-details, .btn-continue-shopping {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-order-details:hover, .btn-continue-shopping:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-continue-shopping {
+    background-color: #6c757d;
+  }
+  
+  .btn-continue-shopping:hover {
+    background-color: #5a6268;
+  }

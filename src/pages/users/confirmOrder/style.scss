@@ -201,3 +201,70 @@ hr.aaa {
     background-color: #63e910; /* Màu nền khi hover */
     transform: scale(1.05); /* Tăng nhẹ kích thước nút khi hover */
 }
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #5e2e86;
+    font-size: 1.7rem;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+
+}
+
+
+.a-change-address {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: white; /* Màu nền */
+    color: #5e2e86; /* Màu chữ */
+    border-radius: 4px;
+    text-decoration: none; /* Bỏ gạch chân */
+    transition: background-color 0.3s ease; /* Hiệu ứng hover */
+  
+    &:hover {
+      background-color: #27d538; /* Màu khi hover */
+    }
+  
+    &:active {
+      background-color: #004494; /* Màu khi nhấn */
+    }
+  }
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 600px;
+    max-width: 100%;
+  }
+
+.btn.save-address{
+    margin-top: 13px;
+    display: block;
+    // width: 100%;
+    padding: 10px;
+    background-color: #5e2e86; /* Màu nền #5E2E86 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+}

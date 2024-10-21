@@ -7,7 +7,11 @@ export const ROUTERS = {
         REGISTER: "/register",
         PRODUCT_DETAILS: "/details/:id",
         CARTITEMS: "/cart-items",
-        CONFIRMORDER: "/confirm-order/:id/:quantity",
+        CONFIRMORDER: "/confirm-order",
         PRODUCT_LISTING: "/listing/:slug",
+        PERSONAL_INFOR: "/personal-infor",
+        ORDER_SUCCESS: "/order-success",
+        PAYMENT_ONLINE: "/payment-online"
+
     }
 }

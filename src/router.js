@@ -11,6 +11,16 @@ import CartItems from 'pages/users/cartItems';
 import CheckCode from 'component/user/checkCode';
 import ConfirmOrder from 'pages/users/confirmOrder';
 import ProductListing from 'pages/users/product_listing';
+import Personal_infor from 'component/user/personal_infor';
+import PersonalInfor from 'component/user/personal_infor';
+import { MdOutlineReorder } from 'react-icons/md';
+import OrderSuccess from 'component/user/order_success';
+// import Payment from 'component/user/payment_online';
+
+import { CartProvider } from "context/CartContext";
+import Payment_Online from 'component/user/payment_online/Payment_Online';
+
+
 
 const renderUserRouter = () => {
     const userRouters = [
@@ -61,6 +71,18 @@ const renderUserRouter = () => {
         {
             path: ROUTERS.USER.PRODUCT_LISTING,
             component: <ProductListing/>
+        },
+        {
+            path: ROUTERS.USER.PERSONAL_INFOR,
+            component: <PersonalInfor/>
+        },
+        {
+            path: ROUTERS.USER.ORDER_SUCCESS,
+            component: <OrderSuccess/>
+        },
+        {
+            path: ROUTERS.USER.PAYMENT_ONLINE,
+            component: <Payment_Online/>
         },
     ]
 

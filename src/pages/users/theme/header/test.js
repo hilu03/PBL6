@@ -14,11 +14,12 @@ import { CartContext } from "context/CartContext";
 import { generateSlug } from "utils/createSlug";
 
 const Test = () => {
-  //   const [openCategory, setOpenCategory] = useState(false);
+
   const token = localStorage.getItem("token");
   const name = localStorage.getItem("name");
   console.log(name, token);
   const [categories, setCategories] = useState([]);
+  // const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
   const { cartCount } = useContext(CartContext);
 
@@ -31,9 +32,10 @@ const Test = () => {
         console.error("Error fetching categories:", error);
       }
     };
-
     fetchCategories();
   }, []);
+
+ 
 
   const handleLogout = async () => {
     const token = localStorage.getItem("token");
@@ -115,9 +117,9 @@ const Test = () => {
                         {/* <FaRegUser/> */}
                         <div className="submenu">
                           <ul>
-                            <li>
-                              <a href="">Thông tin cá nhân</a>
-                            </li>
+                          <li>
+  <Link to="/personal-infor">Thông tin cá nhân</Link>
+</li>
                             <li>
                               <a href="">Lịch sử mua hàng</a>
                             </li>
