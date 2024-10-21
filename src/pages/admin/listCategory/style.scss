@@ -1,0 +1,139 @@
+.CategoryList {
+    padding: 0 50px;
+    .cateBox {
+        width: 50%;
+    }
+    .card {
+        border-radius: 12px;
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+        h5 {
+            color: #9d2ff7;
+            font-weight: 600;
+        }
+
+        .headCard {
+            h5 {
+                color: #9d2ff7;
+                font-weight: 600;
+            }
+            Button {
+                background: white;
+                color: #9d2ff7;
+                border-radius: 10px;
+                border: 2px solid #9d2ff7;
+                font-weight: bold;
+                padding: 3px 15px;
+            }
+            Button:hover {
+                background: #9d2ff7;
+                color: white;
+            }
+        }
+    }
+    hr {
+        border: none;
+        margin-top: 5px;   
+        border-top: 1px solid rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .cardFilters {
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .custom-select {
+            width: 100%; 
+            height: 40px;
+            outline: none; 
+            border: 0px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 14px; 
+            background-color: white;
+
+            li {
+                padding: 0 16px;
+            }
+        }
+    }
+
+    .table {
+        .thead-dark {
+            th {
+                // background-color: #9d2ff7 !important;
+                background-color: #5E2E86 !important;
+                border-color: rgba(255, 255, 255, 1) !important;
+                color: white;
+                font-weight: 600;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+        }
+
+        tbody {
+            td {
+                font-size: 14px;
+                font-weight: 500;
+
+                .productBox {
+                    width: 100%;
+                    align-items: center;
+                    .imgWrapper1 {
+                        width: 15%;
+                        flex: 0 0 15%;
+    
+                        img {
+                            height: 3.5rem;
+                            object-fit: contain;
+                        }
+                    }
+
+                    h6 {
+                        width: 85%;
+                        flex: 0 0 85%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        font-weight: 600;
+                        font-size: 14px;
+                        margin-bottom: 0px;
+                    }
+                }
+
+                .old, .new {
+                    display: block;
+                    width: 100%;
+                }
+            }
+            .actions {
+                Button {
+                    min-width: 35px !important;
+                    width: 35px;
+                    height: 35px;
+                    margin: 0 3px;
+
+                    svg {
+                        font-size: 30px !important;
+                    }
+                }
+
+                Button.secondary {
+                    background: rgba(203, 60, 231, 0.15);
+                }
+                Button.error {
+                    background: rgba(241, 17, 51, 0.15);
+                }
+            }
+        }
+    }
+    .v-align {
+        td {
+            vertical-align: middle !important;
+        }
+    }
+
+    .tableFooter {
+        padding-bottom: 10px;
+    }
+}

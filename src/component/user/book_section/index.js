@@ -21,7 +21,7 @@ const BookSection = ({title, books, type}) => {
             <div className="container">
                 <div className="title">
                     <h3>{title}</h3>
-                    <Link to={`/books/${type}`}>Xem tất cả</Link>
+                    <Link to={`/books/?type=${type}`} state={{ book: books }}>Xem tất cả</Link>
                 </div>
 
                 <div className="product_row w-100">
@@ -49,31 +49,31 @@ const BookSection = ({title, books, type}) => {
                 >
 
                     {books && Array.isArray(books) && books.length > 0 ? (
-                            books.map(book => (
-                                <SwiperSlide key={book.id} onClick={() => navigate(`/details/${book.id}`)}>
-                                    <div className="item productItem">
-                                        <div className="imgWrapper">
-                                            <img src={book.imageLink} alt={book.title} className='w-100' />
-                                            <span className="badge bg-danger">- {Discount(book.originalPrice, book.discountedPrice)}%</span>
-                                            <div className='actions'>
-                                                <Button
-                                                    onClick={(e) => { e.stopPropagation();}}>
-                                                    <FaRegHeart />
-                                                </Button>
-                                            </div>
-                                            <h4>{book.title}</h4>
-                                            <span className='text-success'>In Stock</span>
-                                            <div className="d-flex justify-content-between">
-                                                <span className="curPrice text-danger">{Formatter(book.discountedPrice)}</span>
-                                                <span className="oriPrice">{Formatter(book.originalPrice)}</span>
-                                            </div>
+                        books.map(book => (
+                            <SwiperSlide key={book.id} onClick={() => navigate(`/details/${book.id}`)}>
+                                <div className="item productItem">
+                                    <div className="imgWrapper">
+                                        <img src={book.imageLink} alt={book.title} className='w-100' />
+                                        <span className="badge bg-danger">- {Discount(book.originalPrice, book.discountedPrice)}%</span>
+                                        <div className='actions'>
+                                            <Button
+                                                onClick={(e) => { e.stopPropagation();}}>
+                                                <FaRegHeart />
+                                            </Button>
+                                        </div>
+                                        <h4>{book.title}</h4>
+                                        <span className='text-success'>In Stock</span>
+                                        <div className="d-flex justify-content-between">
+                                            <span className="curPrice text-danger">{Formatter(book.discountedPrice)}</span>
+                                            <span className="oriPrice">{Formatter(book.originalPrice)}</span>
                                         </div>
                                     </div>
-                                </SwiperSlide>
-                            ))
-                        ) : (
-                            <p>No books available</p>
-                        )}
+                                </div>
+                            </SwiperSlide>
+                        ))
+                    ) : (
+                        <p>No books available</p>
+                    )}
                 </Swiper>
                 </div>
             </div>

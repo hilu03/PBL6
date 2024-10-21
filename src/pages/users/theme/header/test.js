@@ -17,7 +17,7 @@ const Test = () => {
   //   const [openCategory, setOpenCategory] = useState(false);
   const token = localStorage.getItem("token");
   const name = localStorage.getItem("name");
-  console.log(name, token);
+  const role = localStorage.getItem("role");
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const { cartCount } = useContext(CartContext);
@@ -70,11 +70,14 @@ const Test = () => {
 
                   <div className="submenu">
                     <ul>
+                      <li>
+                        <Link to={`/listing/alls`}>Tất cả sản phẩm</Link>
+                      </li>
                       {categories && categories.length > 0 ? (
                         categories.map((category) => (
                           <li key={category.id}>
 
-<Link to={`/listing/${generateSlug(category.name)}`}>{category.name}</Link>
+                            <Link to={`/listing/${generateSlug(category.name)}`}>{category.name}</Link>
                            
                           </li>
                         ))
@@ -89,7 +92,9 @@ const Test = () => {
             <div className="col-lg-6 col-md-6 col-sm-7 col-7">
               <div className="search">
                 <input type="text" placeholder="Search...!!!" />
-                <button type="button">
+                <button type="button"
+                  onClick={() => {navigate('/books')}}
+                >
                   <FaSearch />
                 </button>
               </div>
@@ -109,7 +114,7 @@ const Test = () => {
                     </Link>
                   </li>
                   <li className="signin d-none d-md-block">
-                    {token ? (
+                    {role === "user" ? (
                       <button>
                         {name}
                         {/* <FaRegUser/> */}
@@ -138,10 +143,10 @@ const Test = () => {
                   </li>
 
                   <li>
-                                        <Link to="" className="d-md-none">
-                                            <FaBars />
-                                        </Link>
-                                    </li>
+                      <Link to="" className="d-md-none">
+                          <FaBars />
+                      </Link>
+                  </li>
                 </ul>
               </div>
             </div>

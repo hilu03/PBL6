@@ -36,10 +36,16 @@ const LoginForm = () => {
       if (response.status === 200) {
         const token = response.data.data.token
         const name = response.data.data.fullName
+        const role = response.data.data.role
         
         localStorage.setItem("name", name)
         localStorage.setItem("token", token)
-        navigate('/');
+        localStorage.setItem("role", role)
+
+        if (role === "user")
+          navigate('/');
+        else if (role === "admin")
+          navigate('/admin')
       }
       // else if (response.status === 401){
       //   setError("Fail to login: Incorrect email or password.");

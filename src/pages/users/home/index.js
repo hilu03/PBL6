@@ -5,6 +5,7 @@ import './style.scss';
 import SliderComponent from 'component/user/slider';
 import HotBook from 'component/user/hot_book';
 import BestSellerBooks from 'component/user/best_seller';
+import Ranking from 'component/user/ranking';
 
 const HomePage = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = () => {
       <SliderComponent/>
       <HotBook/>
       <BestSellerBooks/>
+      {/* <Ranking/> */}
     </>
   );
 }

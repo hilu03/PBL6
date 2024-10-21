@@ -3,7 +3,9 @@
     justify-content: space-between;
     margin-top: 40px;
     h3 {
+        font-size: 25px;
         font-weight: bold;
+        text-transform: uppercase;
     }
     a {
         text-decoration: none;
@@ -106,18 +108,21 @@
 .oriPrice {
     font-size: 13px;
     font-weight: bold;
-    color: rgba(0,0,0,0.3   );
+    color: rgba(0,0,0,0.3);
     text-decoration: line-through;
 }
 
 .swiper-button-prev, .swiper-button-next {
-    background: rgba(255, 255, 135, 59);
+    background: #5E2E86;
 }
 
 .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after {
-    font-size: 30px !important
+    font-size: 30px !important;
+    color: white ;
 }
 
-.swiper-button-next:after, .swiper-rtl .swiper-button-prev:after {
-    font-size: 30px !important
+.swiper-button-next:after, .swiper-rtl .swiper-button-prev:before {
+    font-size: 30px !important;
+    color: white ;
+
 }
